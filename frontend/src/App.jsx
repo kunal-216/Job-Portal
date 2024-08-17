@@ -7,10 +7,14 @@ import Profile from './pages/Profile/Profile'
 import Jobs from './pages/Jobs/Jobs'
 import Internships from './pages/Internships/Internships'
 import Contact from './pages/Contact/Contact'
+import Dashboard from './pages/Dashboard/Dashboard'
+import Navbar from './components/Navbar/Navbar'
+import Footer from './components/Footer/Footer'
 
 const App = () => {
   return (
     <div>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -19,7 +23,9 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/internships" element={<Internships />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
+      <Footer />
     </div>
   )
 }
