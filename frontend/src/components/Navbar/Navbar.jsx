@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+
+  const [menu,setMenu] = useState(false)
+
   return (
     <nav className='flex justify-between items-center p-4 bg-gray-800 text-white'>
       <div>
@@ -9,7 +12,7 @@ const Navbar = () => {
       <div className='flex space-x-6'>
         <Link to="/" className='hover:text-gray-400'>Home</Link>
         <Link to="/jobs" className='hover:text-gray-400'>Jobs</Link>
-        <Link to="/about" className='hover:text-gray-400'>About Us</Link>
+        <Link to="/internships" className='hover:text-gray-400'>Internships</Link>
         <Link to="/contact" className='hover:text-gray-400'>Contact</Link>
       </div>
       <div className='flex space-x-4'>
