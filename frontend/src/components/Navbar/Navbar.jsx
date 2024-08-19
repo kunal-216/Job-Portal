@@ -5,10 +5,12 @@ import { FaUserCircle } from "react-icons/fa";
 const Navbar = () => {
 
   const [menu,setMenu] = useState('home');
+  const token = true;
 
   return (
     <nav className='flex justify-between items-center p-4 bg-gray-800 text-white'>
       <div>
+        <Link to="/"><img src="" alt="Logo" /></Link>
       </div>
       <div className='flex space-x-6'>
         <Link to="/" onClick={()=>setMenu("Home")} className={menu==="Home"? 'hover:text-gray-400 underline underline-offset-4 decoration-blue-200' : 'hover:text-gray-400'}>Home</Link>
@@ -21,7 +23,7 @@ const Navbar = () => {
         <Link to="/profile" className='flex items-center'>
           <FaUserCircle className='w-10 h-10 rounded-full' />
         </Link>
-        <Link to="/signup" className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded'>Sign Up</Link>
+        {token ? <Link to="/user" className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded'>Sign Up</Link> : <></>}
       </div>
     </nav>
   )
