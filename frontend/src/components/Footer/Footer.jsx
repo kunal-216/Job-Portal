@@ -3,14 +3,14 @@ import { FaLinkedin, FaInstagramSquare, FaFacebook, FaTwitterSquare } from "reac
 
 const Footer = () => {
   return (
-    <footer className="bg-[#1F2937] text-white py-8 sticky fixed">
+    <footer className="bg-[#1F2937] text-white py-8 sticky">
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap justify-between ml-40 text-center md:text-left">
           <div className="w-full md:w-1/4 mb-6 md:mb-0">
             <h3 className="text-xl font-bold mb-4">Quick Links</h3>
             <ul className="text-gray-400">
               <li className="mb-2"><a href="/jobs" className="hover:underline">Browse Jobs</a></li>
-              <li className="mb-2"><a href="/companies" className="hover:underline">Browse Companies</a></li>
+              <li className="mb-2"><a href="/internships" className="hover:underline">Browse Internships</a></li>
               <li className="mb-2"><a href="/blog" className="hover:underline">Career Blog</a></li>
               <li className="mb-2"><a href="/contact" className="hover:underline">Contact Us</a></li>
             </ul>
@@ -32,7 +32,7 @@ const Footer = () => {
               <li className="mb-2"><a href="/post-a-job" className="hover:underline">Post a Job</a></li>
               <li className="mb-2"><a href="/search-resumes" className="hover:underline">Search Resumes</a></li>
               <li className="mb-2"><a href="/employer-branding" className="hover:underline">Employer Branding</a></li>
-              <li className="mb-2"><a href="/recruiter-login" className="hover:underline">Recruiter Login</a></li>
+              <li className="mb-2"><a href="/user" className="hover:underline">Recruiter Login</a></li>
             </ul>
           </div>
         </div>

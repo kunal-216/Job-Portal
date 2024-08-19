@@ -23,7 +23,7 @@ const Navbar = () => {
         <Link to="/profile" className='flex items-center'>
           <FaUserCircle className='w-10 h-10 rounded-full' />
         </Link>
-        {token ? <Link to="/user" className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded'>Sign Up</Link> : <></>}
+        {token ? <Link to="/user" onClick={()=>setMenu("Sign Up")} className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded'>Sign Up</Link> : <></>}
       </div>
     </nav>
   )
