@@ -96,7 +96,7 @@ const LoginSignup = () => {
         <div className="mb-6 flex items-start">
           <input
             type="checkbox"
-            className="mr-2 leading-tight"
+            className="mr-2 mt-1 leading-tight"
             required
           />
           <p className="text-sm text-gray-600">
