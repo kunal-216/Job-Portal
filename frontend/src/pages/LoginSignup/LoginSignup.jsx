@@ -9,7 +9,7 @@ const LoginSignup = () => {
 
   const [currState, setCurrState] = useState('Sign Up');
   const [data, setData] = useState({
-    designation: '',
+    designation: 'Candidate',
     name: '',
     email: '',
     password: '',
@@ -24,24 +24,25 @@ const LoginSignup = () => {
     e.preventDefault();
     let newUrl = url;
     if (currState === 'Login') {
-      newUrl += '/api/user/login';
+      newUrl += '/user/login';
     } else {
-      newUrl += '/api/user/register';
+      newUrl += '/user/register';
     }
-
+  
     try {
       const response = await axios.post(newUrl, data);
-
-      if (response.data.success) {
-        toast.success(response.data.message);
+      
+      if (response.status === 200) {
+        toast.success('Successfully logged in!');
         navigate('/');
       } else {
-        toast.error(response.data.message);
+        toast.error(response.data.message || 'Something went wrong.');
       }
     } catch (error) {
-      toast.error('Something went wrong. Please try again.');
+      toast.error(error.response?.data?.message || 'Something went wrong. Please try again.');
     }
   };
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center">

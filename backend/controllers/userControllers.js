@@ -1,10 +1,10 @@
-import userModel from "../models/userModels";
+import userModel from "../models/userModels.js";
 import validator from "validator"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken";
 
 const loginUser = async (req, res) => {
-    const { email, password } = req.user;
+    const { email, password } = req.body;
     try {
         const user = await userModel.findOne({ email })
         if (!user) {
@@ -28,7 +28,7 @@ const createToken = (id) => {
 }
 
 const registerUser = async (req, res) => {
-    const { name, email, password, designation } = req.body;
+    const { designation, name, email, password } = req.body;
     try {
         if (!email || !password) {
             return res.status(400).json({ message: "Please enter both email and password" })
@@ -54,14 +54,14 @@ const registerUser = async (req, res) => {
         const salt = 10
         const hashedPassword = await bcrypt.hash(password,salt);
         
-        const newUser = ({
+        const newUser = new userModel({
             designation,
             name,
             email,
             password: hashedPassword,
         });
 
-        const user = newUser.save({});
+        const user = await newUser.save();
         const token = createToken(user._id);
         res.json({ token });
     } catch (error) {
