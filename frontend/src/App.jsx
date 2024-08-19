@@ -2,15 +2,8 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Home from "./pages/Home/Home"
-import LoginSignup from "./pages/LoginSignup/LoginSignup"
-import Connect from './pages/Connect/Connect'
-import Jobs from './pages/Jobs/Jobs'
-import Internships from './pages/Internships/Internships'
-import Contact from './pages/Contact/Contact'
-import Dashboard from './pages/Dashboard/Dashboard'
-import Navbar from './components/Navbar/Navbar'
-import Footer from './components/Footer/Footer'
+import { Home, LoginSignup, Jobs, Connect, Contact, Internships, Dashboard } from "./pages/index"
+import { Navbar, Footer } from './components/index'
 
 const App = () => {
   return (
