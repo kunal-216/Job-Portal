@@ -1,0 +1,1 @@
+export {default as heroImg} from "../assets/logo.png"

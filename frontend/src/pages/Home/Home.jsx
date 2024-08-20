@@ -1,9 +1,12 @@
 import React from 'react'
+import { Header, LatestJobs, Category } from '../../components/index'
 
 const Home = () => {
   return (
     <div>
-      Home
+      <Header />
+      <Category />
+      <LatestJobs />
     </div>
   )
 }

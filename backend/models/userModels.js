@@ -5,6 +5,16 @@ const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    // profile:{
+    //     bio : {type: String},
+    //     skills:[{type: String}],
+    //     resume:{type:String},
+    //     company:{type: mongoose.Schema.Types.ObjectId, ref:"Company"},
+    //     profilePhoto:{
+    //         type:String,
+    //         default:"",
+    //     }
+    // }
 }, { timestamps: true });
 
 const userModel = mongoose.models.user || mongoose.model("user", userSchema);
