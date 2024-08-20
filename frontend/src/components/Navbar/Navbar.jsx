@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { FaUserCircle } from "react-icons/fa";
+import logo from "./logo.png"
 
 const Navbar = () => {
 
@@ -10,7 +11,7 @@ const Navbar = () => {
   return (
     <nav className='flex justify-between items-center p-4 bg-gray-800 text-white'>
       <div>
-        <Link to="/"><img src="" alt="Logo" /></Link>
+        <Link to="/"><img src={logo} alt="Logo" className='h-9 text-white' /></Link>
       </div>
       <div className='flex space-x-6'>
         <Link to="/" onClick={() => setMenu("Home")} className={menu === "Home" ? 'hover:text-gray-400 underline underline-offset-4 decoration-blue-200' : 'hover:text-gray-400'}>Home</Link>
