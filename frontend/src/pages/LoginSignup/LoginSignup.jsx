@@ -3,11 +3,13 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useContextProvider } from '../../context/StoreContext';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const LoginSignup = () => {
   const url = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
-  const {setToken} = useContextProvider()
+  const [showPassword, setShowPassword] = useState(false);
+  const { setToken } = useContextProvider();
 
   const [currState, setCurrState] = useState('Sign Up');
   const [data, setData] = useState({
@@ -37,7 +39,7 @@ const LoginSignup = () => {
       if (response.status === 200) {
         toast.success('Successfully logged in!');
         navigate('/');
-        setToken(true)
+        setToken(true);
       } else {
         toast.error(response.data.message || 'Something went wrong.');
       }
@@ -46,6 +48,9 @@ const LoginSignup = () => {
     }
   };
 
+  const passwordToggle = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -87,7 +92,7 @@ const LoginSignup = () => {
             <option value="Recruiter">Recruiter</option>
           </select>
         </div>
-        <div className="mb-4">
+        <div className="mb-4 relative">
           {currState === 'Sign Up' && (
             <input
               type="text"
@@ -108,15 +113,22 @@ const LoginSignup = () => {
             value={data.email}
             required
           />
-          <input
-            type="password"
-            name="password"
-            placeholder="Enter your Password"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onChange={onChangeHandler}
-            value={data.password}
-            required
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              placeholder="Enter your Password"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
+              onChange={onChangeHandler}
+              value={data.password}
+              required
+            />
+            <div 
+              onClick={passwordToggle} 
+              className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer">
+              {showPassword ? <FaEye /> : <FaEyeSlash />}
+            </div>
+          </div>
         </div>
         <div className="mb-6 flex items-start">
           <input
