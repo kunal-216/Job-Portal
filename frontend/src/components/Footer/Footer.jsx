@@ -11,7 +11,6 @@ const Footer = () => {
             <ul className="text-gray-400">
               <li className="mb-2"><a href="/jobs" className="hover:underline">Browse Jobs</a></li>
               <li className="mb-2"><a href="/internships" className="hover:underline">Browse Internships</a></li>
-              <li className="mb-2"><a href="/blog" className="hover:underline">Career Blog</a></li>
               <li className="mb-2"><a href="/contact" className="hover:underline">Contact Us</a></li>
             </ul>
           </div>
@@ -21,7 +20,6 @@ const Footer = () => {
             <ul className="text-gray-400">
               <li className="mb-2"><a href="/resume-writing" className="hover:underline">Resume Writing</a></li>
               <li className="mb-2"><a href="/career-coaching" className="hover:underline">Career Coaching</a></li>
-              <li className="mb-2"><a href="/interview-preparation" className="hover:underline">Interview Preparation</a></li>
               <li className="mb-2"><a href="/job-alerts" className="hover:underline">Job Alerts</a></li>
             </ul>
           </div>
@@ -31,7 +29,6 @@ const Footer = () => {
             <ul className="text-gray-400">
               <li className="mb-2"><a href="/post-a-job" className="hover:underline">Post a Job</a></li>
               <li className="mb-2"><a href="/search-resumes" className="hover:underline">Search Resumes</a></li>
-              <li className="mb-2"><a href="/employer-branding" className="hover:underline">Employer Branding</a></li>
               <li className="mb-2"><a href="/user" className="hover:underline">Recruiter Login</a></li>
             </ul>
           </div>

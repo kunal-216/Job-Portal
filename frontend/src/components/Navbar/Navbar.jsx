@@ -6,7 +6,7 @@ import logo from "./logo.png"
 const Navbar = () => {
 
   const [menu, setMenu] = useState('home');
-  const token = true;
+  const token = false;
 
   return (
     <nav className='flex justify-between items-center p-4 bg-gray-800 text-white'>
@@ -26,10 +26,13 @@ const Navbar = () => {
             <Link to="/dashboard" className='flex items-center'>
               <FaUserCircle className='w-10 h-10 rounded-full' />
             </Link>
-            <Link to="/user" onClick={() => setMenu("Sign Up")} className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded'>Sign Up</Link>
           </>
-          : 
+          :
           <>
+            <Link to="/user" className='flex items-center'>
+              <FaUserCircle className='w-10 h-10 rounded-full' />
+            </Link>
+            <Link to="/user" onClick={() => setMenu("Sign Up")} className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded'>Sign Up</Link>
           </>}
       </div>
     </nav>
