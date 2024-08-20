@@ -10,9 +10,16 @@ connectDB();
 const app = express();
 const port = process.env.PORT;
 
+// app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+// // Initialize Passport!  Also use passport.session() middleware, to support
+// // persistent login sessions (recommended).
+// app.use(passport.initialize());
+// app.use(passport.session());
+
 const corsOptions = {
     origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials:true,
 }
 app.use(cors(corsOptions))
 app.use(express.json());

@@ -59,27 +59,6 @@ const LoginSignup = () => {
         onSubmit={submitHandler}
       >
         <h2 className="text-2xl font-bold text-center mb-6">{currState}</h2>
-        <div className="grid grid-cols-2 gap-4 mb-4">
-          <button className="flex items-center justify-center space-x-2 w-full bg-red-500 text-white text-[15px] py-2 px-4 rounded-lg hover:bg-red-600">
-            <span>{currState} with Google</span>
-          </button>
-          <button className="flex items-center justify-center space-x-2 w-full bg-blue-400 text-white text-[15px] py-2 px-4 rounded-lg hover:bg-blue-500">
-            <span>{currState} with Twitter</span>
-          </button>
-          <button className="flex items-center justify-center space-x-2 w-full bg-blue-600 text-white text-[15px] py-2 px-4 rounded-lg hover:bg-blue-700">
-            <span>{currState} with Facebook</span>
-          </button>
-          <button className="flex items-center justify-center space-x-2 w-full bg-gray-800 text-white text-[15px] py-2 px-4 rounded-lg hover:bg-gray-900">
-            <span>{currState} with Github</span>
-          </button>
-        </div>
-
-        <div className="flex items-center justify-center my-4">
-          <div className="flex-grow border-t border-gray-300"></div>
-          <span className="mx-4 text-gray-500">OR</span>
-          <div className="flex-grow border-t border-gray-300"></div>
-        </div>
-
         <div className="mb-4">
           <select
             name="designation"
@@ -123,8 +102,8 @@ const LoginSignup = () => {
               value={data.password}
               required
             />
-            <div 
-              onClick={passwordToggle} 
+            <div
+              onClick={passwordToggle}
               className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer">
               {showPassword ? <FaEye /> : <FaEyeSlash />}
             </div>
@@ -154,6 +133,28 @@ const LoginSignup = () => {
         >
           {currState === 'Sign Up' ? 'Create Account' : 'Login'}
         </button>
+
+        <div className="flex items-center justify-center my-4">
+          <div className="flex-grow border-t border-gray-300"></div>
+          <span className="mx-4 text-gray-500">OR</span>
+          <div className="flex-grow border-t border-gray-300"></div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <button className="flex items-center justify-center space-x-2 w-full bg-red-500 text-white text-[15px] py-2 px-4 rounded-lg hover:bg-red-600">
+            <span>{currState} with Google</span>
+          </button>
+          <button className="flex items-center justify-center space-x-2 w-full bg-blue-400 text-white text-[15px] py-2 px-4 rounded-lg hover:bg-blue-500">
+            <span>{currState} with Twitter</span>
+          </button>
+          <button className="flex items-center justify-center space-x-2 w-full bg-blue-600 text-white text-[15px] py-2 px-4 rounded-lg hover:bg-blue-700">
+            <span>{currState} with Facebook</span>
+          </button>
+          <button className="flex items-center justify-center space-x-2 w-full bg-gray-800 text-white text-[15px] py-2 px-4 rounded-lg hover:bg-gray-900">
+            <span>{currState} with Github</span>
+          </button>
+        </div>
+
         {currState === 'Login' ? (
           <p
             className="mt-4 text-center text-sm text-gray-600 cursor-pointer"
