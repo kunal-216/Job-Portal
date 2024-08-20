@@ -19,8 +19,8 @@ const Category = () => {
 
     return (
         <div className="categories text-center mt-12">
-            <h3 className="text-2xl font-bold mb-6">POPULAR CATEGORIES</h3>
-            <div className="banner flex justify-center gap-8 flex-wrap">
+            <h3 className="text-3xl font-bold mb-6">POPULAR CATEGORIES</h3>
+            <div className="banner flex justify-center gap-[2.5rem] flex-wrap">
                 {categories.map((element) => {
                     return (
                         <div className="card bg-gradient-to-r from-blue-400 to-purple-400 text-black w-36 h-36 rounded-lg flex flex-col items-center justify-center shadow-lg" key={element.id}>
