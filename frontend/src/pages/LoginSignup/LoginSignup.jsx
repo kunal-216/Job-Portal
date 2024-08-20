@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useContextProvider } from '../../context/StoreContext';
 
 const LoginSignup = () => {
   const url = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
+  const {setToken} = useContextProvider()
 
   const [currState, setCurrState] = useState('Sign Up');
   const [data, setData] = useState({
@@ -28,13 +30,14 @@ const LoginSignup = () => {
     } else {
       newUrl += '/user/register';
     }
-  
+
     try {
       const response = await axios.post(newUrl, data);
-      
+
       if (response.status === 200) {
         toast.success('Successfully logged in!');
         navigate('/');
+        setToken(true)
       } else {
         toast.error(response.data.message || 'Something went wrong.');
       }
@@ -42,7 +45,7 @@ const LoginSignup = () => {
       toast.error(error.response?.data?.message || 'Something went wrong. Please try again.');
     }
   };
-  
+
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -51,6 +54,27 @@ const LoginSignup = () => {
         onSubmit={submitHandler}
       >
         <h2 className="text-2xl font-bold text-center mb-6">{currState}</h2>
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <button className="flex items-center justify-center space-x-2 w-full bg-red-500 text-white text-[15px] py-2 px-4 rounded-lg hover:bg-red-600">
+            <span>{currState} with Google</span>
+          </button>
+          <button className="flex items-center justify-center space-x-2 w-full bg-blue-400 text-white text-[15px] py-2 px-4 rounded-lg hover:bg-blue-500">
+            <span>{currState} with Twitter</span>
+          </button>
+          <button className="flex items-center justify-center space-x-2 w-full bg-blue-600 text-white text-[15px] py-2 px-4 rounded-lg hover:bg-blue-700">
+            <span>{currState} with Facebook</span>
+          </button>
+          <button className="flex items-center justify-center space-x-2 w-full bg-gray-800 text-white text-[15px] py-2 px-4 rounded-lg hover:bg-gray-900">
+            <span>{currState} with Github</span>
+          </button>
+        </div>
+
+        <div className="flex items-center justify-center my-4">
+          <div className="flex-grow border-t border-gray-300"></div>
+          <span className="mx-4 text-gray-500">OR</span>
+          <div className="flex-grow border-t border-gray-300"></div>
+        </div>
+
         <div className="mb-4">
           <select
             name="designation"

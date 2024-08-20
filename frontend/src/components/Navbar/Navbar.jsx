@@ -2,11 +2,22 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { FaUserCircle } from "react-icons/fa";
 import logo from "./logo.png"
+import { toast } from 'react-toastify';
+import { useContextProvider } from '../../context/StoreContext';
 
 const Navbar = () => {
 
   const [menu, setMenu] = useState('home');
-  const token = false;
+  const {token, setToken} = useContextProvider();
+
+  const LogoutHandler = async(req,res) => {
+    try {
+      console.log("logout")
+      setToken(false);
+    } catch (error) {
+      toast.error(error)
+    }
+  }
 
   return (
     <nav className='flex justify-between items-center p-4 bg-gray-800 text-white'>
@@ -26,6 +37,7 @@ const Navbar = () => {
             <Link to="/dashboard" className='flex items-center'>
               <FaUserCircle className='w-10 h-10 rounded-full' />
             </Link>
+            <button onClick={LogoutHandler} className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded'>Logout</button>
           </>
           :
           <>
