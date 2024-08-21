@@ -31,7 +31,7 @@ const Header = () => {
   ];
   return (
     <>
-      <div className="flex flex-col lg:flex-row items-center justify-between py-8 px-6 lg:px-20 bg-white">
+      <div className="flex flex-col lg:flex-row items-center justify-between mt-16 py-8 px-6 lg:px-20 bg-white">
         <div className="flex justify-center lg:w-[45%]">
           <img
             src={heroImg}
