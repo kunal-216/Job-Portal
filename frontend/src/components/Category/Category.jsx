@@ -18,13 +18,13 @@ const Category = () => {
     ];
 
     return (
-        <div className="categories text-center mt-12">
-            <h3 className="text-3xl font-bold mb-6">POPULAR CATEGORIES</h3>
+        <div className="categories text-center mt-24 mb-24">
+            <h3 className="text-4xl font-bold mb-12"><span className="text-[#3B82F6]">Popular</span> Categories</h3>
             <div className="banner flex justify-center gap-[2.5rem] flex-wrap">
                 {categories.map((element) => {
                     return (
-                        <div className="card bg-gradient-to-r from-blue-400 to-purple-400 text-black w-36 h-36 rounded-lg flex flex-col items-center justify-center shadow-lg" key={element.id}>
-                            <div className="icon text-4xl mb-2">{element.icon}</div>
+                        <div className="card text-black w-36 h-36 rounded-lg flex flex-col items-center justify-center shadow-lg" key={element.id}>
+                            <div className="icon text-4xl mb-2 text-blue-900">{element.icon}</div>
                             <div className="text text-sm font-medium">{element.title}</div>
                         </div>
                     );

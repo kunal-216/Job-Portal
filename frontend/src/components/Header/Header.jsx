@@ -42,7 +42,7 @@ const Header = () => {
 
         <div className="flex flex-col items-center lg:items-start lg:w-[55%] mt-8 lg:mt-0 lg:ml-10">
           <span className="px-4 py-2 rounded-full bg-gray-100 text-[#F83002] font-medium">
-            No. 1 Website for Jobs and Internships
+            No.1 Website for Jobs and Internships
           </span>
 
           <h1 className="text-3xl lg:text-6xl font-bold text-center lg:text-left mt-5 leading-9">
@@ -73,7 +73,7 @@ const Header = () => {
               className="card bg-white shadow-lg rounded-lg p-6 flex flex-col items-center text-center"
               key={element.id}
             >
-              <div className="icon text-3xl text-blue-500 mb-4">{element.icon}</div>
+              <div className="icon text-3xl text-blue-900 mb-4">{element.icon}</div>
               <div className="content">
                 <p className="text-2xl font-semibold">{element.title}</p>
                 <p className="text-gray-500">{element.subTitle}</p>
