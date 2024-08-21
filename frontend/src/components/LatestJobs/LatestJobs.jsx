@@ -10,7 +10,7 @@ const LatestJobs = () => {
     {
       id: 1,
       companyName: "Microsoft",
-      location: "New Delhi, India",
+      location: "Work from Home",
       jobTitle: "Software Developer",
       salary: "₹55,00,000",
       jobTimings: "Work from Home",
@@ -46,7 +46,7 @@ const LatestJobs = () => {
     {
       id: 5,
       companyName: "Google",
-      location: "Hyderabad, India",
+      location: "Work from Home",
       jobTitle: "SEO Optimizer",
       salary: "₹25,00,000",
       jobTimings: "Work from Home",

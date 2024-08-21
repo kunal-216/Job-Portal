@@ -18,7 +18,7 @@ const LatestInternships = () => {
         {
             id: 2,
             companyName: "Reliance",
-            location: "Mumbai, India",
+            location: "Work from Home",
             internshipTitle: "Frontend Developer",
             stipend: "₹55,000 /month",
             internshipTimings: "Work from Home",
@@ -45,7 +45,7 @@ const LatestInternships = () => {
         {
             id: 5,
             companyName: "Infosys",
-            location: "Bangalore, India",
+            location: "Work from Home",
             internshipTitle: "Full Stack Developer",
             stipend: "₹40,000 /month",
             internshipTimings: "Work from Home",
