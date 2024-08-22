@@ -4,18 +4,22 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useContextProvider } from '../../context/StoreContext';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { assets } from '../../assets/assets';
 
 const LoginSignup = () => {
   const url = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
   const { setToken } = useContextProvider();
 
   const [currState, setCurrState] = useState('Sign Up');
+  const [img, setImg] = useState(null);
   const [data, setData] = useState({
     designation: '',
     name: '',
     email: '',
+    gender: "",
     password: '',
   });
 
@@ -33,14 +37,47 @@ const LoginSignup = () => {
       newUrl += '/user/register';
     }
 
+    const formData = new FormData();
+    formData.append('image', img);
+    formData.append('name', data.name);
+    formData.append('gender', data.gender);
+    formData.append('designation', data.designation);
+    formData.append('email', data.email);
+    formData.append('password', data.password);
+
     try {
-      const response = await axios.post(newUrl, data);
+      let response;
+      if (currState === "Login") {
+        response = await axios.post(newUrl, {
+          email: data.email,
+          password: data.password,
+          designation: data.designation,
+        }, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+      } else {
+        response = await axios.post(newUrl, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+      }
 
       if (response.status === 200) {
+        setData({
+          name: "",
+          email: "",
+          password: "",
+          gender: "",
+          address: "",
+        });
+        setImg(null);
+        setToken(response.data.token)
+        localStorage.setItem("token", response.data.token)
         toast.success('Successfully logged in!');
         navigate('/');
-        setToken(response.data.token)
-        localStorage.setItem("token",response.data.token)
       } else {
         toast.error(response.data.message || 'Something went wrong.');
       }
@@ -54,13 +91,22 @@ const LoginSignup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center my-3">
       <form
         className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-full max-w-md"
         onSubmit={submitHandler}
       >
         <h2 className="text-2xl font-bold text-center mb-6">{currState}</h2>
-        <div className="mb-4">
+        {currState !== "Login" &&
+          <div className="add-img-upload flex-col mb-3">
+            <p>Upload Image</p>
+            <label htmlFor="image">
+              <img src={img ? URL.createObjectURL(img) : assets.upload_area} alt="Upload" />
+            </label>
+            <input onChange={(e) => setImg(e.target.files[0])} type="file" id="image" hidden required />
+          </div>
+        }
+        <div className="mb-3">
           <select
             name="designation"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -68,22 +114,36 @@ const LoginSignup = () => {
             value={data.designation}
             required
           >
-            <option>Select Role</option>
+            <option value="" disabled>Select Role</option>
             <option value="Candidate">Candidate</option>
             <option value="Recruiter">Recruiter</option>
           </select>
         </div>
         <div className="mb-4 relative">
           {currState === 'Sign Up' && (
-            <input
-              type="text"
-              name="name"
-              placeholder="Enter your Name"
-              className="w-full px-3 py-2 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onChange={onChangeHandler}
-              value={data.name}
-              required
-            />
+            <>
+              <input
+                type="text"
+                name="name"
+                placeholder="Enter your Name"
+                className="w-full px-3 py-2 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onChange={onChangeHandler}
+                value={data.name}
+                required
+              />
+                <select
+                  name="gender"
+                  className="w-full mb-3 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onChange={onChangeHandler}
+                  value={data.gender}
+                  required
+                >
+                  <option value="" disabled>Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+            </>
           )}
           <input
             type="email"
@@ -136,13 +196,13 @@ const LoginSignup = () => {
           {currState === 'Sign Up' ? 'Create Account' : 'Login'}
         </button>
 
-        <div className="flex items-center justify-center my-4">
+        {/* <div className="flex items-center justify-center my-4">
           <div className="flex-grow border-t border-gray-300"></div>
           <span className="mx-4 text-gray-500">OR</span>
           <div className="flex-grow border-t border-gray-300"></div>
-        </div>
+        </div> */}
 
-        <div className="grid grid-cols-2 gap-4 mb-4">
+        {/* <div className="grid grid-cols-2 gap-4 mb-4">
           <button className="flex items-center justify-center space-x-2 w-full bg-red-500 text-white text-[15px] py-2 px-4 rounded-lg hover:bg-red-600">
             <span>{currState} with Google</span>
           </button>
@@ -155,7 +215,7 @@ const LoginSignup = () => {
           <button className="flex items-center justify-center space-x-2 w-full bg-gray-800 text-white text-[15px] py-2 px-4 rounded-lg hover:bg-gray-900">
             <span>{currState} with Github</span>
           </button>
-        </div>
+        </div> */}
 
         {currState === 'Login' ? (
           <p

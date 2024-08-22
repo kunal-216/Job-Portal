@@ -1,8 +1,10 @@
 import mongoose from "mongoose"
 
 const userSchema = new mongoose.Schema({
+    image: { type: String, required: true },
     designation: { type: String, enum: ['Candidate', 'Recruiter'], required: true },
     name: { type: String, required: true },
+    gender: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     // profile:{
