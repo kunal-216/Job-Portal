@@ -19,7 +19,10 @@ const Sidebar = () => {
                     <p className='text-base font-medium text-gray-100'>Resume</p>
                 </NavLink>
                 <NavLink to='/post-job' className='flex items-center gap-3 border-l-4 border-transparent pl-3 pr-2 py-2 rounded-r-md cursor-pointer hover:bg-blue-700 hover:border-blue-400 transition-colors duration-200 ease-in-out' activeClassName='bg-blue-700 border-blue-400 shadow-md'>
-                    <p className='text-base font-medium text-gray-100'>Post A Job</p>
+                    <p className='text-base font-medium text-gray-100'>Post a Job</p>
+                </NavLink>
+                <NavLink to='/jobs-posted' className='flex items-center gap-3 border-l-4 border-transparent pl-3 pr-2 py-2 rounded-r-md cursor-pointer hover:bg-blue-700 hover:border-blue-400 transition-colors duration-200 ease-in-out' activeClassName='bg-blue-700 border-blue-400 shadow-md'>
+                    <p className='text-base font-medium text-gray-100'>Jobs Posted</p>
                 </NavLink>
             </div>
         </div>
