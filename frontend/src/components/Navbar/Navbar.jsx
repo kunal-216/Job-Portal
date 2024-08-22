@@ -4,18 +4,24 @@ import { FaUserCircle } from "react-icons/fa";
 import logo from "./logo.png"
 import { toast } from 'react-toastify';
 import { useContextProvider } from '../../context/StoreContext';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
 
   const [menu, setMenu] = useState('home');
   const {token, setToken} = useContextProvider();
+  const navigate = useNavigate();
 
-  const LogoutHandler = async(req,res) => {
+  const LogoutHandler = () => {
     try {
-      console.log("logout")
-      setToken(false);
+      setMenu("Logout")
+      localStorage.removeItem("token")
+      console.log(token)
+      setToken("")
+      navigate("/")
+      toast.success('Successfully logged out!');
     } catch (error) {
-      toast.error(error)
+      toast.error(error.message || 'Logout failed. Please try again.');
     }
   }
 

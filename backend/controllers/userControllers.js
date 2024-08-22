@@ -4,7 +4,7 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken";
 
 const loginUser = async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, designation } = req.body;
     try {
         const user = await userModel.findOne({ email })
         if (!user) {
@@ -15,6 +15,10 @@ const loginUser = async (req, res) => {
         if (!isMatch) {
             return res.json({ message: "Invalid credentials" });
         }
+
+        if (designation !== user.designation) {
+            return res.status(400).json({ message: "Designation does not match" });
+        }        
 
         const token = createToken(user._id)
         res.json({ token });
@@ -51,7 +55,7 @@ const registerUser = async (req, res) => {
             return res.json({ success: false, message: "Please enter a strong password" });
         }
 
-        const salt = 10
+        const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password,salt);
         
         const newUser = new userModel({

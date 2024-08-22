@@ -39,7 +39,8 @@ const LoginSignup = () => {
       if (response.status === 200) {
         toast.success('Successfully logged in!');
         navigate('/');
-        setToken(true);
+        setToken(response.data.token)
+        localStorage.setItem("token",response.data.token)
       } else {
         toast.error(response.data.message || 'Something went wrong.');
       }
