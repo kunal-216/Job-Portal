@@ -2,7 +2,7 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Home, LoginSignup, Jobs, Connect, Contact, Internships, Dashboard } from "./pages/index"
+import { Home, LoginSignup, Jobs, Connect, Contact, Internships, Dashboard, MyApplications, UpdateProfile, Profile } from "./pages/index"
 import { Navbar, Footer } from './components/index'
 import { StoreContextProvider } from './context/StoreContext';
 
@@ -20,6 +20,9 @@ const App = () => {
           <Route path="/internships" element={<Internships />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path='/my-applications' element={<MyApplications />} />
+          <Route path='/update-profile' element={<UpdateProfile />} />
+          <Route path='/profile' element={<Profile />} />
         </Routes>
         <Footer />
       </StoreContextProvider>

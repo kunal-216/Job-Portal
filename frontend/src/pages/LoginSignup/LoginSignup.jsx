@@ -13,7 +13,7 @@ const LoginSignup = () => {
 
   const [currState, setCurrState] = useState('Sign Up');
   const [data, setData] = useState({
-    designation: 'Candidate',
+    designation: '',
     name: '',
     email: '',
     password: '',
@@ -67,6 +67,7 @@ const LoginSignup = () => {
             value={data.designation}
             required
           >
+            <option>Select Role</option>
             <option value="Candidate">Candidate</option>
             <option value="Recruiter">Recruiter</option>
           </select>
