@@ -26,7 +26,7 @@ const App = () => {
           <Route path='/resume' element={<Resume />} />
           <Route path='/post-opportunity' element={<PostOpportunity />} />
           <Route path='/opportunities-posted' element={<OpportunitiesPosted />} />
-          <Route path='/bookmarked' element={<Bookmarked />} />
+          <Route path='/bookmarks' element={<Bookmarked />} />
         </Routes>
         <Footer />
       </StoreContextProvider>

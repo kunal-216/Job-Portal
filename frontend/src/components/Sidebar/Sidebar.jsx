@@ -29,10 +29,6 @@ const Sidebar = () => {
                     <IoIosDocument size={20} />
                     <p className='text-base font-medium text-gray-100'>Resume</p>
                 </NavLink>
-                <NavLink to='/bookmarked' className='flex items-center gap-3 border-l-4 border-transparent pl-3 pr-2 py-2 rounded-r-md cursor-pointer hover:bg-blue-700 hover:border-blue-400 transition-colors duration-200 ease-in-out' activeClassName='bg-blue-700 border-blue-400 shadow-md'>
-                    <FaBookmark size={17} />
-                    <p className='text-base font-medium text-gray-100'>Bookmarked</p>
-                </NavLink>
                 <NavLink to='/post-opportunity' className='flex items-center gap-3 border-l-4 border-transparent pl-3 pr-2 py-2 rounded-r-md cursor-pointer hover:bg-blue-700 hover:border-blue-400 transition-colors duration-200 ease-in-out' activeClassName='bg-blue-700 border-blue-400 shadow-md'>
                     <MdOutlinePostAdd size={20} />
                     <p className='text-base font-medium text-gray-100'>Post an Opportunity</p>
@@ -40,6 +36,10 @@ const Sidebar = () => {
                 <NavLink to='/opportunities-posted' className='flex items-center gap-3 border-l-4 border-transparent pl-3 pr-2 py-2 rounded-r-md cursor-pointer hover:bg-blue-700 hover:border-blue-400 transition-colors duration-200 ease-in-out' activeClassName='bg-blue-700 border-blue-400 shadow-md'>
                     <IoKeySharp size={20} />
                     <p className='text-base font-medium text-gray-100'>Opportunities Posted</p>
+                </NavLink>
+                <NavLink to='/bookmarks' className='flex items-center gap-3 border-l-4 border-transparent pl-3 pr-2 py-2 rounded-r-md cursor-pointer hover:bg-blue-700 hover:border-blue-400 transition-colors duration-200 ease-in-out' activeClassName='bg-blue-700 border-blue-400 shadow-md'>
+                    <FaBookmark size={17} />
+                    <p className='text-base font-medium text-gray-100'>Bookmarks</p>
                 </NavLink>
             </div>
         </div>
