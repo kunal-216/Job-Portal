@@ -2,7 +2,6 @@ import React from 'react';
 import { FaFilter } from "react-icons/fa";
 
 const JobFilterCard = () => {
-
     const filterData = [
         {
             filterType: "Location",
@@ -34,7 +33,7 @@ const JobFilterCard = () => {
                                 {
                                     item.array.map((option, idx) => (
                                         <div key={idx} className="flex items-center">
-                                            <input type="radio" name={item.filterType} className="mr-2" />
+                                            <input type="checkbox" name={item.filterType} className="mr-2" />
                                             <label className="text-gray-600">{option}</label>
                                         </div>
                                     ))
