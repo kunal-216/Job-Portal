@@ -4,7 +4,7 @@ import { useContextProvider } from '../../context/StoreContext';
 
 const Profile = () => {
 
-  const { profileData } = useContextProvider();
+  const { profileData, url } = useContextProvider();
 
   return (
     <div className='flex'>
