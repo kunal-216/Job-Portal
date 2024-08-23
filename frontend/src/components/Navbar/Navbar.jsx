@@ -40,7 +40,7 @@ const Navbar = () => {
       <div className='flex space-x-4'>
         {token ?
           <>
-            <Link to="/dashboard" className='flex items-center'>
+            <Link to="/dashboard" onClick={() => setMenu("Dashboard")} className='flex items-center'>
               <FaUserCircle className='w-10 h-10 rounded-full' />
             </Link>
             <button onClick={LogoutHandler} className=' bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded'>Logout</button>
