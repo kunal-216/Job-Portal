@@ -1,41 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Sidebar } from '../../components/index'
 import { useContextProvider } from '../../context/StoreContext';
-import { toast } from 'react-toastify';
-import axios from "axios"
 
 const Profile = () => {
 
-  const url = import.meta.env.VITE_API_URL;
-  const { token } = useContextProvider();
-  const [profileData, setProfileData] = useState(null);
-
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${url}/api/user/profile`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-
-      if (response.data.success) {
-        setProfileData(response.data.data);
-      } else {
-        toast.error('Failed to fetch the profile data.');
-      }
-
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      toast.error('An error occurred while fetching the profile data.');
-    }
-  }
-
-  useEffect(() => {
-    if (token) {
-      fetchData();
-    }
-  }, [token])
+  const { profileData } = useContextProvider();
 
   return (
     <div className='flex'>
