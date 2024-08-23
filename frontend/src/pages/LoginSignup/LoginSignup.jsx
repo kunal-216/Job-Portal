@@ -32,9 +32,9 @@ const LoginSignup = () => {
     e.preventDefault();
     let newUrl = url;
     if (currState === 'Login') {
-      newUrl += '/user/login';
+      newUrl += '/api/user/login';
     } else {
-      newUrl += '/user/register';
+      newUrl += '/api/user/register';
     }
 
     const formData = new FormData();
