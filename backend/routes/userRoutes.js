@@ -1,7 +1,7 @@
 import express from "express"
 import multer from "multer";
 import { loginUser, registerUser } from "../controllers/userControllers.js";
-import { getProfileDetails } from "../controllers/profileControllers.js";
+import { getProfileDetails, updateProfile } from "../controllers/profileControllers.js";
 import authMiddleware from "../middleware/auth.js";
 
 const userRouter = express.Router();
@@ -22,5 +22,6 @@ const handleFileUpload = upload.single("image");
 userRouter.post("/login", loginUser);
 userRouter.post("/register", handleFileUpload, registerUser);
 userRouter.get("/profile", authMiddleware, getProfileDetails);
+userRouter.put("/update",authMiddleware, handleFileUpload, updateProfile);
 
 export default userRouter;

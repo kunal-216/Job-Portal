@@ -12,10 +12,6 @@ const userSchema = new mongoose.Schema({
     //     skills:[{type: String}],
     //     resume:{type:String},
     //     company:{type: mongoose.Schema.Types.ObjectId, ref:"Company"},
-    //     profilePhoto:{
-    //         type:String,
-    //         default:"",
-    //     }
     // }
 }, { timestamps: true });
 

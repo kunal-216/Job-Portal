@@ -33,7 +33,7 @@ const Profile = () => {
                   type='text'
                   value={profileData.name}
                   name='name'
-                  className='mt-1 p-2 block w-full border border-gray-300 rounded-md'
+                  className='mt-1 p-2 block w-full border border-gray-300 rounded-md bg-gray-200'
                   disabled
                 />
               </div>
@@ -43,7 +43,7 @@ const Profile = () => {
                   type='text'
                   value={profileData.gender}
                   name='gender'
-                  className='mt-1 p-2 block w-full border border-gray-300 rounded-md'
+                  className='mt-1 p-2 block w-full border border-gray-300 rounded-md bg-gray-200'
                   disabled
                 />
               </div>
@@ -53,7 +53,7 @@ const Profile = () => {
                   type='text'
                   value={profileData.email}
                   name='email'
-                  className='mt-1 p-2 block w-full border border-gray-300 rounded-md'
+                  className='mt-1 p-2 block w-full border border-gray-300 rounded-md bg-gray-200'
                   disabled
                 />
               </div>
@@ -63,7 +63,7 @@ const Profile = () => {
                   type='text'
                   value={profileData.designation}
                   name='designation'
-                  className='mt-1 p-2 block w-full border border-gray-300 rounded-md'
+                  className='mt-1 p-2 block w-full border border-gray-300 rounded-md bg-gray-200'
                   disabled
                 />
               </div>
