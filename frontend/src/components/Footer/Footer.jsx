@@ -18,17 +18,17 @@ const Footer = () => {
           <div className="w-full md:w-1/4 mb-6 md:mb-0">
             <h3 className="text-xl font-bold mb-4">Candidate Services</h3>
             <ul className="text-gray-400">
-              <li className="mb-2"><a href="/resume-writing" className="hover:underline">Resume Writing</a></li>
-              <li className="mb-2"><a href="/career-coaching" className="hover:underline">Career Coaching</a></li>
-              <li className="mb-2"><a href="/job-alerts" className="hover:underline">Job Alerts</a></li>
+              <li className="mb-2"><a href="/resume" className="hover:underline">Resume Writing</a></li>
+              <li className="mb-2"><a href="/" className="hover:underline">Career Coaching</a></li>
+              <li className="mb-2"><a href="/" className="hover:underline">Job Alerts</a></li>
             </ul>
           </div>
 
           <div className="w-full md:w-1/4 mb-6 md:mb-0">
             <h3 className="text-xl font-bold mb-4">Recruiter Services</h3>
             <ul className="text-gray-400">
-              <li className="mb-2"><a href="/post-a-job" className="hover:underline">Post a Job</a></li>
-              <li className="mb-2"><a href="/search-resumes" className="hover:underline">Search Resumes</a></li>
+              <li className="mb-2"><a href="/post-opportunity" className="hover:underline">Post a Job</a></li>
+              <li className="mb-2"><a href="/" className="hover:underline">Search Resumes</a></li>
               <li className="mb-2"><a href="/user" className="hover:underline">Recruiter Login</a></li>
             </ul>
           </div>
