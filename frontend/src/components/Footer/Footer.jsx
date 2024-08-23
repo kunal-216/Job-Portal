@@ -1,7 +1,12 @@
 import React from 'react';
 import { FaLinkedin, FaInstagramSquare, FaFacebook, FaTwitterSquare } from "react-icons/fa";
+import { Link } from 'react-router-dom';
+import { useContextProvider } from '../../context/StoreContext';
 
 const Footer = () => {
+
+  const {token} = useContextProvider();
+
   return (
     <footer className="bg-[#1F2937] text-white py-8 sticky">
       <div className="container mx-auto px-4">
@@ -9,27 +14,27 @@ const Footer = () => {
           <div className="w-full md:w-1/4 mb-6 md:mb-0">
             <h3 className="text-xl font-bold mb-4">Quick Links</h3>
             <ul className="text-gray-400">
-              <li className="mb-2"><a href="/jobs" className="hover:underline">Browse Jobs</a></li>
-              <li className="mb-2"><a href="/internships" className="hover:underline">Browse Internships</a></li>
-              <li className="mb-2"><a href="/contact" className="hover:underline">Contact Us</a></li>
+              <li className="mb-2"><Link to="/jobs" className="hover:underline">Browse Jobs</Link></li>
+              <li className="mb-2"><Link to="/internships" className="hover:underline">Browse Internships</Link></li>
+              <li className="mb-2"><Link to="/contact" className="hover:underline">Contact Us</Link></li>
             </ul>
           </div>
 
           <div className="w-full md:w-1/4 mb-6 md:mb-0">
             <h3 className="text-xl font-bold mb-4">Candidate Services</h3>
             <ul className="text-gray-400">
-              <li className="mb-2"><a href="/resume" className="hover:underline">Resume Writing</a></li>
-              <li className="mb-2"><a href="/" className="hover:underline">Career Coaching</a></li>
-              <li className="mb-2"><a href="/" className="hover:underline">Job Alerts</a></li>
+              <li className="mb-2"><Link to="/resume" className="hover:underline">Resume Writing</Link></li>
+              <li className="mb-2"><Link to="/" className="hover:underline">Career Coaching</Link></li>
+              <li className="mb-2"><Link to="/" className="hover:underline">Job Alerts</Link></li>
             </ul>
           </div>
 
           <div className="w-full md:w-1/4 mb-6 md:mb-0">
             <h3 className="text-xl font-bold mb-4">Recruiter Services</h3>
             <ul className="text-gray-400">
-              <li className="mb-2"><a href="/post-opportunity" className="hover:underline">Post a Job</a></li>
-              <li className="mb-2"><a href="/" className="hover:underline">Search Resumes</a></li>
-              <li className="mb-2"><a href="/user" className="hover:underline">Recruiter Login</a></li>
+              <li className="mb-2"><Link to="/post-opportunity" className="hover:underline">Post a Job</Link></li>
+              <li className="mb-2"><Link to="/" className="hover:underline">Search Resumes</Link></li>
+              <li className="mb-2">{token ? <><Link to="/profile" className="hover:underline">See Profile</Link></>: <Link to="/user" className="hover:underline">Recruiter Login</Link>}</li>
             </ul>
           </div>
         </div>
