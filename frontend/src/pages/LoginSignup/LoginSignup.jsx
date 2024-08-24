@@ -71,7 +71,7 @@ const LoginSignup = () => {
           email: "",
           password: "",
           gender: "",
-          address: "",
+          dob:"",
         });
         setImg(null);
         setToken(response.data.token)
