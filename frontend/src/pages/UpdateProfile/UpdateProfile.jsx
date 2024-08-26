@@ -68,7 +68,11 @@ const UpdateProfile = () => {
       <div className="flex-1 flex flex-col items-center p-6">
         <div className="w-full max-w-md">
           <div className="flex flex-col items-center mb-8">
-            <h1 className="text-3xl font-semibold mb-4">Update Profile</h1>
+            <header className='block bg-blue-600 text-white py-4 rounded-lg shadow-lg mb-6 px-[85px]'>
+              <div className='container mx-auto text-center'>
+                <h1 className='text-4xl font-extrabold'>Update Profile</h1>
+              </div>
+            </header>
             {editState !== "Edit" && (
               <FaUserEdit
                 size={24}
