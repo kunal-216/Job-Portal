@@ -27,7 +27,7 @@ app.use("/api/user",userRouter);
 // URL can be: http://localhost:3000/images/profileData.image or the deployed: https://blahblah.com/images/profileData.image
 app.use("/images",express.static('uploads'))
 app.use("/",(req,res)=>{
-    res.send("Hello from Home Page");
+    res.send("Hello from Server");
 })
 
 app.listen(PORT, () => {
