@@ -7,11 +7,10 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { assets } from '../../assets/assets';
 
 const LoginSignup = () => {
-  const url = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
-  const { setToken } = useContextProvider();
+  const { setToken , url} = useContextProvider();
 
   const [currState, setCurrState] = useState('Sign Up');
   const [img, setImg] = useState(null);

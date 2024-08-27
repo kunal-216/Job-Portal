@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 
 // middleware
 const corsOptions = {
-    origin: process.env.FRONTEND_URI,
+    origin: [process.env.FRONTEND_URI],
     credentials: true
 }
 app.use(cors(corsOptions));
