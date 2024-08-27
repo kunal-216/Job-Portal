@@ -6,7 +6,7 @@ const StoreContext = createContext();
 
 export const StoreContextProvider = ({ children }) => {
 
-  const url = import.meta.env.VITE_API_URL;
+  const url = "http://localhost:3000";
 
   const [token, setToken] = useState(null);
   const [profileData, setProfileData] = useState(null);
