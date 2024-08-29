@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { MdOutlineDashboard, MdOutlinePostAdd } from "react-icons/md";
 import { FaUser, FaUserCog, FaList, FaBookmark } from "react-icons/fa";
@@ -25,7 +24,7 @@ const Sidebar = () => {
                     <FaUserCog size={20} />
                     <p className='text-base font-medium text-gray-100'>Update Profile</p>
                 </NavLink>
-                {/* {profileData.designation === "Candidate" ?
+                {profileData.designation === "Candidate" ?
                     <>
                         <NavLink to='/my-applications' className={({ isActive }) => `flex items-center gap-3 border-l-4 pl-3 pr-2 py-2 rounded-r-md cursor-pointer transition-colors duration-200 ease-in-out ${isActive ? 'bg-blue-700 border-blue-400 shadow-md' : 'border-transparent hover:bg-blue-700 hover-border-blue-400'}`}>
                             <FaList size={20} />
@@ -52,7 +51,7 @@ const Sidebar = () => {
                             <p className='text-base font-medium text-gray-100'>Opportunities Posted</p>
                         </NavLink>
                     </> : <></>} 
-                */}
+               
                 <NavLink to='/my-applications' className={({ isActive }) => `flex items-center gap-3 border-l-4 pl-3 pr-2 py-2 rounded-r-md cursor-pointer transition-colors duration-200 ease-in-out ${isActive ? 'bg-blue-700 border-blue-400 shadow-md' : 'border-transparent hover:bg-blue-700 hover-border-blue-400'}`}>
                     <FaList size={20} />
                     <p className='text-base font-medium text-gray-100'>My Applications</p>

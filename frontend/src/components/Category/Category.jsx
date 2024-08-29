@@ -1,4 +1,3 @@
-import React from "react";
 import { MdOutlineDesignServices, MdOutlineWebhook, MdAccountBalance, MdOutlineAnimation } from "react-icons/md";
 import { TbAppsFilled } from "react-icons/tb";
 import { FaReact } from "react-icons/fa";

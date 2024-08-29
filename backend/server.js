@@ -25,7 +25,8 @@ app.use("/api/user",userRouter);
 
 // access all the images of the uploads folder using the URL or basically from the databases' .png file 
 // URL can be: http://localhost:3000/images/profileData.image or the deployed: https://blahblah.com/images/profileData.image
-app.use("/images",express.static('uploads'))
+app.use("/images",express.static('image_uploads'))
+app.use("/resume",express.static('resume_uploads'))
 app.use("/",(req,res)=>{
     res.send("Hello from Server");
 })

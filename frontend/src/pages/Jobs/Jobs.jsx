@@ -1,4 +1,3 @@
-import React from 'react'
 import { JobFilterCard, Job } from "../../components/index"
 
 const Jobs = () => {

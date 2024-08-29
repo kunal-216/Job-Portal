@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaFilter } from "react-icons/fa";
 
 const JobFilterCard = () => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Sidebar } from '../../components/index';
 import { useContextProvider } from '../../context/StoreContext';
 import { FaUserEdit } from "react-icons/fa";
@@ -40,6 +40,7 @@ const UpdateProfile = () => {
       }
     } catch (error) {
       toast.error("An error occurred while saving the profile data.");
+      console.log(error)
       setEditState(null);
     }
   };

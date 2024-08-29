@@ -1,4 +1,3 @@
-import React from 'react'
 import { Sidebar } from '../../components/index'
 import { useContextProvider } from '../../context/StoreContext';
 
@@ -71,6 +70,32 @@ const Profile = () => {
                   disabled
                 />
               </div>
+              <div className=''>
+              <label htmlFor='bio' className='block text-sm font-medium text-gray-700'>Bio</label>
+              <input
+                type='text'
+                value={profileData.bio}
+                name='bio'
+                className='mt-1 p-2 block w-full border border-gray-300 rounded-md bg-gray-200'
+                disabled
+              />
+            </div>
+            <div className='mt-4'>
+              <label htmlFor='resume' className='block text-sm font-medium text-gray-700'>Resume</label>
+              {profileData.resume ? (
+                <div className='mt-2'>
+                  <a
+                    href={`${url}/resume/${profileData.resume}`}
+                    className='text-blue-600 hover:underline'
+                    target='_blank'
+                    rel='noopener noreferrer'>
+                    View Resume
+                  </a>
+                </div>
+              ) : (
+                <p className='text-gray-600'>No resume available</p>
+              )}
+            </div>
             </div>
           </div>
         ) : (

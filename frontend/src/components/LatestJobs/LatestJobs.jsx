@@ -1,4 +1,3 @@
-import React from 'react'
 import Cards from '../Cards/Cards'
 import { FaMicrosoft, FaApple, FaGoogle } from "react-icons/fa"
 import { SiMeta, SiTesla } from "react-icons/si"

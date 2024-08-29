@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +14,7 @@ const LoginSignup = () => {
 
   const [currState, setCurrState] = useState('Sign Up');
   const [img, setImg] = useState(null);
+  const [resume, setResume] = useState(null);
   const [data, setData] = useState({
     designation: '',
     name: '',
@@ -21,6 +22,15 @@ const LoginSignup = () => {
     gender: "",
     password: '',
   });
+
+  const changeFileHandler = (e) => {
+    const { name, files } = e.target;
+    if (name === 'file') {
+      setImg(files[0]);
+    } else if (name === 'resume') {
+      setResume(files[0]);
+    }
+  };
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -37,6 +47,7 @@ const LoginSignup = () => {
     }
 
     const formData = new FormData();
+    if (resume) formData.append('resume', resume);
     formData.append('image', img);
     formData.append('name', data.name);
     formData.append('gender', data.gender);
@@ -73,6 +84,7 @@ const LoginSignup = () => {
           dob:"",
         });
         setImg(null);
+        setResume(null);
         setToken(response.data.token)
         localStorage.setItem("token", response.data.token)
         toast.success('Successfully logged in!');
@@ -169,6 +181,16 @@ const LoginSignup = () => {
               {showPassword ? <FaEye /> : <FaEyeSlash />}
             </div>
           </div>
+          <div className="mb-4 mt-3 flex-col">
+              <p className='text-gray-500'>Upload Resume</p>
+              <input
+                type="file"
+                name="resume"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onChange={changeFileHandler}
+                required
+              />
+            </div>
         </div>
         <div className="mb-6 flex items-start">
           <input

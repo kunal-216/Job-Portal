@@ -32,18 +32,22 @@ const createToken = (id) => {
 }
 
 const registerUser = async (req, res) => {
-    const { designation, name, email, password, gender } = req.body;
+    const { designation, name, email, password, gender, bio } = req.body;
     try {
         if (!email || !password) {
             return res.status(400).json({ message: "Please enter both email and password" })
         }
 
-        if(!name || !designation || !gender){
+        if(!name || !designation || !gender || !bio){
             return res.status(400).json({ message: "Please enter valid details" })
         }
 
-        if (!req.file || !req.file.filename) {
-            return res.status(400).json({ success: false, message: "Image file is required" });
+        if (!req.files || !req.files.image || req.files.image.length === 0) {
+            return res.status(400).json({ message: "Image file is required" });
+        }
+
+        if (!req.files || !req.files.resume || req.files.resume.length === 0) {
+            return res.status(400).json({ message: "Resume file is required" });
         }
 
         const exists = await userModel.findOne({email});
@@ -63,12 +67,14 @@ const registerUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password,salt);
         
         const newUser = new userModel({
-            image: req.file.filename,
+            image: req.files.image[0].filename,
             designation,
             name,
             gender,
             email,
             password: hashedPassword,
+            bio,
+            resume: req.files.resume[0].filename
         });
 
         const user = await newUser.save();

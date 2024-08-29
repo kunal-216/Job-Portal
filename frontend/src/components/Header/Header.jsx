@@ -1,4 +1,3 @@
-import React from 'react';
 import heroImg from './heroImg.jpg';
 import { FaBuilding, FaSuitcase, FaUsers, FaUserPlus } from "react-icons/fa";
 

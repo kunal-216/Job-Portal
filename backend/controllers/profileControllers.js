@@ -19,9 +19,9 @@ const getProfileDetails = async (req, res) => {
 }
 
 const updateProfile = async (req, res) => {
-    const { name, gender, email, designation } = req.body;
+    const { name, gender, email, designation, bio } = req.body;
     try {
-        if (!name || !gender || !email || !designation) {
+        if (!name || !gender || !email || !designation || !bio) {
             return res.status(400).json({ success: false, message: "All fields are required" });
         }
 
@@ -35,7 +35,7 @@ const updateProfile = async (req, res) => {
             return res.status(401).json({ success: false, message: "User not authenticated" });
         }
 
-        let updateData = { name, designation, gender, email };
+        let updateData = { name, designation, gender, email, bio };
 
         // Handle image file upload
         if (req.file) {
@@ -46,6 +46,17 @@ const updateProfile = async (req, res) => {
             if (user && user.image) {
                 const oldImagePath = path.join(__dirname, '..', 'uploads', user.image);
                 fs.unlinkSync(oldImagePath);
+            }
+        }
+
+        if (req.file && req.file.resume) {
+            updateData.resume = req.file.resume[0].filename;
+
+            // Delete old resume if a new resume is uploaded
+            const user = await userModel.findById(req.user.id);
+            if (user && user.resume) {
+                const oldResumePath = path.join(__dirname, '..', 'uploads', user.resume);
+                fs.unlinkSync(oldResumePath);
             }
         }
 

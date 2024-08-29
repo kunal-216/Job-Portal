@@ -1,4 +1,3 @@
-import React from 'react'
 import { InternshipFilterCard, Internship } from "../../components/index"
 
 const Internships = () => {

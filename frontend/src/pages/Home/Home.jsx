@@ -1,4 +1,3 @@
-import React from 'react'
 import { Header, LatestJobs, Category, LatestInternships } from '../../components/index'
 
 const Home = () => {

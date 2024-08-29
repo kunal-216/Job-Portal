@@ -8,7 +8,13 @@ const userRouter = express.Router();
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "uploads");
+        if (file.fieldname === "image") {
+            cb(null, "image_uploads");
+        } else if (file.fieldname === "resume") {
+            cb(null, "resume_uploads");
+        } else {
+            cb(new Error("Invalid field name"), null);
+        }
     },
     filename: (req, file, cb) => {
         cb(null, `${Date.now()}-${file.originalname}`);
@@ -17,7 +23,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-const handleFileUpload = upload.single("image");
+const handleFileUpload = upload.fields([
+    { name: 'image', maxCount: 1 },
+    { name: 'resume', maxCount: 1 }
+]);
 
 userRouter.post("/login", loginUser);
 userRouter.post("/register", handleFileUpload, registerUser);

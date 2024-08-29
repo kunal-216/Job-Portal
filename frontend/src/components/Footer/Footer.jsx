@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaLinkedin, FaInstagramSquare, FaFacebook, FaTwitterSquare } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { useContextProvider } from '../../context/StoreContext';

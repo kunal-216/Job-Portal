@@ -1,4 +1,3 @@
-import React from 'react'
 import Cards from '../Cards/Cards'
 import { SiTcs, SiRelianceindustrieslimited, SiInfosys, SiHcl, SiAirtel } from "react-icons/si"
 import { Link } from "react-router-dom"

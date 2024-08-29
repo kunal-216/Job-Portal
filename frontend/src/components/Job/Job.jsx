@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { FaBookmark, FaGoogle } from "react-icons/fa";
 import {CiBookmark} from "react-icons/ci"
 
