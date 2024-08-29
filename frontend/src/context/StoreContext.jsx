@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, Children } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
@@ -6,7 +6,7 @@ const StoreContext = createContext();
 
 export const StoreContextProvider = ({children}) => {
 
-  const url = "http://localhost:3000";
+  const url = import.meta.env.VITE_API_URI;
 
   const [token, setToken] = useState(null);
   const [profileData, setProfileData] = useState(null);
