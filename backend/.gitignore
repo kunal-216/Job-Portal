@@ -1,3 +1,4 @@
 node_modules
 .env
-uploads
+image_uploads
+resume_uploads

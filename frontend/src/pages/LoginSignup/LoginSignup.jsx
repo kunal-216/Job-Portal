@@ -10,7 +10,7 @@ const LoginSignup = () => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
-  const { setToken , url} = useContextProvider();
+  const { setToken, url } = useContextProvider();
 
   const [currState, setCurrState] = useState('Sign Up');
   const [img, setImg] = useState(null);
@@ -21,6 +21,7 @@ const LoginSignup = () => {
     email: '',
     gender: "",
     password: '',
+    bio: "",
   });
 
   const changeFileHandler = (e) => {
@@ -54,6 +55,7 @@ const LoginSignup = () => {
     formData.append('designation', data.designation);
     formData.append('email', data.email);
     formData.append('password', data.password);
+    formData.append('bio', data.bio);
 
     try {
       let response;
@@ -81,7 +83,8 @@ const LoginSignup = () => {
           email: "",
           password: "",
           gender: "",
-          dob:"",
+          dob: "",
+          bio: "",
         });
         setImg(null);
         setResume(null);
@@ -142,18 +145,18 @@ const LoginSignup = () => {
                 value={data.name}
                 required
               />
-                <select
-                  name="gender"
-                  className="w-full mb-3 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  onChange={onChangeHandler}
-                  value={data.gender}
-                  required
-                >
-                  <option value="" disabled>Select Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
+              <select
+                name="gender"
+                className="w-full mb-3 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onChange={onChangeHandler}
+                value={data.gender}
+                required
+              >
+                <option value="" disabled>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
             </>
           )}
           <input
@@ -181,16 +184,27 @@ const LoginSignup = () => {
               {showPassword ? <FaEye /> : <FaEyeSlash />}
             </div>
           </div>
-          <div className="mb-4 mt-3 flex-col">
-              <p className='text-gray-500'>Upload Resume</p>
-              <input
-                type="file"
-                name="resume"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onChange={changeFileHandler}
-                required
-              />
-            </div>
+          <div>
+            <textarea
+              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 mt-3"
+              rows="6"
+              name="bio"
+              placeholder="Enter your Bio"
+              onChange={onChangeHandler}
+              value={data.bio}
+              required
+            ></textarea>
+          </div>
+          <div className="mb-4 mt-2 flex-col">
+            <p className='text-gray-500'>Upload Resume</p>
+            <input
+              type="file"
+              name="resume"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={changeFileHandler}
+              required
+            />
+          </div>
         </div>
         <div className="mb-6 flex items-start">
           <input
