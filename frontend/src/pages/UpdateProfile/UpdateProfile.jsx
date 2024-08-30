@@ -84,7 +84,7 @@ const UpdateProfile = () => {
     <div className="flex min-h-screen bg-gray-100">
       <Sidebar />
       <div className="flex-1 flex flex-col items-center p-6">
-        <div className="w-full max-w-2xl"> 
+        <div className="w-full max-w-2xl">
           <div className="flex flex-col items-center mb-8">
             <header className='block bg-blue-600 text-white py-4 rounded-lg shadow-lg mb-6 px-[85px]'>
               <div className='container mx-auto text-center'>
@@ -122,7 +122,7 @@ const UpdateProfile = () => {
 
               <div className="space-y-6">
                 <div className="flex space-x-4">
-                  <div className="info flex-1"> 
+                  <div className="info flex-1">
                     <h3 className="text-lg font-medium">Full Name</h3>
                     <input
                       type="text"
@@ -133,7 +133,7 @@ const UpdateProfile = () => {
                       className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
                     />
                   </div>
-                  <div className="info flex-1"> 
+                  <div className="info flex-1">
                     <h3 className="text-lg font-medium">Gender</h3>
                     {editState !== "Edit" ?
                       <input
@@ -200,39 +200,31 @@ const UpdateProfile = () => {
                     className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
                   />
                 </div>
-                <div className="info">
-                  <h3 className="text-lg font-medium">Resume</h3>
-                  <div className="flex items-center">
-                    <input
-                      id="resumeInput"
-                      type="file"
-                      accept=".pdf,.doc,.docx"
-                      style={{ display: "none" }}
-                      onChange={handleResumeChange}
-                    />
-                    {editState !== "Edit" ? (
-                      <a
-                        href={`${url}/resume/${profileData.resume}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-500 hover:underline"
-                      >
-                        View Resume
-                      </a>
-                    ) : (
+                {editState === "Edit" && (
+                  <div className="info">
+                    <h3 className="text-lg font-medium">Resume</h3>
+                    <div className="flex items-center">
+                      <input
+                        id="resumeInput"
+                        type="file"
+                        accept=".pdf,.doc,.docx"
+                        style={{ display: "none" }}
+                        onChange={handleResumeChange}
+                      />
                       <button
                         onClick={handleResumeClick}
                         className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
                       >
                         Upload New Resume
                       </button>
-                    )}
+                    </div>
                   </div>
-                </div>
+                )}
+
                 {editState === "Edit" && (
                   <button
                     onClick={saveData}
-                    className="mt-4 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+                    className="mt-2 mb-4 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
                   >
                     Save Profile
                   </button>
