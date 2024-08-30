@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 const Cards = ({ companyName, location, jobTitle, salary, icon, jobTimings }) => {
   return (
     <div className="w-full max-w-5xl lg:flex shadow-xl rounded-xl overflow-hidden border border-gray-300 bg-white p-8 my-6 transition-transform transform hover:scale-105 mx-auto">

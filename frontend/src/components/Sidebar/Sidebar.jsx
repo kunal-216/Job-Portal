@@ -52,7 +52,7 @@ const Sidebar = () => {
                         </NavLink>
                     </> : <></>} 
                
-                <NavLink to='/my-applications' className={({ isActive }) => `flex items-center gap-3 border-l-4 pl-3 pr-2 py-2 rounded-r-md cursor-pointer transition-colors duration-200 ease-in-out ${isActive ? 'bg-blue-700 border-blue-400 shadow-md' : 'border-transparent hover:bg-blue-700 hover-border-blue-400'}`}>
+                {/* <NavLink to='/my-applications' className={({ isActive }) => `flex items-center gap-3 border-l-4 pl-3 pr-2 py-2 rounded-r-md cursor-pointer transition-colors duration-200 ease-in-out ${isActive ? 'bg-blue-700 border-blue-400 shadow-md' : 'border-transparent hover:bg-blue-700 hover-border-blue-400'}`}>
                     <FaList size={20} />
                     <p className='text-base font-medium text-gray-100'>My Applications</p>
                 </NavLink>
@@ -71,7 +71,7 @@ const Sidebar = () => {
                 <NavLink to='/opportunities-posted' className={({ isActive }) => `flex items-center gap-3 border-l-4 pl-3 pr-2 py-2 rounded-r-md cursor-pointer transition-colors duration-200 ease-in-out ${isActive ? 'bg-blue-700 border-blue-400 shadow-md' : 'border-transparent hover:bg-blue-700 hover:border-blue-400'}`}>
                     <IoKeySharp size={20} />
                     <p className='text-base font-medium text-gray-100'>Opportunities Posted</p>
-                </NavLink>
+                </NavLink> */}
             </div>
         </div>
     );
