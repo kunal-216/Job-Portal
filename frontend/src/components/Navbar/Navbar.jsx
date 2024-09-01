@@ -26,11 +26,10 @@ const Navbar = () => {
       <div>
         <Link to="/"><img src={logo} alt="Logo" className='h-9 text-white' /></Link>
       </div>
-      <div className='flex space-x-6'>
+      <div className='flex space-x-6 mr-5'>
         <Link to="/" className='hover:text-gray-400'>Home</Link>
         <Link to="/jobs" className='hover:text-gray-400'>Jobs</Link>
         <Link to="/internships" className='hover:text-gray-400'>Internships</Link>
-        <Link to="/connect" className='hover:text-gray-400'>Connect</Link>
         <Link to="/contact" className='hover:text-gray-400'>Contact Us</Link>
       </div>
       <div className='flex space-x-4'>

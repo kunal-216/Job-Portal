@@ -19,9 +19,9 @@ const getProfileDetails = async (req, res) => {
 }
 
 const updateProfile = async (req, res) => {
-    const { name, gender, email, designation, bio } = req.body;
+    const { name, gender, email, bio } = req.body;
     try {
-        if (!name || !gender || !email || !designation || !bio) {
+        if (!name || !gender || !email) {
             return res.status(400).json({ success: false, message: "All fields are required" });
         }
 
@@ -35,7 +35,7 @@ const updateProfile = async (req, res) => {
             return res.status(401).json({ success: false, message: "User not authenticated" });
         }
 
-        let updateData = { name, designation, gender, email, bio };
+        let updateData = { name, gender, email, bio };
 
         // Handle image file upload
         if (req.file) {

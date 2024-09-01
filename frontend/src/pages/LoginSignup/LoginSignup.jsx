@@ -1,37 +1,22 @@
-import { useState } from 'react';
-import { toast } from 'react-toastify';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useContextProvider } from '../../context/StoreContext';
+/* eslint-disable react/no-unescaped-entities */
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { useContextProvider } from "../../context/StoreContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { assets } from '../../assets/assets';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const LoginSignup = () => {
-  const navigate = useNavigate();
-
+  const { url, setToken } = useContextProvider();
+  const [currState, setCurrState] = useState("Sign up");
   const [showPassword, setShowPassword] = useState(false);
-  const { setToken, url } = useContextProvider();
-
-  const [currState, setCurrState] = useState('Sign Up');
-  const [img, setImg] = useState(null);
-  const [resume, setResume] = useState(null);
   const [data, setData] = useState({
-    designation: '',
-    name: '',
-    email: '',
-    gender: "",
-    password: '',
-    bio: "",
+    name: "",
+    email: "",
+    password: "",
+    designation: "",
   });
-
-  const changeFileHandler = (e) => {
-    const { name, files } = e.target;
-    if (name === 'file') {
-      setImg(files[0]);
-    } else if (name === 'resume') {
-      setResume(files[0]);
-    }
-  };
+  const navigate = useNavigate();
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -40,22 +25,13 @@ const LoginSignup = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
     let newUrl = url;
     if (currState === 'Login') {
       newUrl += '/api/user/login';
     } else {
       newUrl += '/api/user/register';
     }
-
-    const formData = new FormData();
-    if (resume) formData.append('resume', resume);
-    formData.append('image', img);
-    formData.append('name', data.name);
-    formData.append('gender', data.gender);
-    formData.append('designation', data.designation);
-    formData.append('email', data.email);
-    formData.append('password', data.password);
-    formData.append('bio', data.bio);
 
     try {
       let response;
@@ -70,33 +46,33 @@ const LoginSignup = () => {
           }
         });
       } else {
-        response = await axios.post(newUrl, formData, {
+        response = await axios.post(newUrl, {
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          designation: data.designation,
+        }, {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'application/json'
           }
         });
       }
 
       if (response.status === 200) {
-        setData({
-          name: "",
-          email: "",
-          password: "",
-          gender: "",
-          dob: "",
-          bio: "",
-        });
-        setImg(null);
-        setResume(null);
-        setToken(response.data.token)
-        localStorage.setItem("token", response.data.token)
-        toast.success('Successfully logged in!');
-        navigate('/');
+        localStorage.setItem('token', response.data.token);
+        setToken(response.data.token);
+        toast.success(currState === 'Login' ? 'Successfully logged in!' : 'Successfully signed up!');
+        if (currState === 'Sign up') {
+          navigate(data.designation === 'Recruiter' ? '/recruiter' : '/candidate');
+        } else {
+          navigate('/');
+        }
       } else {
         toast.error(response.data.message || 'Something went wrong.');
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Something went wrong. Please try again.');
+      console.error('Error response:', error.response);
+      toast.error(error.response?.data?.message || error.message || 'An error occurred.');
     }
   };
 
@@ -105,177 +81,98 @@ const LoginSignup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center my-3">
-      <form
-        className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-full max-w-md"
-        onSubmit={submitHandler}
-      >
-        <h2 className="text-2xl font-bold text-center mb-6">{currState}</h2>
-        {currState !== "Login" &&
-          <div className="add-img-upload flex-col mb-3">
-            <p>Upload Image</p>
-            <label htmlFor="image">
-              <img src={img ? URL.createObjectURL(img) : assets.upload_area} alt="Upload" />
-            </label>
-            <input onChange={(e) => setImg(e.target.files[0])} type="file" id="image" hidden required />
-          </div>
-        }
-        <div className="mb-3">
-          <select
-            name="designation"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onChange={onChangeHandler}
-            value={data.designation}
-            required
-          >
-            <option value="" disabled>Select Role</option>
-            <option value="Candidate">Candidate</option>
-            <option value="Recruiter">Recruiter</option>
-          </select>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <form onSubmit={submitHandler} className="relative bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <div className="mb-4">
+          <h1 className="text-3xl text-center font-bold text-blue-500 mb-2">{currState}</h1>
         </div>
-        <div className="mb-4 relative">
-          {currState === 'Sign Up' && (
-            <>
-              <input
-                type="text"
-                name="name"
-                placeholder="Enter your Name"
-                className="w-full px-3 py-2 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onChange={onChangeHandler}
-                value={data.name}
-                required
-              />
-              <select
-                name="gender"
-                className="w-full mb-3 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onChange={onChangeHandler}
-                value={data.gender}
-                required
-              >
-                <option value="" disabled>Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
-            </>
-          )}
+        {currState === "Sign up" && (
+          <div className="mb-4">
+            <input
+              type="text"
+              name="name"
+              value={data.name}
+              onChange={onChangeHandler}
+              placeholder="Enter your name"
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+        )}
+        <div className="mb-4">
           <input
             type="email"
             name="email"
-            placeholder="Enter your Email"
-            className="w-full px-3 py-2 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onChange={onChangeHandler}
             value={data.email}
-            required
-          />
-          <div className="relative">
-            <input
-              type={showPassword ? 'text' : 'password'}
-              name="password"
-              placeholder="Enter your Password"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
-              onChange={onChangeHandler}
-              value={data.password}
-              required
-            />
-            <div
-              onClick={passwordToggle}
-              className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer">
-              {showPassword ? <FaEye /> : <FaEyeSlash />}
-            </div>
-          </div>
-          <div>
-            <textarea
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 mt-3"
-              rows="6"
-              name="bio"
-              placeholder="Enter your Bio"
-              onChange={onChangeHandler}
-              value={data.bio}
-              required
-            ></textarea>
-          </div>
-          <div className="mb-4 mt-2 flex-col">
-            <p className='text-gray-500'>Upload Resume</p>
-            <input
-              type="file"
-              name="resume"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onChange={changeFileHandler}
-              required
-            />
+            onChange={onChangeHandler}
+            placeholder="Enter your email"
+            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div className="mb-4 relative">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            value={data.password}
+            onChange={onChangeHandler}
+            placeholder="Enter your password"
+            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <div
+            onClick={passwordToggle}
+            className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer">
+            {showPassword ? <FaEye /> : <FaEyeSlash />}
           </div>
         </div>
+        <select
+          name="designation"
+          className="w-full mb-3 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          onChange={onChangeHandler}
+          value={data.designation}
+          required>
+          <option value="" disabled>Select Designation</option>
+          <option value="Candidate">Candidate</option>
+          <option value="Recruiter">Recruiter</option>
+        </select>
         <div className="mb-6 flex items-start">
           <input
             type="checkbox"
             className="mr-2 mt-1 leading-tight"
-            required
-          />
+            required />
           <p className="text-sm text-gray-600">
             By continuing, I agree to the{' '}
-            <a href="#" className="text-blue-500 hover:underline">
-              terms of use
-            </a>{' '}
-            and{' '}
-            <a href="#" className="text-blue-500 hover:underline">
-              privacy policy
-            </a>
-            .
+            <a href="#" className="text-blue-500 hover:underline">terms of use</a>{' '}and{' '}
+            <a href="#" className="text-blue-500 hover:underline">privacy policy</a>.
           </p>
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-        >
-          {currState === 'Sign Up' ? 'Create Account' : 'Login'}
+          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+          {currState === 'Sign up' ? 'Create Account' : 'Login'}
         </button>
-
-        {/* <div className="flex items-center justify-center my-4">
-          <div className="flex-grow border-t border-gray-300"></div>
-          <span className="mx-4 text-gray-500">OR</span>
-          <div className="flex-grow border-t border-gray-300"></div>
-        </div> */}
-
-        {/* <div className="grid grid-cols-2 gap-4 mb-4">
-          <button className="flex items-center justify-center space-x-2 w-full bg-red-500 text-white text-[15px] py-2 px-4 rounded-lg hover:bg-red-600">
-            <span>{currState} with Google</span>
-          </button>
-          <button className="flex items-center justify-center space-x-2 w-full bg-blue-400 text-white text-[15px] py-2 px-4 rounded-lg hover:bg-blue-500">
-            <span>{currState} with Twitter</span>
-          </button>
-          <button className="flex items-center justify-center space-x-2 w-full bg-blue-600 text-white text-[15px] py-2 px-4 rounded-lg hover:bg-blue-700">
-            <span>{currState} with Facebook</span>
-          </button>
-          <button className="flex items-center justify-center space-x-2 w-full bg-gray-800 text-white text-[15px] py-2 px-4 rounded-lg hover:bg-gray-900">
-            <span>{currState} with Github</span>
-          </button>
-        </div> */}
-
-        {currState === 'Login' ? (
-          <p
-            className="mt-4 text-center text-sm text-gray-600 cursor-pointer"
-            onClick={() => setCurrState('Sign Up')}
-          >
-            Create a new Account?{' '}
-            <span className="text-blue-500 hover:underline">
-              Click Here
-            </span>
-          </p>
-        ) : (
-          <p
-            className="mt-4 text-center text-sm text-gray-600 cursor-pointer"
-            onClick={() => setCurrState('Login')}
-          >
-            Already have an Account?{' '}
-            <span className="text-blue-500 hover:underline">
-              Login Here
-            </span>
-          </p>
-        )}
+        <div className="mt-4 text-center">
+          {currState === 'Sign up' ? (
+            <p>
+              Already have an account?{' '}
+              <button
+                type="button"
+                className="text-blue-500 hover:underline"
+                onClick={() => setCurrState('Login')}>
+                Login
+              </button>
+            </p>
+          ) : (
+            <p>
+              Don't have an account?{' '}
+              <button
+                type="button"
+                className="text-blue-500 hover:underline"
+                onClick={() => setCurrState('Sign up')}>
+                Sign Up
+              </button>
+            </p>
+          )}
+        </div>
       </form>
     </div>
   );
 };
 
 export default LoginSignup;
+

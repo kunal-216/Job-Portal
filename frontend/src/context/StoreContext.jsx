@@ -6,12 +6,13 @@ import axios from 'axios';
 
 const StoreContext = createContext();
 
-export const StoreContextProvider = ({children}) => {
+export const StoreContextProvider = ({ children }) => {
 
   const url = import.meta.env.VITE_API_URI;
 
   const [token, setToken] = useState(null);
   const [profileData, setProfileData] = useState(null);
+  const [userDesignation, setUserDesignation] = useState("Candidate")
 
   const fetchData = async () => {
     try {
@@ -66,7 +67,7 @@ export const StoreContextProvider = ({children}) => {
   };
 
   return (
-    <StoreContext.Provider value={{ token, setToken, profileData, setProfileData, url, logout }}>
+    <StoreContext.Provider value={{ token, setToken, profileData, setProfileData, url, logout, userDesignation, setUserDesignation }}>
       {children}
     </StoreContext.Provider>
   );

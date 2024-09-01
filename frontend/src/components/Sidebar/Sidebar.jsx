@@ -6,7 +6,7 @@ import { IoKeySharp } from "react-icons/io5";
 import { useContextProvider } from '../../context/StoreContext';
 
 const Sidebar = () => {
-    const { profileData } = useContextProvider();
+    const { profileData, userDesignation } = useContextProvider();
     const hasProfileData = profileData && profileData.designation;
 
     return (
@@ -25,7 +25,7 @@ const Sidebar = () => {
                     <p className='text-base font-medium text-gray-100'>Update Profile</p>
                 </NavLink>
                 
-                {hasProfileData && profileData.designation === "Candidate" && (
+                {hasProfileData && userDesignation === "Candidate" && (
                     <>
                         <NavLink to='/my-applications' className={({ isActive }) => `flex items-center gap-3 border-l-4 pl-3 pr-2 py-2 rounded-r-md cursor-pointer transition-colors duration-200 ease-in-out ${isActive ? 'bg-blue-700 border-blue-400 shadow-md' : 'border-transparent hover:bg-blue-700 hover:border-blue-400'}`}>
                             <FaList size={20} />
@@ -41,7 +41,7 @@ const Sidebar = () => {
                         </NavLink>
                     </>
                 )}
-                {hasProfileData && profileData.designation === "Recruiter" && (
+                {hasProfileData && userDesignation === "Recruiter" && (
                     <>
                         <NavLink to='/post-opportunity' className={({ isActive }) => `flex items-center gap-3 border-l-4 pl-3 pr-2 py-2 rounded-r-md cursor-pointer transition-colors duration-200 ease-in-out ${isActive ? 'bg-blue-700 border-blue-400 shadow-md' : 'border-transparent hover:bg-blue-700 hover:border-blue-400'}`}>
                             <MdOutlinePostAdd size={20} />

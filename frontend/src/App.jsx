@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Home, LoginSignup, Jobs, Connect, Contact, Internships, Dashboard, MyApplications, UpdateProfile, Profile, Resume, PostOpportunity, OpportunitiesPosted, Bookmarked } from "./pages/index"
+import { Home, LoginSignup, Jobs, Contact, Internships, Dashboard, MyApplications, UpdateProfile, Profile, Resume, PostOpportunity, OpportunitiesPosted, Bookmarked, CandidateSignup, RecruiterSignup } from "./pages/index"
 import { Navbar, Footer } from './components/index'
 import { StoreContextProvider } from './context/StoreContext';
 
@@ -14,8 +14,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/user" element={<LoginSignup />} />
+          <Route path="/candidate" element={<CandidateSignup />} />
+          <Route path="/recruiter" element={<RecruiterSignup />} />
           <Route path="/jobs" element={<Jobs />} />
-          <Route path="/connect" element={<Connect />} />
           <Route path="/internships" element={<Internships />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/dashboard" element={<Dashboard />} />
