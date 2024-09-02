@@ -83,14 +83,14 @@ const UpdateProfile = () => {
   return (
     <div className="flex min-h-screen bg-gray-100">
       <Sidebar />
-      <div className="flex-1 flex flex-col items-center p-6">
-        <div className="w-full max-w-2xl">
-          <div className="flex flex-col items-center mb-8">
-            <header className='block bg-blue-600 text-white py-4 rounded-lg shadow-lg mb-6 px-[85px]'>
-              <div className='container mx-auto text-center'>
-                <h1 className='text-4xl font-extrabold'>Update Profile</h1>
-              </div>
-            </header>
+      <div className="flex-1 flex flex-col p-6 bg-gray-100">
+        <div className="w-full max-w-2xl mx-auto">
+          <header className='bg-blue-600 text-white py-4 rounded-lg shadow-lg mb-8'>
+            <div className='container mx-auto text-center'>
+              <h1 className='text-4xl font-extrabold'>Update Profile</h1>
+            </div>
+          </header>
+          <div className="flex justify-center mb-8">
             {editState !== "Edit" && (
               <FaUserEdit
                 size={24}
@@ -121,8 +121,8 @@ const UpdateProfile = () => {
               </div>
 
               <div className="space-y-6">
-                <div className="flex space-x-4">
-                  <div className="info flex-1">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="info">
                     <h3 className="text-lg font-medium">Full Name</h3>
                     <input
                       type="text"
@@ -133,7 +133,7 @@ const UpdateProfile = () => {
                       className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
                     />
                   </div>
-                  <div className="info flex-1">
+                  <div className="info">
                     <h3 className="text-lg font-medium">Gender</h3>
                     {editState !== "Edit" ?
                       <input
@@ -148,15 +148,16 @@ const UpdateProfile = () => {
                         className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
                         onChange={handleInputChange}
                         value={profileData.gender}
-                        required>
+                        required
+                      >
                         <option value="" disabled>Select Gender</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                       </select>}
                   </div>
                 </div>
-                <div className="flex space-x-4">
-                  <div className="info flex-1">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="info">
                     <h3 className="text-lg font-medium">Email</h3>
                     <input
                       type="email"
@@ -167,7 +168,7 @@ const UpdateProfile = () => {
                       className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
                     />
                   </div>
-                  <div className="info flex-1">
+                  <div className="info">
                     <h3 className="text-lg font-medium">Designation</h3>
                     {editState !== "Edit" ? <input
                       type="text"
@@ -224,7 +225,7 @@ const UpdateProfile = () => {
                 {editState === "Edit" && (
                   <button
                     onClick={saveData}
-                    className="mt-2 mb-4 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+                    className="mt-4 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
                   >
                     Save Profile
                   </button>
@@ -232,12 +233,11 @@ const UpdateProfile = () => {
               </div>
             </div>
           ) : (
-            <p className="text-center">Loading profile data...</p>
+            <p className="text-center text-gray-600">Loading profile data...</p>
           )}
         </div>
       </div>
     </div>
-
   );
 };
 

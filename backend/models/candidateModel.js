@@ -11,5 +11,6 @@ const candidateSchema = new mongoose.Schema({
     bio: { type: String, required: true },
 }, { timestamps: true });
 
+
 const candidateModel = mongoose.models.candidate || mongoose.model("candidate", candidateSchema);
 export default candidateModel

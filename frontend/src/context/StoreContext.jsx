@@ -12,11 +12,13 @@ export const StoreContextProvider = ({ children }) => {
 
   const [token, setToken] = useState(null);
   const [profileData, setProfileData] = useState(null);
-  const [userDesignation, setUserDesignation] = useState("Candidate")
+  const [candidateProfileData, setCandidateProfileData] = useState(null);
+  const [recruiterProfileData, setRecruiterProfileData] = useState(null);
+  const [userDesignation, setUserDesignation] = useState("Candidate");
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${url}/api/user/profile`, {
+      const response = await axios.get(`${url}/api/profile/user`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -24,9 +26,9 @@ export const StoreContextProvider = ({ children }) => {
 
       if (response.data.success) {
         setProfileData(response.data.data);
+        setUserDesignation(response.data.data.designation);
       } else if (response.data.tokenExpired) {
-        setToken(null);
-        localStorage.removeItem('token');
+        logout();
         toast.error('Session expired. Please log in again.');
       } else {
         toast.error('Failed to fetch the profile data.');
@@ -34,13 +36,64 @@ export const StoreContextProvider = ({ children }) => {
 
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        setToken(null);
-        localStorage.removeItem('token');
+        logout();
         toast.error('Session expired. Please log in again.');
       } else {
         console.error('Error fetching data:', error);
         toast.error('An error occurred while fetching the profile data.');
       }
+    }
+  };
+
+  const fetchCandidateData = async () => {
+    try {
+      const response = await axios.get(`${url}/api/profile/candidate`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+  
+      if (response.data.success) {
+        setCandidateProfileData(response.data.data);
+        console.log(response.data.data)
+        toast.success("Candidate Profile Fetched Successfully");
+      } else {
+        toast.error(response.data.message || 'Failed to fetch candidate profile.');
+      }
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 401) {
+          logout();
+          toast.error('Session expired. Please log in again.');
+        } else {
+          toast.error(`Error: ${error.response.data.message || 'Failed to fetch candidate profile.'}`);
+        }
+      } else {
+        console.error('Error fetching candidate data:', error);
+        toast.error('An unexpected error occurred.');
+      }
+    }
+  };
+  
+
+  const fetchRecruiterData = async () => {
+    try {
+      const response = await axios.get(`${url}/api/profile/recruiter`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.status === 200) {
+        setRecruiterProfileData(response.data.data);
+        toast.success("Recruiter Profile Fetched Successfully");
+      } else {
+        console.error('Failed to fetch recruiter profile:', response.data);
+        toast.error('Failed to fetch recruiter profile.');
+      }
+    } catch (error) {
+      console.error('Error fetching recruiter data:', error);
+      toast.error('An error occurred while fetching recruiter profile.');
     }
   };
 
@@ -60,6 +113,17 @@ export const StoreContextProvider = ({ children }) => {
     }
   }, [token]);
 
+  useEffect(() => {
+    if (profileData) {
+      if (profileData.designation === "Candidate") {
+        fetchCandidateData();
+      } else if (profileData.designation === "Recruiter") {
+        fetchRecruiterData();
+      }
+    }
+  }, [profileData]);
+
+
   const logout = () => {
     setToken(null);
     setProfileData(null);
@@ -67,7 +131,13 @@ export const StoreContextProvider = ({ children }) => {
   };
 
   return (
-    <StoreContext.Provider value={{ token, setToken, profileData, setProfileData, url, logout, userDesignation, setUserDesignation }}>
+    <StoreContext.Provider value={{
+      token, setToken,
+      profileData, setProfileData,
+      url, logout,
+      userDesignation, setUserDesignation,
+      candidateProfileData, recruiterProfileData
+    }}>
       {children}
     </StoreContext.Provider>
   );

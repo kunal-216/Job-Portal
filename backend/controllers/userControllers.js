@@ -98,7 +98,9 @@ const candidateRegister = async (req, res) => {
         }
 
         const imagePath = req.files.image[0].path;
+        const imagefileName = imagePath.split('\\').pop();
         const resumePath = req.files.resume[0].path;
+        const resumefileName = resumePath.split('\\').pop();
 
         const newCandidate = new candidateModel({
             userId: req.user.id,
@@ -107,8 +109,8 @@ const candidateRegister = async (req, res) => {
             gender,
             skills: JSON.parse(skills),
             age,
-            image: imagePath,
-            resume: resumePath
+            image: imagefileName,
+            resume: resumefileName
         });
 
         await newCandidate.save();
@@ -145,14 +147,16 @@ const recruiterRegister = async (req, res) => {
         }
 
         const imagePath = req.files.image[0].path;
+        const imagefileName = imagePath.split('\\').pop();
         const companyLogoPath = req.files.companyLogo[0].path;
+        const companyLogofileName = companyLogoPath.split('\\').pop();
 
         const newRecruiter = new recruiterModel({
             userId: req.user.id,
-            image: imagePath,
+            image: imagefileName,
             companyName,
             location,
-            companyLogo: companyLogoPath,
+            companyLogo: companyLogofileName,
             gender,
         });
 

@@ -1,10 +1,9 @@
 import express from "express"
 import multer from "multer";
-import { loginUser, registerUser, candidateRegister, recruiterRegister } from "../controllers/userControllers.js";
-import authMiddleware from "../middleware/auth.js";
-import { checkContentType } from "../middleware/contentType.js";
+import { getCandidateProfile, getProfileDetails, getRecruiterProfile, updateCandidateProfile, updateRecruiterProfile, updateProfile } from "../controllers/profileControllers.js";
+import authMiddleware from "../middleware/auth.js"
 
-const userRouter = express.Router();
+const profileRouter = express.Router();
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -35,9 +34,11 @@ const handleRecruiterUpload = upload.fields([
     { name: 'companyLogo', maxCount: 1 }
 ]);
 
-userRouter.post("/login", loginUser);
-userRouter.post("/register", registerUser);
-userRouter.post("/candidate-register", authMiddleware, checkContentType("multipart/form-data"), handleCandidateUpload, candidateRegister);
-userRouter.post("/recruiter-register", authMiddleware, checkContentType("multipart/form-data"), handleRecruiterUpload, recruiterRegister);
+profileRouter.get("/user", authMiddleware, getProfileDetails)
+profileRouter.put("/user", authMiddleware, updateProfile)
+profileRouter.get("/candidate", authMiddleware, getCandidateProfile)
+profileRouter.get("/recruiter", authMiddleware, getRecruiterProfile)
+profileRouter.put("/candidate", authMiddleware, handleCandidateUpload, updateCandidateProfile)
+profileRouter.put("/recruiter", authMiddleware, handleRecruiterUpload, updateRecruiterProfile)
 
-export default userRouter;
+export default profileRouter;
