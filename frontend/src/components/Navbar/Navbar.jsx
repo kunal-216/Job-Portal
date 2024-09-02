@@ -6,8 +6,7 @@ import { useContextProvider } from '../../context/StoreContext';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
-
-  const { token, setToken, profileData, url } = useContextProvider();
+  const { token, setToken, url, userDesignation, candidateProfileData, recruiterProfileData } = useContextProvider();
   const navigate = useNavigate();
 
   const LogoutHandler = () => {
@@ -36,15 +35,27 @@ const Navbar = () => {
         {token ?
           <>
             <Link to="/dashboard" className='flex items-center'>
-              {profileData?.image ? (
-                <img
-                  src={`${url}/images/${profileData.image}`}
-                  alt='Profile'
-                  className='rounded-full w-8 h-8 object-cover'
-                />
-              ) : (
-                <FaUserCircle className='w-8 h-8 rounded-full' />
-              )}
+              {userDesignation === "Candidate" ?
+                candidateProfileData?.image ? (
+                  <img
+                    src={`${url}/images/${candidateProfileData.image}`}
+                    alt='Profile'
+                    className='rounded-full w-8 h-8 object-cover'
+                  />
+                ) : (
+                  <FaUserCircle className='w-8 h-8 rounded-full' />
+                )
+                :
+                recruiterProfileData?.image ? (
+                  <img
+                    src={`${url}/images/${recruiterProfileData.image}`}
+                    alt='Profile'
+                    className='rounded-full w-8 h-8 object-cover'
+                  />
+                ) : (
+                  <FaUserCircle className='w-8 h-8 rounded-full' />
+                )
+              }
             </Link>
             <button onClick={LogoutHandler} className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded'>Logout</button>
           </>
@@ -54,7 +65,8 @@ const Navbar = () => {
               <FaUserCircle className='w-8 h-8 rounded-full' />
             </Link>
             <Link to="/user" className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded'>Sign Up</Link>
-          </>}
+          </>
+        }
       </div>
     </nav>
   );

@@ -3,13 +3,13 @@ import { useState, useEffect } from 'react';
 import { useContextProvider } from '../../context/StoreContext';
 
 const Resume = () => {
-  const { url, profileData} = useContextProvider();
+  const { url, candidateProfileData} = useContextProvider();
   const [resumeUrl, setResumeUrl] = useState('');
 
   useEffect(() => {
-    const resumeLink = `${url}/resume/${profileData.resume}`;
+    const resumeLink = `${url}/resume/${candidateProfileData?.resume}`;
     setResumeUrl(resumeLink);
-  }, [profileData,url]);
+  }, [candidateProfileData,url]);
 
   return (
     <div className='flex'>

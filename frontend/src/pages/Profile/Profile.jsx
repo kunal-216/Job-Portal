@@ -43,18 +43,40 @@ const Profile = () => {
                     {renderProfileField('Designation', profileData.designation, 'w-1/2')}
                   </div>
                   {renderProfileField('Bio', candidateProfileData?.bio)}
-                  {renderProfileField('Skills', candidateProfileData?.skills)}
+                  {candidateProfileData?.skills && (
+                    <div className='flex flex-col'>
+                      <label htmlFor="skills" className='block text-sm font-medium text-gray-700'>
+                        Skills
+                      </label>
+                      <div className='mt-1 flex flex-wrap gap-2'>
+                        {candidateProfileData.skills.map((skill, index) => (
+                          <span key={index} className='bg-blue-600 text-white text-sm font-medium py-1 px-3 rounded-full'>
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   {renderProfileField('University', candidateProfileData?.university)}
                 </div>
               </>
             ) : (
               <>
-                <div className='flex flex-col items-center mb-6'>
-                  <img
-                    src={`${url}/images/${recruiterProfileData?.companyLogo}`}
-                    className='rounded-full w-32 h-32 object-cover cursor-pointer'
-                    alt="Company Logo"
-                  />
+                <div className='flex flex-row justify-center items-center gap-20'>
+                  <div className='flex flex-col items-center mb-6'>
+                    <img
+                      src={`${url}/images/${recruiterProfileData?.image}`}
+                      className='rounded-full w-32 h-32 object-cover cursor-pointer'
+                      alt="Company Logo"
+                    />
+                  </div>
+                  <div className='flex flex-col items-center mb-6'>
+                    <img
+                      src={`${url}/logo/${recruiterProfileData?.companyLogo}`}
+                      className='rounded-full w-32 h-32 object-cover cursor-pointer'
+                      alt="Company Logo"
+                    />
+                  </div>
                 </div>
                 <div className='space-y-6'>
                   {renderProfileField('Name', profileData.name)}

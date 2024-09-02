@@ -169,6 +169,4 @@ const recruiterRegister = async (req, res) => {
     }
 };
 
-
-
 export { loginUser, registerUser, recruiterRegister, candidateRegister };

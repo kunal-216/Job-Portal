@@ -6,11 +6,16 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 
 const UpdateProfile = () => {
-
-  const { url, profileData, setProfileData } = useContextProvider();
+  const {
+    url, profileData, setProfileData, userDesignation,
+    candidateProfileData, recruiterProfileData,
+    setCandidateProfileData, setRecruiterProfileData,
+    debouncedHandleInputChange
+  } = useContextProvider();
 
   const [image, setImage] = useState(null);
   const [resume, setResume] = useState(null);
+  const [companyLogo, setCompanyLogo] = useState(null);
   const [editState, setEditState] = useState(null);
 
   const saveData = async (e) => {
@@ -18,14 +23,25 @@ const UpdateProfile = () => {
     const payload = new FormData();
     payload.append('name', profileData.name);
     payload.append('email', profileData.email);
-    payload.append('gender', profileData.gender);
     payload.append('designation', profileData.designation);
-    payload.append('bio', profileData.bio);
+
+    if (userDesignation === "Candidate") {
+      payload.append('age', candidateProfileData.age);
+      payload.append('gender', candidateProfileData.gender);
+      payload.append('bio', candidateProfileData.bio);
+      payload.append('university', candidateProfileData.university);
+      payload.append('skills', candidateProfileData.skills);
+      if (resume) payload.append('resume', resume);
+    } else if (userDesignation === "Recruiter") {
+      payload.append('companyName', recruiterProfileData.companyName);
+      payload.append('location', recruiterProfileData.location);
+      if (companyLogo) payload.append('companyLogo', companyLogo);
+    }
+
     if (image) payload.append('image', image);
-    if (resume) payload.append('resume', resume);
 
     try {
-      const response = await axios.put(`${url}/api/user/update`, payload, {
+      const response = await axios.put(`${url}/api/profile/user`, payload, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -36,48 +52,59 @@ const UpdateProfile = () => {
         toast.success("Profile Updated Successfully");
         setEditState(null);
         setProfileData(response.data.data);
+
+        if (userDesignation === "Candidate") {
+          setCandidateProfileData(response.data.data);
+        } else if (userDesignation === "Recruiter") {
+          setRecruiterProfileData(response.data.data);
+        }
+
         setImage(null);
         setResume(null);
+        setCompanyLogo(null);
       } else {
         toast.error("Failed to Update Profile");
         setEditState(null);
       }
     } catch (error) {
       toast.error("An error occurred while saving the profile data.");
-      console.log(error)
+      console.error("Error updating profile:", error);
       setEditState(null);
     }
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setImage(file);
-    } else {
-      setImage(null);
-    }
+    setImage(file || null);
   };
 
   const handleResumeChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setResume(file);
-    } else {
-      setResume(null);
-    }
+    setResume(file || null);
+  };
+
+  const handleCompanyLogoChange = (e) => {
+    const file = e.target.files[0];
+    setCompanyLogo(file || null);
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setProfileData({ ...profileData, [name]: value });
+    debouncedHandleInputChange(name, value);
+    if (userDesignation === "Candidate") {
+      setCandidateProfileData(prevState => ({ ...prevState, [name]: value }));
+    } else if (userDesignation === "Recruiter") {
+      setRecruiterProfileData(prevState => ({ ...prevState, [name]: value }));
+    }
+    setProfileData(prevState => ({ ...prevState, [name]: value }));
   };
 
   const handleImageClick = () => {
     document.getElementById('imageInput').click();
   };
 
-  const handleResumeClick = () => {
-    document.getElementById('resumeInput').click();
+  const handleCompanyLogoClick = () => {
+    document.getElementById('companyLogoInput').click();
   };
 
   return (
@@ -102,24 +129,43 @@ const UpdateProfile = () => {
 
           {profileData ? (
             <div className="w-full">
-              <div
-                className={`relative cursor-pointer mb-6 flex justify-center ${editState === "Edit" ? 'opacity-75' : ''}`}
-                onClick={editState === "Edit" ? handleImageClick : null}
-              >
-                <img
-                  src={`${url}/images/${profileData.image}`}
-                  alt={profileData.name}
-                  className="w-32 h-32 rounded-full object-cover border-2 border-gray-300"
-                />
-                <input
-                  id="imageInput"
-                  type="file"
-                  accept="image/*"
-                  style={{ display: "none" }}
-                  onChange={handleImageChange}
-                />
+              <div className='flex flex-row justify-center items-center gap-10'>
+                <div
+                  className={`relative cursor-pointer mb-6 flex justify-center ${editState === "Edit" ? 'opacity-75' : ''}`}
+                  onClick={editState === "Edit" ? handleImageClick : null}>
+                  <img
+                    src={`${url}/images/${userDesignation === "Candidate" ? candidateProfileData.image : recruiterProfileData.image}`}
+                    alt={profileData.name}
+                    className="w-32 h-32 rounded-full object-cover border-2 border-gray-300"
+                  />
+                  <input
+                    id="imageInput"
+                    type="file"
+                    accept="image/*"
+                    style={{ display: "none" }}
+                    onChange={handleImageChange}
+                  />
+                </div>
+                {userDesignation === "Recruiter" && (
+                  <div
+                    className={`relative cursor-pointer mb-6 flex justify-center ${editState === "Edit" ? 'opacity-75' : ''}`}
+                    onClick={editState === "Edit" ? handleCompanyLogoClick : null}
+                  >
+                    <img
+                      src={`${url}/logo/${recruiterProfileData.companyLogo}`}
+                      alt={recruiterProfileData.companyName}
+                      className="w-32 h-32 rounded-full object-cover border-2 border-gray-300"
+                    />
+                    <input
+                      id="companyLogoInput"
+                      type="file"
+                      accept="image/*"
+                      style={{ display: "none" }}
+                      onChange={handleCompanyLogoChange}
+                    />
+                  </div>
+                )}
               </div>
-
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="info">
@@ -138,107 +184,141 @@ const UpdateProfile = () => {
                     {editState !== "Edit" ?
                       <input
                         type="text"
-                        value={profileData.gender}
+                        value={userDesignation === "Candidate" ? candidateProfileData.gender : recruiterProfileData.gender}
                         readOnly
                         name="gender"
-                        className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
+                        className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm bg-white"
                       /> :
                       <select
                         name="gender"
-                        className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
+                        value={userDesignation === "Candidate" ? candidateProfileData.gender : recruiterProfileData.gender}
                         onChange={handleInputChange}
-                        value={profileData.gender}
-                        required
+                        className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
                       >
-                        <option value="" disabled>Select Gender</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
-                      </select>}
+                        <option value="Other">Other</option>
+                      </select>
+                    }
                   </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="info">
-                    <h3 className="text-lg font-medium">Email</h3>
-                    <input
-                      type="email"
-                      value={profileData.email}
-                      readOnly={editState !== "Edit"}
-                      onChange={handleInputChange}
-                      name="email"
-                      className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
-                    />
-                  </div>
-                  <div className="info">
-                    <h3 className="text-lg font-medium">Designation</h3>
-                    {editState !== "Edit" ? <input
-                      type="text"
-                      value={profileData.designation}
-                      readOnly
-                      name="designation"
-                      className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
-                    /> :
-                      <select
-                        name="designation"
-                        className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
-                        onChange={handleInputChange}
-                        value={profileData.designation}
-                        required
-                      >
-                        <option value="" disabled>Select Role</option>
-                        <option value="Candidate">Candidate</option>
-                        <option value="Recruiter">Recruiter</option>
-                      </select>}
-                  </div>
-                </div>
-                <div className="info">
-                  <h3 className="text-lg font-medium">Bio</h3>
-                  <textarea
-                    value={profileData.bio}
-                    readOnly={editState !== "Edit"}
-                    onChange={handleInputChange}
-                    name="bio"
-                    rows={3}
-                    className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
-                  />
-                </div>
-                {editState === "Edit" && (
-                  <div className="info">
-                    <h3 className="text-lg font-medium">Resume</h3>
-                    <div className="flex items-center">
+
+                {/* Conditionally render additional fields based on userDesignation */}
+                {userDesignation === "Candidate" && (
+                  <>
+                    <div className="info">
+                      <h3 className="text-lg font-medium">Age</h3>
                       <input
-                        id="resumeInput"
-                        type="file"
-                        accept=".pdf,.doc,.docx"
-                        style={{ display: "none" }}
-                        onChange={handleResumeChange}
+                        type="text"
+                        value={candidateProfileData.age}
+                        readOnly={editState !== "Edit"}
+                        onChange={handleInputChange}
+                        name="age"
+                        className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
                       />
-                      <button
-                        onClick={handleResumeClick}
-                        className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-                      >
-                        Upload New Resume
-                      </button>
                     </div>
-                  </div>
+                    <div className="info">
+                      <h3 className="text-lg font-medium">Bio</h3>
+                      <textarea
+                        value={candidateProfileData.bio}
+                        readOnly={editState !== "Edit"}
+                        onChange={handleInputChange}
+                        name="bio"
+                        className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
+                      />
+                    </div>
+                    <div className="info">
+                      <h3 className="text-lg font-medium">University</h3>
+                      <input
+                        type="text"
+                        value={candidateProfileData.university}
+                        readOnly={editState !== "Edit"}
+                        onChange={handleInputChange}
+                        name="university"
+                        className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
+                      />
+                    </div>
+                    <div className="info">
+                      <h3 className="text-lg font-medium">Skills</h3>
+                      <input
+                        type="text"
+                        value={candidateProfileData.skills}
+                        readOnly={editState !== "Edit"}
+                        onChange={handleInputChange}
+                        name="skills"
+                        className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
+                      />
+                    </div>
+                    <div className="info">
+                      <h3 className="text-lg font-medium">Resume</h3>
+                      {editState === "Edit" ? (
+                        <>
+                          <input
+                            type="file"
+                            accept=".pdf"
+                            onChange={handleResumeChange}
+                            className="mt-1 block w-full"
+                          />
+                        </>
+                      ) : (
+                        <a
+                          href={`${url}/files/${candidateProfileData.resume}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600"
+                        >
+                          View Resume
+                        </a>
+                      )}
+                    </div>
+                  </>
+                )}
+
+                {userDesignation === "Recruiter" && (
+                  <>
+                    <div className="info">
+                      <h3 className="text-lg font-medium">Company Name</h3>
+                      <input
+                        type="text"
+                        value={recruiterProfileData.companyName}
+                        readOnly={editState !== "Edit"}
+                        onChange={handleInputChange}
+                        name="companyName"
+                        className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
+                      />
+                    </div>
+                    <div className="info">
+                      <h3 className="text-lg font-medium">Location</h3>
+                      <input
+                        type="text"
+                        value={recruiterProfileData.location}
+                        readOnly={editState !== "Edit"}
+                        onChange={handleInputChange}
+                        name="location"
+                        className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
+                      />
+                    </div>
+                  </>
                 )}
 
                 {editState === "Edit" && (
                   <button
                     onClick={saveData}
-                    className="mt-4 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
                   >
-                    Save Profile
+                    Save
                   </button>
                 )}
               </div>
             </div>
           ) : (
-            <p className="text-center text-gray-600">Loading profile data...</p>
+            <p>Loading...</p>
           )}
         </div>
       </div>
     </div>
   );
 };
+
 
 export default UpdateProfile;
