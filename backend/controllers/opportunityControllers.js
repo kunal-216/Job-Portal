@@ -2,6 +2,16 @@ import jobModel from "../models/jobModel.js"
 import internshipModel from "../models/internshipModel.js";
 import recruiterModel from "../models/recruiterModel.js";
 
+const getJobs = async (req,res) => {
+    try {
+        const jobs = await jobModel.find({});
+        res.status(201).json({ message: "Jobs fetched successfully", data: jobs });
+    } catch (error) {
+        console.log(error)
+        res.status(501).json({ message: error, success: false })
+    }
+}
+
 const postJob = async (req, res) => {
     const { title, description, location, salary, category, experience, workMode, recruiterId } = req.body
     try {
@@ -10,7 +20,7 @@ const postJob = async (req, res) => {
         }
 
         const recruiter = await recruiterModel.findById(recruiterId)
-        if(!recruiter){
+        if (!recruiter) {
             return res.status(404).json({ message: "Recruiter not found" })
         }
 
@@ -35,6 +45,16 @@ const postJob = async (req, res) => {
     }
 }
 
+const getInternships = async (req,res) => {
+    try {
+        const internships = await internshipModel.find({});
+        res.status(201).json({ message: "Internships fetched successfully", data: internships });
+    } catch (error) {
+        console.log(error)
+        res.status(501).json({ message: error, success: false })
+    }
+}
+
 const postInternship = async (req, res) => {
     const { title, description, location, category, salary, experience, workMode, recruiterId } = req.body;
     try {
@@ -43,7 +63,7 @@ const postInternship = async (req, res) => {
         }
 
         const recruiter = await recruiterModel.findById(recruiterId)
-        if(!recruiter){
+        if (!recruiter) {
             return res.status(404).json({ message: "Recruiter not found" })
         }
 
@@ -57,7 +77,7 @@ const postInternship = async (req, res) => {
             experience,
             internshipCategory: category,
             internshipType: workMode,
-            applications:[],
+            applications: [],
         })
 
         const internship = await newInternship.save();
@@ -68,4 +88,4 @@ const postInternship = async (req, res) => {
     }
 }
 
-export { postJob, postInternship }
+export { postJob, postInternship, getJobs, getInternships }

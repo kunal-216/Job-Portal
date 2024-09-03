@@ -15,6 +15,8 @@ export const StoreContextProvider = ({ children }) => {
   const [candidateProfileData, setCandidateProfileData] = useState(null);
   const [recruiterProfileData, setRecruiterProfileData] = useState(null);
   const [userDesignation, setUserDesignation] = useState("Candidate");
+  const [internshipData, setInternshipData] = useState(null);
+  const [jobData, setJobData] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -52,11 +54,9 @@ export const StoreContextProvider = ({ children }) => {
           'Authorization': `Bearer ${token}`
         }
       });
-  
+
       if (response.data.success) {
         setCandidateProfileData(response.data.data);
-        console.log(response.data.data)
-        toast.success("user Profile Fetched Successfully");
       } else {
         toast.error(response.data.message || 'Failed to fetch user profile.');
       }
@@ -74,7 +74,7 @@ export const StoreContextProvider = ({ children }) => {
       }
     }
   };
-  
+
 
   const fetchRecruiterData = async () => {
     try {
@@ -86,7 +86,6 @@ export const StoreContextProvider = ({ children }) => {
 
       if (response.status === 200) {
         setRecruiterProfileData(response.data.data);
-        toast.success("User Profile Fetched Successfully");
       } else {
         console.error('Failed to fetch user profile:', response.data);
         toast.error('Failed to fetch user profile.');
@@ -97,6 +96,45 @@ export const StoreContextProvider = ({ children }) => {
     }
   };
 
+  const fetchJobs = async () => {
+    try {
+      const response = await axios.get(`${url}/api/opportunity/get-jobs`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      if (response.status === 201) {
+        setJobData(response.data.data);
+      } else{
+        console.error('Failed to fetch jobs:', response.data);
+        toast.error('Failed to fetch jobs.');
+      }
+    } catch (error) {
+      toast.error(error)
+      console.log(error);
+    }
+  }
+
+  const fetchInternships = async () => {
+    try {
+      const response = await axios.get(`${url}/api/opportunity/get-internships`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+
+      if (response.status === 201) {
+        setInternshipData(response.data.data)
+      } else {
+        console.error('Failed to fetch internships:', response.data);
+        toast.error('Failed to fetch internships.');
+      }
+    } catch (error) {
+      toast.error(error)
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     const loadData = () => {
       const storedToken = localStorage.getItem("token");
@@ -105,6 +143,8 @@ export const StoreContextProvider = ({ children }) => {
       }
     };
     loadData();
+    fetchJobs();
+    fetchInternships();
   }, []);
 
   useEffect(() => {
@@ -136,7 +176,8 @@ export const StoreContextProvider = ({ children }) => {
       profileData, setProfileData,
       url, logout,
       userDesignation, setUserDesignation,
-      candidateProfileData, recruiterProfileData
+      candidateProfileData, recruiterProfileData,
+      internshipData, jobData
     }}>
       {children}
     </StoreContext.Provider>
