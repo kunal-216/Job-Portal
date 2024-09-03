@@ -167,7 +167,7 @@ const UpdateProfile = () => {
                 )}
               </div>
               <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-4">
                   <div className="info">
                     <h3 className="text-lg font-medium">Full Name</h3>
                     <input
@@ -181,14 +181,15 @@ const UpdateProfile = () => {
                   </div>
                   <div className="info">
                     <h3 className="text-lg font-medium">Gender</h3>
-                    {editState !== "Edit" ?
+                    {editState !== "Edit" ? (
                       <input
                         type="text"
                         value={userDesignation === "Candidate" ? candidateProfileData.gender : recruiterProfileData.gender}
                         readOnly
                         name="gender"
                         className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm bg-white"
-                      /> :
+                      />
+                    ) : (
                       <select
                         name="gender"
                         value={userDesignation === "Candidate" ? candidateProfileData.gender : recruiterProfileData.gender}
@@ -199,10 +200,9 @@ const UpdateProfile = () => {
                         <option value="Female">Female</option>
                         <option value="Other">Other</option>
                       </select>
-                    }
+                    )}
                   </div>
                 </div>
-
                 {/* Conditionally render additional fields based on userDesignation */}
                 {userDesignation === "Candidate" && (
                   <>

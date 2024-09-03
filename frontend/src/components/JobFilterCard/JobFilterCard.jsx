@@ -14,6 +14,10 @@ const JobFilterCard = () => {
             filterType: "Salary",
             array: ["0-2 Lakh", "2-5 Lakh", "5-8 Lakh", "8-12 Lakh", "12-20 Lakh", "20 Lakh+"]
         },
+        {
+            filterType: "Date Posted",
+            array: ["Past 24 hours", "Past week", "Past month", "Anytime"]
+        },
     ];
 
     return (

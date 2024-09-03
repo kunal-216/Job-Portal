@@ -31,7 +31,7 @@ export const StoreContextProvider = ({ children }) => {
         logout();
         toast.error('Session expired. Please log in again.');
       } else {
-        toast.error('Failed to fetch the profile data.');
+        toast.error('Failed to fetch the user data.');
       }
 
     } catch (error) {
@@ -40,7 +40,7 @@ export const StoreContextProvider = ({ children }) => {
         toast.error('Session expired. Please log in again.');
       } else {
         console.error('Error fetching data:', error);
-        toast.error('An error occurred while fetching the profile data.');
+        toast.error('An error occurred while fetching the user data.');
       }
     }
   };
@@ -56,9 +56,9 @@ export const StoreContextProvider = ({ children }) => {
       if (response.data.success) {
         setCandidateProfileData(response.data.data);
         console.log(response.data.data)
-        toast.success("Candidate Profile Fetched Successfully");
+        toast.success("user Profile Fetched Successfully");
       } else {
-        toast.error(response.data.message || 'Failed to fetch candidate profile.');
+        toast.error(response.data.message || 'Failed to fetch user profile.');
       }
     } catch (error) {
       if (error.response) {
@@ -66,10 +66,10 @@ export const StoreContextProvider = ({ children }) => {
           logout();
           toast.error('Session expired. Please log in again.');
         } else {
-          toast.error(`Error: ${error.response.data.message || 'Failed to fetch candidate profile.'}`);
+          toast.error(`Error: ${error.response.data.message || 'Failed to fetch user profile.'}`);
         }
       } else {
-        console.error('Error fetching candidate data:', error);
+        console.error('Error fetching user data:', error);
         toast.error('An unexpected error occurred.');
       }
     }
@@ -86,13 +86,13 @@ export const StoreContextProvider = ({ children }) => {
 
       if (response.status === 200) {
         setRecruiterProfileData(response.data.data);
-        toast.success("Recruiter Profile Fetched Successfully");
+        toast.success("User Profile Fetched Successfully");
       } else {
-        console.error('Failed to fetch recruiter profile:', response.data);
-        toast.error('Failed to fetch recruiter profile.');
+        console.error('Failed to fetch user profile:', response.data);
+        toast.error('Failed to fetch user profile.');
       }
     } catch (error) {
-      console.error('Error fetching recruiter data:', error);
+      console.error('Error fetching user data:', error);
       toast.error('An error occurred while fetching recruiter profile.');
     }
   };

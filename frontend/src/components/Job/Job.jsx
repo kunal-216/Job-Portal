@@ -32,6 +32,7 @@ const Job = () => {
             <div className='flex items-center gap-2 mt-4'>
                 <span className="px-4 py-2 rounded-full bg-teal-500 text-white text-sm font-medium">Full-time</span>
                 <span className="px-4 py-2 rounded-full bg-indigo-500 text-white text-sm font-medium">₹40,000 - ₹60,000</span>
+                <span className="px-4 py-2 rounded-full bg-teal-800 text-white text-sm font-medium">0-1 years</span>
             </div>
 
             <div className='flex items-center justify-between mt-6'>

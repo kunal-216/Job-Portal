@@ -3,19 +3,23 @@ import { Sidebar } from '../../components/index';
 import { toast } from 'react-toastify';
 import { useContextProvider } from '../../context/StoreContext';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const PostOpportunity = () => {
-  const { url } = useContextProvider();
+  const { url, recruiterProfileData } = useContextProvider();
+  const navigate = useNavigate();
 
+  // type means job or opportunity
   const [type, setType] = useState("job");
+  // opportunityType means part time, full time, WFH
   const [data, setData] = useState({
     title: "",
     description: "",
     location: "",
     salary: "",
-    company: "",
     category: "",
-    position: "",
+    workMode: "",
+    experience: "",
   });
 
   const handleChange = (e) => {
@@ -32,26 +36,29 @@ const PostOpportunity = () => {
         description: data.description,
         location: data.location,
         salary: data.salary,
-        company: data.company,
         category: data.category,
-        position: data.position,
+        experience: data.experience,
+        recruiterId: recruiterProfileData._id,
+        workMode: data.workMode,
       }, {
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
       });
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         toast.success('Opportunity posted successfully!');
         setData({
           title: "",
           description: "",
           location: "",
           salary: "",
-          company: "",
           category: "",
-          position: "",
+          workMode: "",
+          experience: "",
         });
+        navigate("/")
       }
     } catch (error) {
       toast.error('Failed to post opportunity. Please try again.');
@@ -75,7 +82,7 @@ const PostOpportunity = () => {
               name='type'
               id='type'
               className='w-full p-2 border border-gray-300 rounded'
-              value={type}
+              value={data.type}
               onChange={(e) => setType(e.target.value)}
             >
               <option value='job'>Job</option>
@@ -110,7 +117,6 @@ const PostOpportunity = () => {
                 value={data.location}
                 onChange={handleChange}
                 placeholder='Enter location'
-                required
               />
             </div>
             <div>
@@ -124,22 +130,22 @@ const PostOpportunity = () => {
                 className='w-full p-2 border border-gray-300 rounded'
                 value={data.salary}
                 onChange={handleChange}
-                placeholder='Enter salary'
+                placeholder='10,00,000-15,00,000'
                 required
               />
             </div>
             <div>
-              <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='company'>
-                Company Name
+              <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='experience'>
+                Experience Required
               </label>
               <input
                 type='text'
-                name='company'
-                id='company'
+                name='experience'
+                id='experience'
                 className='w-full p-2 border border-gray-300 rounded'
-                value={data.company}
+                value={data.experience}
                 onChange={handleChange}
-                placeholder='Enter company name'
+                placeholder='0-2 years'
                 required
               />
             </div>
@@ -148,31 +154,51 @@ const PostOpportunity = () => {
             <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='category'>
               Category
             </label>
-            <input
-              type='text'
+            <select
               name='category'
               id='category'
               className='w-full p-2 border border-gray-300 rounded'
               value={data.category}
-              onChange={handleChange}
-              placeholder='Enter category'
-              required
-            />
+              onChange={handleChange}>
+              <option value="" disabled>Select Category</option>
+              <option value='Android Development'>Android Development</option>
+              <option value='Artificial Intelligence'>Artificial Intelligence</option>
+              <option value='Backend Development'>Backend Development</option>
+              <option value='Blockchain Developer'>Blockchain Developer</option>
+              <option value='Data Analyst'>Data Analyst</option>
+              <option value='Data Scientist'>Data Scientist</option>
+              <option value='DevOps'>DevOps</option>
+              <option value='Flutter Development'>Flutter Development</option>
+              <option value='Frontend Development'>Frontend Development</option>
+              <option value='Full Stack Development'>Full Stack Development</option>
+              <option value='Game Development'>Game Development</option>
+              <option value='Graphic Editing'>Graphic Editing</option>
+              <option value='Machine Learning'>Machine Learning</option>
+              <option value='Mobile App Development'>Mobile App Development</option>
+              <option value='Sales Executive'>Sales Executive</option>
+              <option value='SEO Optimisation'>SEO Optimisation</option>
+              <option value='Software Development'>Software Development</option>
+              <option value='Software Testing'>Software Testing</option>
+              <option value='Ui/Ux Development'>Ui/Ux Development</option>
+            </select>
           </div>
           <div className='mb-4'>
-            <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='position'>
-              Position
+            <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='workMode'>
+              Work Mode
             </label>
-            <input
-              type='text'
-              name='position'
-              id='position'
+            <select
+              name='workMode'
+              id='workMode'
               className='w-full p-2 border border-gray-300 rounded'
-              value={data.position}
+              value={data.workMode}
               onChange={handleChange}
-              placeholder='Enter position'
-              required
-            />
+            >
+              <option value="" disabled>Select mode of Work</option>
+              <option value='Full Time'>Full Time</option>
+              <option value='Part Time'>Part Time</option>
+              <option value='Remote'>Remote</option>
+              <option value='Hybrid'>Hybrid</option>
+            </select>
           </div>
           <div className='mb-6'>
             <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='description'>
