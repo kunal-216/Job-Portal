@@ -3,13 +3,11 @@ import { Sidebar } from '../../components/index';
 import { toast } from 'react-toastify';
 import { useContextProvider } from '../../context/StoreContext';
 import axios from 'axios';
-import { assets } from '../../assets/assets';
 
 const PostOpportunity = () => {
   const { url } = useContextProvider();
 
   const [type, setType] = useState("job");
-  const [logoImg, setLogoImg] = useState(null);
   const [data, setData] = useState({
     title: "",
     description: "",
@@ -25,29 +23,21 @@ const PostOpportunity = () => {
     setData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleImageChange = (e) => {
-    setLogoImg(e.target.files[0]);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('title', data.title);
-    formData.append('description', data.description);
-    formData.append('location', data.location);
-    formData.append('salary', data.salary);
-    formData.append('company', data.company);
-    formData.append('category', data.category);
-    formData.append('position', data.position);
-    if (logoImg) {
-      formData.append('logoImg', logoImg);
-    }
-
     try {
-      const response = await axios.post(`${url}/api/opportunity/post-${type}`, formData, {
+      const response = await axios.post(`${url}/api/opportunity/post-${type}`, {
+        title: data.title,
+        description: data.description,
+        location: data.location,
+        salary: data.salary,
+        company: data.company,
+        category: data.category,
+        position: data.position,
+      }, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json',
         },
       });
 
@@ -62,7 +52,6 @@ const PostOpportunity = () => {
           category: "",
           position: "",
         });
-        setLogoImg(null);
       }
     } catch (error) {
       toast.error('Failed to post opportunity. Please try again.');
@@ -73,29 +62,11 @@ const PostOpportunity = () => {
   return (
     <div className='flex'>
       <Sidebar />
-      <div className='flex-1 flex items-center justify-center min-h-screen bg-gray-100'>
+      <div className='flex-1 flex items-center justify-center min-h-screen bg-gray-100 mt-4 mb-6'>
         <form onSubmit={handleSubmit} className='w-full max-w-4xl bg-white p-8 rounded-lg shadow-lg my-6 mx-auto'>
           <header className='bg-blue-600 text-white py-4 rounded-lg shadow-lg mb-6 text-center'>
             <h1 className='text-4xl font-extrabold'>Post Opportunity</h1>
           </header>
-          <div className='mb-6 flex flex-col items-center'>
-            <p className='mb-2 text-gray-700 text-md font-semibold'>Upload Company Logo</p>
-            <label htmlFor="logoImg" className='cursor-pointer'>
-              <img
-                src={logoImg ? URL.createObjectURL(logoImg) : assets.upload_area}
-                alt="Upload"
-                className='w-[150px] h-auto'
-              />
-            </label>
-            <input
-              onChange={handleImageChange}
-              type="file"
-              name='logoImg'
-              id='logoImg'
-              className='hidden'
-              required
-            />
-          </div>
           <div className='mb-4'>
             <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='type'>
               Type
@@ -147,7 +118,7 @@ const PostOpportunity = () => {
                 Salary
               </label>
               <input
-                type='number'
+                type='text'
                 name='salary'
                 id='salary'
                 className='w-full p-2 border border-gray-300 rounded'
