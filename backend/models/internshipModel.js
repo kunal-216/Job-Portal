@@ -2,7 +2,8 @@ import mongoose from "mongoose"
 
 const internshipSchema = new mongoose.Schema({
     companyLogo: {type: String, required: true},
-    company: { type: mongoose.Schema.Types.ObjectId, ref: 'recruiter', required: true },
+    companyId: { type: mongoose.Schema.Types.ObjectId, ref: 'recruiter', required: true },
+    company: { type: String, required: true },
     applications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'application'}],
     title: { type: String, required: true },
     description: { type: String, required: true },

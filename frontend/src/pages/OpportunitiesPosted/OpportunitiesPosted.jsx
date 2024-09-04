@@ -57,7 +57,7 @@ const OpportunitiesPosted = () => {
     <div className='flex'>
       <Sidebar />
       <div className='flex-1 flex flex-col items-center min-h-screen bg-gray-100 p-6'>
-        <header className='w-[45%] bg-blue-600 text-white py-4 rounded-lg shadow-lg mb-6'>
+        <header className='w-[67%] bg-blue-600 text-white py-4 rounded-lg shadow-lg mb-6'>
           <div className='container mx-auto text-center'>
             <h1 className='text-4xl font-extrabold'>Opportunities Posted</h1>
           </div>

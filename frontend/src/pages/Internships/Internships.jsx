@@ -1,8 +1,10 @@
 import { InternshipFilterCard, Internship } from "../../components/index"
+import { useContextProvider } from "../../context/StoreContext"
 
 const Internships = () => {
 
-  const InternshipArray = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  const { internshipData } = useContextProvider();
+  const internships = internshipData || [];
 
   return (
     <div className='max-w-[100rem] mx-20 my-20'>
@@ -11,16 +13,18 @@ const Internships = () => {
         <div className='w-[18%]'>
           <InternshipFilterCard />
         </div>
-        {InternshipArray.length <= 0 ? <span>No Internships found</span> : (
+        {internships.length === 0 ? (
+          <span>No Internships found</span>
+        ) : (
           <div className='w-[80%] pb-5'>
             <div className='grid grid-cols-3 gap-4'>
-              {
-                InternshipArray.map((item) => (
-                  <div key={item}>
-                    <Internship />
-                  </div>
-                ))
-              }
+              {internships.map((item) => (
+                <Internship key={item._id} internship={item} createdAt={item.createdAt}
+                  company={item.company} internshipType={item.internshipType}
+                  companyLogo={item.companyLogo} description={item.description} 
+                  location={item.location} stipend={item.stipend} title={item.title}
+                />
+              ))}
             </div>
           </div>
         )}

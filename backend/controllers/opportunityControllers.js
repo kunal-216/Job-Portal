@@ -26,7 +26,8 @@ const postJob = async (req, res) => {
 
         const newJob = new jobModel({
             companyLogo: recruiter.companyLogo,
-            company: recruiter._id,
+            companyId: recruiter._id,
+            company:recruiter.companyName,
             title,
             description,
             salary,
@@ -69,7 +70,8 @@ const postInternship = async (req, res) => {
 
         const newInternship = internshipModel({
             companyLogo: recruiter.companyLogo,
-            company: recruiter._id,
+            companyId: recruiter._id,
+            company:recruiter.companyName,
             title,
             description,
             stipend: salary,

@@ -1,8 +1,9 @@
 import { JobFilterCard, Job } from "../../components/index"
+import { useContextProvider } from "../../context/StoreContext"
 
 const Jobs = () => {
-
-  const jobArray = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  const { jobData } = useContextProvider();
+  const jobs = jobData || [];
 
   return (
     <div className='max-w-[100rem] mx-20 my-20'>
@@ -11,16 +12,19 @@ const Jobs = () => {
         <div className='w-[18%]'>
           <JobFilterCard />
         </div>
-        {jobArray.length <= 0 ? <span>No Jobs found</span> : (
+        {jobs.length === 0 ? (
+          <span>No Jobs found</span>
+        ) : (
           <div className='w-[80%] pb-5'>
             <div className='grid grid-cols-3 gap-4'>
-              {
-                jobArray.map((item) => (
-                  <div key={item}>
-                    <Job />
-                  </div>
-                ))
-              }
+              {jobs.map((item) => (
+                <Job
+                  key={item._id} job={item} company={item.company} createdAt={item.createdAt}
+                  companyLogo={item.companyLogo} description={item.description}
+                  experience={item.experience} jobType={item.jobType}
+                  location={item.location} salary={item.salary} title={item.title}
+                />
+              ))}
             </div>
           </div>
         )}
