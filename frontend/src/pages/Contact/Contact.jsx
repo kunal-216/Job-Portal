@@ -76,7 +76,7 @@ const Contact = () => {
             </p>
             <p className="text-gray-600 mb-2"><strong>Address:</strong> 1234 Job Bridge Avenue, Job City, 56789</p>
             <p className="text-gray-600 mb-2"><strong>Phone:</strong> +91 123-456-7890</p>
-            <p className="text-gray-600 mb-2"><strong>Email:</strong> support@talentbridge.com</p>
+            <p className="text-gray-600 mb-2"><strong>Email:</strong> support@opportunet.com</p>
             <p className="text-gray-600 mb-4">
               You can also follow us on social media to stay updated with the latest job postings and career tips:
             </p>

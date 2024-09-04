@@ -42,7 +42,7 @@ const Footer = () => {
           <div className="text-center text-gray-400">
             <p className="mb-2">1234 Job Bridge Avenue, Job City, 56789</p>
             <p className="mb-2">Phone: +91 123-456-7890</p>
-            <p>Email: support@talentbridge.com</p>
+            <p>Email: support@opportunet.com</p>
           </div>
 
           <div className="text-center flex mt-7">
@@ -62,7 +62,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-8 text-center text-gray-400">
-          <p>&copy; 2024 Talent Bridge. All rights reserved.</p>
+          <p>&copy; 2024 OpportuNet. All rights reserved.</p>
         </div>
       </div>
     </footer>

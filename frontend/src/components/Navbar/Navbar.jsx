@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { FaUserCircle } from "react-icons/fa";
-import logo from "./logo.png";
 import { toast } from 'react-toastify';
 import { useContextProvider } from '../../context/StoreContext';
 import { useNavigate } from 'react-router-dom';
@@ -23,7 +22,7 @@ const Navbar = () => {
   return (
     <nav className='flex justify-between items-center p-4 bg-gray-800 text-white h-[80px]'>
       <div>
-        <Link to="/"><img src={logo} alt="Logo" className='h-9 text-white' /></Link>
+        <Link to="/"><h1 className='text-3xl font-bold text-white ml-10'>Opportu<span className='text-[#7ca6fb]'>Net</span></h1></Link>
       </div>
       <div className='flex space-x-6 mr-5'>
         <Link to="/" className='hover:text-gray-400'>Home</Link>
