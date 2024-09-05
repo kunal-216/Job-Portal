@@ -17,6 +17,7 @@ export const StoreContextProvider = ({ children }) => {
   const [userDesignation, setUserDesignation] = useState("Candidate");
   const [internshipData, setInternshipData] = useState(null);
   const [jobData, setJobData] = useState(null);
+  const [postedOpportunities, setPostedOpportunities] = useState(null)
 
   const fetchData = async () => {
     try {
@@ -75,7 +76,6 @@ export const StoreContextProvider = ({ children }) => {
     }
   };
 
-
   const fetchRecruiterData = async () => {
     try {
       const response = await axios.get(`${url}/api/profile/recruiter`, {
@@ -105,7 +105,7 @@ export const StoreContextProvider = ({ children }) => {
       })
       if (response.status === 201) {
         setJobData(response.data.data);
-      } else{
+      } else {
         console.error('Failed to fetch jobs:', response.data);
         toast.error('Failed to fetch jobs.');
       }
@@ -135,6 +135,39 @@ export const StoreContextProvider = ({ children }) => {
     }
   }
 
+  const fetchPostedOpportunities = async () => {
+    const token = localStorage.getItem('token');
+    if (!recruiterProfileData || !recruiterProfileData._id) {
+      console.error('Recruiter profile data is not available');
+      return;
+    }
+    const recruiterId = recruiterProfileData._id;
+    try {
+      const response = await axios.get(`${url}/api/opportunity/get-posted-opportunities/${recruiterId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        const data = response.data.data;
+        if (data && data.jobs && data.internships) {
+          setPostedOpportunities({ jobs: data.jobs, internships: data.internships });
+        } else {
+          console.error('No jobs or internships found in the response data');
+          toast.error('No opportunities found.');
+        }
+      } else {
+        console.error('Failed to fetch opportunities:', response.data);
+        toast.error('Failed to fetch opportunities.');
+      }
+    } catch (error) {
+      toast.error("Error fetching posted opportunities");
+      console.error('Error fetching posted opportunities:', error);
+    }
+  };
+
+
   useEffect(() => {
     const loadData = () => {
       const storedToken = localStorage.getItem("token");
@@ -143,6 +176,7 @@ export const StoreContextProvider = ({ children }) => {
       }
     };
     loadData();
+
     fetchJobs();
     fetchInternships();
   }, []);
@@ -158,10 +192,15 @@ export const StoreContextProvider = ({ children }) => {
       if (profileData.designation === "Candidate") {
         fetchCandidateData();
       } else if (profileData.designation === "Recruiter") {
-        fetchRecruiterData();
+        fetchRecruiterData().then(() => {
+          if (recruiterProfileData && recruiterProfileData._id) {
+            fetchPostedOpportunities();
+          }
+        });
       }
     }
-  }, [profileData]);
+  }, [profileData,recruiterProfileData]);
+  ;
 
 
   const logout = () => {
@@ -177,7 +216,8 @@ export const StoreContextProvider = ({ children }) => {
       url, logout,
       userDesignation, setUserDesignation,
       candidateProfileData, recruiterProfileData,
-      internshipData, jobData
+      internshipData, jobData,
+      postedOpportunities, setPostedOpportunities
     }}>
       {children}
     </StoreContext.Provider>

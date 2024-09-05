@@ -1,52 +1,41 @@
+/* eslint-disable no-unused-vars */
+import axios from 'axios';
 import { Sidebar } from '../../components';
+import { useContextProvider } from '../../context/StoreContext';
+import { toast } from 'react-toastify';
 
 const OpportunitiesPosted = () => {
 
-  const opportunities = [
-    {
-      type: 'Job',
-      salary: '$60,000 - $80,000',
-      role: 'Software Engineer Job',
-      workType: 'Full Time',
-      postedDate: '5 days ago',
-      candidatesApplied: 134
-    },
-    {
-      type: 'Internship',
-      salary: 'Unpaid',
-      role: ' Full Stack Development Intern',
-      workType: 'Part Time',
-      postedDate: '2 days ago',
-      candidatesApplied: 134
-    },
-    {
-      type: 'Internship',
-      salary: 'Unpaid',
-      role: ' Full Stack Development Intern',
-      workType: 'Part Time',
-      postedDate: '2 days ago',
-      candidatesApplied: 134
-    },
-    {
-      type: 'Internship',
-      salary: 'Unpaid',
-      role: ' Full Stack Development Intern',
-      workType: 'Part Time',
-      postedDate: '2 days ago',
-      candidatesApplied: 134
-    },
-    {
-      type: 'Internship',
-      salary: 'Unpaid',
-      role: ' Full Stack Development Intern',
-      workType: 'Part Time',
-      postedDate: '2 days ago',
-      candidatesApplied: 134
-    },
-  ];
+  const { url, postedOpportunities } = useContextProvider();
 
-  const handleDelete = (index) => {
-    console.log('Delete button clicked for index:', index);
+  const jobs = postedOpportunities?.jobs?.length ? postedOpportunities.jobs : [];
+  const internships = postedOpportunities?.internships?.length ? postedOpportunities.internships : [];
+
+  const opportunities = [...jobs, ...internships];
+
+  opportunities.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+  const getTimeDifference = (createdAt) => {
+    const now = new Date();
+    const createdDate = new Date(createdAt);
+    const timeDiff = Math.abs(now - createdDate);
+
+    const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
+    const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+
+    if (hoursDiff < 2) {
+      return 'Posted Just Now';
+    } else if (daysDiff === 0) {
+      return 'Today';
+    } else if (daysDiff === 1) {
+      return '1 day ago';
+    } else if (daysDiff <= 6) {
+      return `${daysDiff} days ago`;
+    } else if (daysDiff <= 30) {
+      return 'Last week';
+    } else {
+      return 'Last month';
+    }
   };
 
   const handleViewDetails = (index) => {
@@ -63,34 +52,34 @@ const OpportunitiesPosted = () => {
           </div>
         </header>
         <div className='w-full max-w-4xl'>
-          {opportunities.length > 0 ? (
+          {opportunities.length !== 0 ? (
             opportunities.map((opportunity, index) => (
               <div key={index} className='bg-white rounded-lg shadow-lg border border-gray-200 mb-6 p-6 relative'>
                 <span className='bg-blue-100 text-blue-600 text-lg font-medium px-4 py-2 rounded-full absolute top-4 right-4'>
-                  {opportunity.type}
+                  {opportunity.internshipCategory || opportunity.jobCategory}
                 </span>
                 <div className='flex flex-col items-start mb-4'>
-                  <p className='text-xl font-semibold text-blue-600'>{opportunity.role}</p>
+                  <p className='text-xl font-semibold text-blue-600'>{opportunity.title}</p>
                   <div className="flex flex-row gap-3 mt-4">
                     <span className='bg-blue-100 text-blue-600 text-lg font-medium px-4 py-2 rounded-full'>
-                      {opportunity.workType}
+                      {opportunity.internshipType || opportunity.jobType}
                     </span>
                     <span className='bg-blue-100 text-blue-600 text-lg font-medium px-4 py-2 rounded-full'>
-                      {opportunity.salary}
+                      ₹{opportunity.stipend || opportunity.salary}
                     </span>
                   </div>
                   <span className='bg-gray-100 text-gray-600 text-lg font-medium px-4 py-2 rounded-full mt-4'>
-                    {opportunity.postedDate}
+                    {getTimeDifference(opportunity.createdAt)}
                   </span>
                 </div>
                 <div className='flex justify-between gap-3 mt-4'>
                   <div className='my-2'>
                     <span className='bg-purple-100 text-red-800 text-md font-medium px-4 py-2 rounded-full mt-2'>
-                      {opportunity.candidatesApplied} Applications
+                      {opportunity.applications.length} Applications
                     </span>
                   </div>
                   <div className='flex flex-row gap-2'>
-                    <button onClick={() => handleDelete(index)} className='bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500'>
+                    <button className='bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500'>
                       Delete
                     </button>
                     <button onClick={() => handleViewDetails(index)} className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'>
