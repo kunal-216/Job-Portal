@@ -24,7 +24,7 @@ const getBookmarks = async (req, res) => {
 
 const addBookmark = async (req, res) => {
     const candidateId = req.params.id.trim();
-    const { companyName, companyLogo, opportunityType, title, salary, location, type, opportunityId } = req.body;       
+    const { companyName, companyLogo, opportunityType, title, salary, location, type, opportunityId } = req.body;
     try {
         if (!mongoose.Types.ObjectId.isValid(candidateId)) {
             return res.status(400).json({ message: "Invalid candidate ID" });
@@ -36,7 +36,7 @@ const addBookmark = async (req, res) => {
         if (!candidate) {
             return res.status(404).json({ message: "Candidate not found" });
         }
-        if (type === "Job" && !location ) {
+        if (type === "Job" && !location) {
             return res.status(400).json({ message: "Location is required for job type" });
         }
         const exists = await bookmarkModel.findOne({ opportunityId, candidateId });
@@ -64,4 +64,19 @@ const addBookmark = async (req, res) => {
     }
 };
 
-export { getBookmarks, addBookmark }
+const deleteBookmark = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const bookmark = await bookmarkModel.findById(id);
+        if (!bookmark) {
+            return res.status(404).json({ message: "Bookmark not found" });
+        }
+        await bookmarkModel.findByIdAndDelete(id)
+        res.status(201).json({ message: "Bookmark deleted successfully" })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Error deleting bookmark" });
+    }
+}
+
+export { getBookmarks, addBookmark, deleteBookmark }

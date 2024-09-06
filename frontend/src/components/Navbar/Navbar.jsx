@@ -22,13 +22,13 @@ const Navbar = () => {
   return (
     <nav className='flex justify-between items-center p-4 bg-gray-800 text-white h-[80px]'>
       <div>
-        <Link to="/"><h1 className='text-3xl font-bold text-white ml-10'>Opportu<span className='text-[#7ca6fb]'>Net</span></h1></Link>
+        <Link to="/"><h1 className='text-[35px] font-bold text-white ml-5 mb-2'>Opportu<span className='text-[#7ca6fb]'>Net</span></h1></Link>
       </div>
-      <div className='flex space-x-6 mr-5'>
-        <Link to="/" className='hover:text-gray-400'>Home</Link>
-        <Link to="/jobs" className='hover:text-gray-400'>Jobs</Link>
-        <Link to="/internships" className='hover:text-gray-400'>Internships</Link>
-        <Link to="/contact" className='hover:text-gray-400'>Contact Us</Link>
+      <div className='flex space-x-6 mr-12'>
+        <Link to="/" className='hover:text-gray-400 text-[18px]'>Home</Link>
+        <Link to="/jobs" className='hover:text-gray-400 text-[18px]'>Jobs</Link>
+        <Link to="/internships" className='hover:text-gray-400 text-[18px]'>Internships</Link>
+        <Link to="/contact" className='hover:text-gray-400 text-[18px]'>Contact Us</Link>
       </div>
       <div className='flex space-x-4'>
         {token ?
@@ -39,20 +39,20 @@ const Navbar = () => {
                   <img
                     src={`${url}/images/${candidateProfileData.image}`}
                     alt='Profile'
-                    className='rounded-full w-8 h-8 object-cover'
+                    className='rounded-full w-9 h-9 object-cover'
                   />
                 ) : (
-                  <FaUserCircle className='w-8 h-8 rounded-full' />
+                  <FaUserCircle className='w-10 h-10 rounded-full' />
                 )
                 :
                 recruiterProfileData?.image ? (
                   <img
                     src={`${url}/images/${recruiterProfileData.image}`}
                     alt='Profile'
-                    className='rounded-full w-8 h-8 object-cover'
+                    className='rounded-full w-9 h-9 object-cover'
                   />
                 ) : (
-                  <FaUserCircle className='w-8 h-8 rounded-full' />
+                  <FaUserCircle className='w-9 h-9 rounded-full' />
                 )
               }
             </Link>
@@ -61,7 +61,7 @@ const Navbar = () => {
           :
           <>
             <Link to="/user" className='flex items-center'>
-              <FaUserCircle className='w-8 h-8 rounded-full' />
+              <FaUserCircle className='w-9 h-9 rounded-full' />
             </Link>
             <Link to="/user" className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded'>Sign Up</Link>
           </>

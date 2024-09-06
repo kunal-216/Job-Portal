@@ -1,13 +1,32 @@
+import { toast } from "react-toastify";
 import { useContextProvider } from "../../context/StoreContext";
 import getTimeDifference from "../../utils/timeDifference";
+import axios from "axios";
 
-const BookmarkCard = ({ companyName, companyLogo, opportunityType,location, title, salary, type, createdAt }) => {
+const BookmarkCard = ({id, companyName, companyLogo, opportunityType, location, title, salary, type, createdAt, onDelete }) => {
 
     const postedTime = getTimeDifference(createdAt);
     const { url } = useContextProvider();
 
-    const handleDelete = () => {
-        console.log('Delete button clicked for:', companyName);
+    const handleDelete = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.delete(`${url}/api/bookmark/delete-bookmark/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                }
+            });
+            if (response.status === 201) {
+                toast.success('Bookmark deleted successfully');
+                onDelete(id);
+            } else {
+                toast.error("Failed to delete bookmark");
+            }
+        } catch (error) {
+            console.log(error)
+            toast.error(error?.response?.data?.message);
+        }
     };
 
     const handleViewDetails = () => {

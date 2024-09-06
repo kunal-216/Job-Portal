@@ -66,7 +66,7 @@ const MyApplications = () => {
       applicationStatus: 'Accepted',
       type: 'Internship',
     },
-    
+
   ];
 
   return (
@@ -79,7 +79,7 @@ const MyApplications = () => {
             <p className='mt-2 text-lg'>Keep track of all your job applications and internships in one place.</p>
           </div>
         </header>
-        
+
         <div className='overflow-x-auto'>
           <table className='min-w-full bg-white border border-gray-300 rounded-lg shadow-md'>
             <thead className='bg-gray-200'>
@@ -89,7 +89,7 @@ const MyApplications = () => {
                 <th className='py-3 text-xl text-center px-4 border-b text-gray-600'>Applied On</th>
                 <th className='py-3 text-xl text-center px-4 border-b text-gray-600'>Number of Applicants</th>
                 <th className='py-3 text-xl text-center px-4 border-b text-gray-600'>Application Status</th>
-                <th className='py-3 text-xl text-center px-4 border-b text-gray-600'>Type</th> {/* New column */}
+                <th className='py-3 text-xl text-center px-4 border-b text-gray-600'>Type</th>
                 <th className='py-3 text-xl text-center px-4 border-b text-gray-600'>Review Application</th>
               </tr>
             </thead>
@@ -101,7 +101,7 @@ const MyApplications = () => {
                   <td className='py-4 text-center px-6 text-lg text-gray-800'>{app.appliedOn}</td>
                   <td className='py-4 text-center px-6 text-lg text-gray-800'>{app.numberOfApplicants}</td>
                   <td className='py-4 text-center px-6 text-lg text-gray-800'>{app.applicationStatus}</td>
-                  <td className='py-4 text-center px-6 text-lg text-gray-800'>{app.type}</td> {/* New data */}
+                  <td className='py-4 text-center px-6 text-lg text-gray-800'>{app.type}</td>
                   <td className='py-4 px-16 text-lg text-gray-800'>
                     <button className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors'>
                       View
@@ -110,6 +110,7 @@ const MyApplications = () => {
                 </tr>
               ))}
             </tbody>
+
           </table>
         </div>
       </div>

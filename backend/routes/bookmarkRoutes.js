@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import { addBookmark, getBookmarks } from "../controllers/bookmarkControllers.js";
+import { addBookmark, getBookmarks, deleteBookmark } from "../controllers/bookmarkControllers.js";
 import authMiddleware from "../middleware/auth.js";
 
 const bookmarkRouter = express.Router();
@@ -24,5 +24,6 @@ const handleFileUpload = upload.fields({ name: 'logo', maxCount: 1 });
 
 bookmarkRouter.get("/get-bookmarks/:id", authMiddleware, getBookmarks);
 bookmarkRouter.post("/post-bookmark/:id", authMiddleware, handleFileUpload, addBookmark);
+bookmarkRouter.delete("/delete-bookmark/:id", authMiddleware, deleteBookmark);
 
 export default bookmarkRouter;

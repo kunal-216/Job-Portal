@@ -3,8 +3,12 @@ import { useContextProvider } from '../../context/StoreContext';
 
 const Bookmarked = () => {
 
-  const { bookmarkData } = useContextProvider();
+  const { bookmarkData, setBookmarkData } = useContextProvider();
   const bookmarks = bookmarkData || []
+  
+  const handleDeleteBookmark = (id) => {
+    setBookmarkData(prevData => prevData.filter(bookmarks => bookmarks._id !== id))
+  }
 
   return (
     <div className='flex'>
@@ -18,10 +22,10 @@ const Bookmarked = () => {
         <div className='w-full max-w-3xl'>
           {bookmarks.length !== 0 ? bookmarks.map((opportunity) => (
             <BookmarkCard
-              key={opportunity._id} type={opportunity.type} createdAt={opportunity.createdAt}
+              key={opportunity._id} id={opportunity._id} type={opportunity.type} createdAt={opportunity.createdAt}
               companyName={opportunity.companyName} companyLogo={opportunity.companyLogo}
               opportunityType={opportunity.opportunityType} title={opportunity.title}
-              salary={opportunity.salary} location={opportunity.location}
+              salary={opportunity.salary} location={opportunity.location} onDelete={handleDeleteBookmark}
             />
           )) :
             <>
