@@ -13,15 +13,15 @@ const Jobs = () => {
           <JobFilterCard />
         </div>
         {jobs.length === 0 ? (
-          <span>No Jobs found</span>
+          <p className='text-2xl text-gray-700 flex flex-row justify-center mt-60'>No Jobs found</p>
         ) : (
           <div className='w-[80%] pb-5'>
             <div className='grid grid-cols-3 gap-4'>
               {jobs.map((item) => (
                 <Job
-                  key={item._id} job={item} company={item.company} createdAt={item.createdAt}
-                  companyLogo={item.companyLogo} description={item.description}
-                  experience={item.experience} jobType={item.jobType}
+                  key={item._id} opportunityId={item._id} company={item.company} 
+                  companyLogo={item.companyLogo} createdAt={item.createdAt}
+                  experience={item.experience} jobType={item.jobType} description={item.description}
                   location={item.location} salary={item.salary} title={item.title}
                 />
               ))}

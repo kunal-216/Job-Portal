@@ -1,44 +1,10 @@
 import { Sidebar, BookmarkCard } from '../../components';
+import { useContextProvider } from '../../context/StoreContext';
 
 const Bookmarked = () => {
-  const bookmarks = [
-    {
-      type: 'Job',
-      logo: 'https://via.placeholder.com/64',
-      companyName: 'Company A',
-      salary: '$60,000/year',
-      role: 'Software Engineer',
-      workType: 'Full-time',
-      postedDate: '4 days ago',
-    },
-    {
-      type: 'Internship',
-      logo: 'https://via.placeholder.com/64',
-      companyName: 'Company B',
-      salary: '$20/hour',
-      role: 'Marketing Intern',
-      workType: 'Part-time',
-      postedDate: '2 days ago',
-    },
-    {
-      type: 'Job',
-      logo: 'https://via.placeholder.com/64',
-      companyName: 'Company A',
-      salary: '$60,000/year',
-      role: 'Software Engineer',
-      workType: 'Full-time',
-      postedDate: '4 days ago',
-    },
-    {
-      type: 'Internship',
-      logo: 'https://via.placeholder.com/64',
-      companyName: 'Company B',
-      salary: '$20/hour',
-      role: 'Marketing Intern',
-      workType: 'Part-time',
-      postedDate: '2 days ago',
-    },
-  ];
+
+  const { bookmarkData } = useContextProvider();
+  const bookmarks = bookmarkData || []
 
   return (
     <div className='flex'>
@@ -50,9 +16,17 @@ const Bookmarked = () => {
           </div>
         </header>
         <div className='w-full max-w-3xl'>
-          {bookmarks.map((job, index) => (
-            <BookmarkCard key={index} job={job} />
-          ))}
+          {bookmarks.length !== 0 ? bookmarks.map((opportunity) => (
+            <BookmarkCard
+              key={opportunity._id} type={opportunity.type} createdAt={opportunity.createdAt}
+              companyName={opportunity.companyName} companyLogo={opportunity.companyLogo}
+              opportunityType={opportunity.opportunityType} title={opportunity.title}
+              salary={opportunity.salary} location={opportunity.location}
+            />
+          )) :
+            <>
+              <p className='text-2xl text-gray-700 flex justify-center items-center mt-60'>No Bookmarks yet!</p>
+            </>}
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@ const PostOpportunity = () => {
   const navigate = useNavigate();
 
   // type means job or opportunity
-  const [type, setType] = useState("job");
+  const [type, setType] = useState('Job'); // Default to 'Job' or 'Internship'
   // opportunityType means part time, full time, WFH
   const [data, setData] = useState({
     title: "",
@@ -32,14 +32,9 @@ const PostOpportunity = () => {
 
     try {
       const response = await axios.post(`${url}/api/opportunity/post-${type}`, {
-        title: data.title,
-        description: data.description,
-        location: data.location,
-        salary: data.salary,
-        category: data.category,
-        experience: data.experience,
+        ...data,
+        type,
         recruiterId: recruiterProfileData._id,
-        workMode: data.workMode,
       }, {
         headers: {
           'Content-Type': 'application/json',
@@ -58,7 +53,8 @@ const PostOpportunity = () => {
           workMode: "",
           experience: "",
         });
-        navigate("/")
+        setType('Job'); 
+        navigate("/");
       }
     } catch (error) {
       toast.error('Failed to post opportunity. Please try again.');
@@ -82,11 +78,11 @@ const PostOpportunity = () => {
               name='type'
               id='type'
               className='w-full p-2 border border-gray-300 rounded'
-              value={data.type}
+              value={type}
               onChange={(e) => setType(e.target.value)}
             >
-              <option value='job'>Job</option>
-              <option value='internship'>Internship</option>
+              <option value='Job'>Job</option>
+              <option value='Internship'>Internship</option>
             </select>
           </div>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mb-4'>
@@ -159,27 +155,10 @@ const PostOpportunity = () => {
               id='category'
               className='w-full p-2 border border-gray-300 rounded'
               value={data.category}
-              onChange={handleChange}>
+              onChange={handleChange}
+            >
               <option value="" disabled>Select Category</option>
-              <option value='Android Development'>Android Development</option>
-              <option value='Artificial Intelligence'>Artificial Intelligence</option>
-              <option value='Backend Development'>Backend Development</option>
-              <option value='Blockchain Developer'>Blockchain Developer</option>
-              <option value='Data Analyst'>Data Analyst</option>
-              <option value='Data Scientist'>Data Scientist</option>
-              <option value='DevOps'>DevOps</option>
-              <option value='Flutter Development'>Flutter Development</option>
-              <option value='Frontend Development'>Frontend Development</option>
-              <option value='Full Stack Development'>Full Stack Development</option>
-              <option value='Game Development'>Game Development</option>
-              <option value='Graphic Editing'>Graphic Editing</option>
-              <option value='Machine Learning'>Machine Learning</option>
-              <option value='Mobile App Development'>Mobile App Development</option>
-              <option value='Sales Executive'>Sales Executive</option>
-              <option value='SEO Optimisation'>SEO Optimisation</option>
-              <option value='Software Development'>Software Development</option>
-              <option value='Software Testing'>Software Testing</option>
-              <option value='Ui/Ux Development'>Ui/Ux Development</option>
+              {/* Add other options here */}
             </select>
           </div>
           <div className='mb-4'>

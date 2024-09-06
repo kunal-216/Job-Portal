@@ -17,7 +17,8 @@ export const StoreContextProvider = ({ children }) => {
   const [userDesignation, setUserDesignation] = useState("Candidate");
   const [internshipData, setInternshipData] = useState(null);
   const [jobData, setJobData] = useState(null);
-  const [postedOpportunities, setPostedOpportunities] = useState(null)
+  const [postedOpportunities, setPostedOpportunities] = useState(null);
+  const [bookmarkData, setBookmarkData] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -167,6 +168,31 @@ export const StoreContextProvider = ({ children }) => {
     }
   };
 
+  const getBookMarkedOpportunities = async () => {
+    if (!candidateProfileData || !candidateProfileData._id) {
+      console.error('Candidate profile data is not available');
+      return;
+    }
+    const candidateId = candidateProfileData._id;
+    try {
+      const response = await axios.get(`${url}/api/bookmark/get-bookmarks/${candidateId}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      if (response.status === 200) {
+        setBookmarkData(response.data.data);
+      } else {
+        console.error('Failed to fetch bookmarks:', response.data);
+        toast.error('Failed to fetch bookmarks.');
+      }
+    } catch (error) {
+      console.error("Error fetching bookmarks:", error);
+      toast.error("Error fetching bookmarks");
+    }
+  };
+
 
   useEffect(() => {
     const loadData = () => {
@@ -176,7 +202,6 @@ export const StoreContextProvider = ({ children }) => {
       }
     };
     loadData();
-
     fetchJobs();
     fetchInternships();
   }, []);
@@ -199,9 +224,13 @@ export const StoreContextProvider = ({ children }) => {
         });
       }
     }
-  }, [profileData,recruiterProfileData]);
-  ;
+  }, [profileData, recruiterProfileData]);
 
+  useEffect(() => {
+    if (candidateProfileData && candidateProfileData._id) {
+      getBookMarkedOpportunities();
+    }
+  }, [candidateProfileData]);
 
   const logout = () => {
     setToken(null);
@@ -217,7 +246,8 @@ export const StoreContextProvider = ({ children }) => {
       userDesignation, setUserDesignation,
       candidateProfileData, recruiterProfileData,
       internshipData, jobData,
-      postedOpportunities, setPostedOpportunities
+      postedOpportunities, setPostedOpportunities,
+      bookmarkData, setBookmarkData
     }}>
       {children}
     </StoreContext.Provider>

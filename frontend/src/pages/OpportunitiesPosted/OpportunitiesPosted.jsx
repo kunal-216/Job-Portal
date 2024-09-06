@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import axios from 'axios';
+ import axios from 'axios';
 import { Sidebar } from '../../components';
 import { useContextProvider } from '../../context/StoreContext';
 import { toast } from 'react-toastify';
@@ -42,6 +41,25 @@ const OpportunitiesPosted = () => {
     console.log('View details button clicked for index:', index);
   };
 
+  const handleDeleteOpportunity = async (index) =>{
+    console.log(index);
+    try {
+      const response = await axios.delete(`${url}/api/opportunity/remove-posted-opportunity/${index}`,{
+        headers:{
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+
+      if(response.status === 200){
+        toast.success("Opportunity deleted successfully")
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Error deleting opportunity");
+    }
+  }
+
   return (
     <div className='flex'>
       <Sidebar />
@@ -56,7 +74,7 @@ const OpportunitiesPosted = () => {
             opportunities.map((opportunity, index) => (
               <div key={index} className='bg-white rounded-lg shadow-lg border border-gray-200 mb-6 p-6 relative'>
                 <span className='bg-blue-100 text-blue-600 text-lg font-medium px-4 py-2 rounded-full absolute top-4 right-4'>
-                  {opportunity.internshipCategory || opportunity.jobCategory}
+                  {opportunity.type || opportunity.type}
                 </span>
                 <div className='flex flex-col items-start mb-4'>
                   <p className='text-xl font-semibold text-blue-600'>{opportunity.title}</p>
@@ -79,7 +97,7 @@ const OpportunitiesPosted = () => {
                     </span>
                   </div>
                   <div className='flex flex-row gap-2'>
-                    <button className='bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500'>
+                    <button onClick={() => handleDeleteOpportunity(index)} className='bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500'>
                       Delete
                     </button>
                     <button onClick={() => handleViewDetails(index)} className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'>

@@ -1,10 +1,11 @@
 import mongoose from "mongoose"
 
 const internshipSchema = new mongoose.Schema({
-    companyLogo: {type: String, required: true},
+    type: { type: String, required: true },
+    companyLogo: { type: String, required: true },
     companyId: { type: mongoose.Schema.Types.ObjectId, ref: 'recruiter', required: true },
     company: { type: String, required: true },
-    applications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'application'}],
+    applications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'application' }],
     title: { type: String, required: true },
     description: { type: String, required: true },
     stipend: { type: String, required: true },
@@ -14,5 +15,5 @@ const internshipSchema = new mongoose.Schema({
     internshipType: { type: String, required: true },
 }, { timestamps: true });
 
-const internshipModel = mongoose.models.internship || mongoose.model("internship",internshipSchema);
+const internshipModel = mongoose.models.internship || mongoose.model("internship", internshipSchema);
 export default internshipModel;

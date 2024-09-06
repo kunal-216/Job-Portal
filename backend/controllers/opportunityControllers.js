@@ -14,9 +14,9 @@ const getJobs = async (req, res) => {
 }
 
 const postJob = async (req, res) => {
-    const { title, description, location, salary, category, experience, workMode, recruiterId } = req.body
+    const { title, description, location, salary, category, experience, workMode, recruiterId, type } = req.body
     try {
-        if (!title || !description || !salary || !category || !experience || !workMode) {
+        if (!title || !description || !salary || !category || !experience || !workMode || !type) {
             return res.status(400).json({ message: "Please fill in all fields" })
         }
 
@@ -26,6 +26,7 @@ const postJob = async (req, res) => {
         }
 
         const newJob = new jobModel({
+            type,
             companyLogo: recruiter.companyLogo,
             companyId: recruiter._id,
             company: recruiter.companyName,
@@ -58,9 +59,9 @@ const getInternships = async (req, res) => {
 }
 
 const postInternship = async (req, res) => {
-    const { title, description, location, category, salary, experience, workMode, recruiterId } = req.body;
+    const { title, description, location, category, salary, experience, workMode, recruiterId, type } = req.body;
     try {
-        if (!title || !description || !category || !salary || !experience || !workMode) {
+        if (!title || !description || !category || !salary || !experience || !workMode || !type) {
             return res.status(400).json({ message: "Please enter all the details" });
         }
 
@@ -70,6 +71,7 @@ const postInternship = async (req, res) => {
         }
 
         const newInternship = internshipModel({
+            type,
             companyLogo: recruiter.companyLogo,
             companyId: recruiter._id,
             company: recruiter.companyName,

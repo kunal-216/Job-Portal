@@ -6,6 +6,7 @@ import connectDB from "./config/db.js"
 import userRouter from "./routes/userRoutes.js";
 import profileRouter from "./routes/profileRoutes.js";
 import opportunityRouter from "./routes/opportunityRoutes.js"
+import bookmarkRouter from "./routes/bookmarkRoutes.js"
 
 dotenv.config();
 connectDB();
@@ -27,6 +28,7 @@ app.use(cookieParser())
 app.use("/api/user", userRouter);
 app.use("/api/profile", profileRouter);
 app.use("/api/opportunity", opportunityRouter);
+app.use("/api/bookmark", bookmarkRouter);
 
 // access all the images of the uploads folder using the URL or basically from the databases' .png file 
 // URL can be: http://localhost:3000/images/profileData.image or the deployed: https://blahblah.com/images/profileData.image

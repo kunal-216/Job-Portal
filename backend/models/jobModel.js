@@ -1,7 +1,8 @@
 import mongoose from "mongoose"
 
 const jobSchema = new mongoose.Schema({
-    companyLogo: {type: String, required: true},
+    type: { type: String, required: true },
+    companyLogo: { type: String, required: true },
     companyId: { type: mongoose.Schema.Types.ObjectId, ref: 'recruiter', required: true },
     company: { type: String, required: true },
     applications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'application' }],
