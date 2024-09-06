@@ -3,7 +3,7 @@ import { useContextProvider } from "../../context/StoreContext";
 import getTimeDifference from "../../utils/timeDifference";
 import axios from "axios";
 
-const BookmarkCard = ({id, companyName, companyLogo, opportunityType, location, title, salary, type, createdAt, onDelete }) => {
+const BookmarkCard = ({ id, companyName, companyLogo, opportunityType, location, title, salary, type, createdAt, onDelete }) => {
 
     const postedTime = getTimeDifference(createdAt);
     const { url } = useContextProvider();
@@ -51,7 +51,7 @@ const BookmarkCard = ({id, companyName, companyLogo, opportunityType, location, 
                         {opportunityType}
                     </span>
                     <span className='bg-blue-100 text-blue-600 text-lg font-medium px-4 py-2 rounded-full'>
-                        {salary}
+                        ₹{salary}
                     </span>
                     {location ?
                         <>
