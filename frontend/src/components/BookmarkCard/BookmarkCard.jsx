@@ -30,10 +30,6 @@ const BookmarkCard = ({ id, companyName, companyLogo, opportunityType, location,
         }
     };
 
-    const handleViewDetails = () => {
-        console.log('View details button clicked for:', companyName);
-    };
-
     return (
         <div className='bg-white rounded-lg shadow-lg border border-gray-200 mb-6 p-6 relative'>
             <span className='bg-blue-100 text-blue-600 text-lg font-medium px-4 py-2 rounded-full absolute top-4 right-4'>
@@ -70,9 +66,16 @@ const BookmarkCard = ({ id, companyName, companyLogo, opportunityType, location,
                 <button onClick={handleDelete} className='bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500'>
                     Delete
                 </button>
-                <Link to={`/jobs/${opportunityId}`} onClick={handleViewDetails} className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'>
-                    View Details
-                </Link>
+                {type === "Job" ?
+                    <>
+                        <Link to={`/jobs/${opportunityId}`} className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'>
+                            View Details
+                        </Link>
+                    </> : <>
+                        <Link to={`/internships/${opportunityId}`} className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'>
+                            View Details
+                        </Link>
+                    </>}
             </div>
         </div>
     );

@@ -34,6 +34,6 @@ opportunityRouter.get("/get-posted-opportunities/:id", authMiddleware, getPosted
 opportunityRouter.delete("/remove-posted-opportunity/:id", authMiddleware, deletePostedOpportunities);
 
 opportunityRouter.get("/jobs/:id", authMiddleware, getdynamicJobs)
-opportunityRouter.get("/jobs/:id", authMiddleware, getdynamicInternships)
+opportunityRouter.get("/internships/:id", authMiddleware, getdynamicInternships)
 
 export default opportunityRouter;

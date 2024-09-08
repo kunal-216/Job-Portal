@@ -145,6 +145,7 @@ const deletePostedOpportunities = async (req, res) => {
 
 const getdynamicJobs = async (req, res) => {
     const { id } = req.params;
+    console.log(id)
     try {
         const job = await jobModel.findById(id);
         if(!job){
@@ -152,7 +153,7 @@ const getdynamicJobs = async (req, res) => {
         }
         res.status(200).json(job)
     } catch (error) {
-        conseol.log(error);
+        console.log(error);
         res.status(500).json({ message: "Internal Server Error" })
     }
 }
@@ -166,7 +167,7 @@ const getdynamicInternships = async (req, res) => {
         }
         res.status(200).json(internship)
     } catch (error) {
-        conseol.log(error);
+        console.log(error);
         res.status(500).json({ message: "Internal Server Error" })
     }
 }
