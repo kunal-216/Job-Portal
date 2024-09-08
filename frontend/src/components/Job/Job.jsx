@@ -5,6 +5,7 @@ import { useContextProvider } from '../../context/StoreContext';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import getTimeDifference from '../../utils/timeDifference';
+import { Link } from 'react-router-dom';
 
 const Job = ({ company, companyLogo, jobType, description, experience, location, salary, title, createdAt, opportunityId }) => {
     const [bookmark, setBookmark] = useState(false);
@@ -85,7 +86,7 @@ const Job = ({ company, companyLogo, jobType, description, experience, location,
             </div>
 
             <div className='flex items-center justify-between mt-6'>
-                <button className='text-sm text-blue-500 hover:text-blue-700 hover:underline'>Details</button>
+                <Link to={`/jobs/${opportunityId}`} className='text-sm text-blue-500 hover:text-blue-700 hover:underline'>Details</Link>
                 <span className="px-4 py-2 text-pink-500 text-sm font-medium">{experience}</span>
             </div>
         </div>

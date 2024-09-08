@@ -14,15 +14,16 @@ const Internships = () => {
           <InternshipFilterCard />
         </div>
         {internships.length === 0 ? (
-          <p className='text-2xl text-gray-700 flex flex-row justify-center mt-60'>No Internships found</p>
+          <p className='text-2xl text-gray-700 flex flex-row mx-auto'>No Internships found</p>
         ) : (
           <div className='w-[80%] pb-5'>
             <div className='grid grid-cols-3 gap-4'>
               {internships.map((item) => (
-                <Internship key={item._id} opportunityId={item._id} internship={item}
-                  company={item.company} internshipType={item.internshipType}
+                <Internship key={item._id} opportunityId={item._id} internship={item} skills={item.skills}
+                  applyBy={item.applyBy} numberOfOpenings={item.numberOfOpenings} 
+                  company={item.company} internshipType={item.internshipType} about={item.about}
                   companyLogo={item.companyLogo} createdAt={item.createdAt} description={item.description}
-                  location={item.location} stipend={item.stipend} title={item.title}
+                  location={item.location} stipend={item.stipend} title={item.title} 
                 />
               ))}
             </div>

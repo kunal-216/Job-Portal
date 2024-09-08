@@ -5,6 +5,7 @@ import { useContextProvider } from '../../context/StoreContext';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import getTimeDifference from '../../utils/timeDifference';
+import { Link } from 'react-router-dom';
 
 const Internship = ({ company, companyLogo, internshipType, description, location, stipend, title, createdAt, opportunityId }) => {
 
@@ -83,7 +84,7 @@ const Internship = ({ company, companyLogo, internshipType, description, locatio
           <span className="px-4 py-2 rounded-full bg-indigo-500 text-white text-sm font-medium">₹{stipend}</span>
         </div>
         <div className='flex items-center justify-end mt-6'>
-          <button className='text-sm text-blue-500 hover:text-blue-700 hover:underline'>Details</button>
+          <Link to={`internships/${opportunityId}`} className='text-sm text-blue-500 hover:text-blue-700 hover:underline'>Details</Link>
         </div>
       </div>
     </div>

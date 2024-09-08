@@ -169,7 +169,7 @@ export const StoreContextProvider = ({ children }) => {
   };
 
   const getBookMarkedOpportunities = async () => {
-    if (!candidateProfileData || !candidateProfileData._id) {
+    if ((!candidateProfileData || !candidateProfileData._id) && (jobData || internshipData)) {
       console.error('Candidate profile data is not available');
       return;
     }
@@ -189,10 +189,8 @@ export const StoreContextProvider = ({ children }) => {
       }
     } catch (error) {
       console.error("Error fetching bookmarks:", error);
-      toast.error("Error fetching bookmarks");
     }
   };
-
 
   useEffect(() => {
     const loadData = () => {
