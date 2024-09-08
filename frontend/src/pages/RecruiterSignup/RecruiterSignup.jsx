@@ -16,6 +16,8 @@ const RecruiterSignup = () => {
         gender: "",
         companyName: "",
         location: "",
+        aboutCompany: "",
+        websiteOfCompany: ""
     });
 
     const onChangeHandler = (e) => {
@@ -25,28 +27,32 @@ const RecruiterSignup = () => {
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
-
+        
         const formData = new FormData();
         formData.append("gender", data.gender);
         formData.append("companyName", data.companyName);
-        formData.append("location", data.location);
+        formData.append("location", data.location); 
+        formData.append("aboutCompany", data.aboutCompany);
+        formData.append("websiteOfCompany", data.websiteOfCompany);
         formData.append("image", userImage);
         formData.append("companyLogo", companyLogo);
-
+    
         try {
-            const token = localStorage.getItem("token"); 
+            const token = localStorage.getItem("token");
             const response = await axios.post(`${url}/api/user/recruiter-register`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "Authorization": `Bearer ${token}`,
                 },
             });
-
+    
             if (response.status === 201) {
                 setData({
                     gender: "",
                     companyName: "",
                     location: "",
+                    websiteOfCompany: "",
+                    aboutCompany: ""
                 });
                 setUserImage(null);
                 setCompanyLogo(null);
@@ -59,6 +65,7 @@ const RecruiterSignup = () => {
             console.log(error);
         }
     };
+    
 
     return (
         <div className="p-4 max-w-lg mx-auto bg-white shadow-md rounded-lg my-16">
@@ -132,6 +139,26 @@ const RecruiterSignup = () => {
                         name="location"
                         value={data.location}
                         placeholder="Enter your location"
+                        onChange={onChangeHandler}
+                        className="w-full p-2 border border-gray-300 rounded-md"
+                    />
+                </div>
+                <div>
+                    <input
+                        type="text"
+                        name="aboutCompany"
+                        value={data.aboutCompany}
+                        placeholder="Enter description about the company"
+                        onChange={onChangeHandler}
+                        className="w-full p-2 border border-gray-300 rounded-md"
+                    />
+                </div>
+                <div>
+                    <input
+                        type="text"
+                        name="websiteOfCompany"
+                        value={data.websiteOfCompany}
+                        placeholder="Enter the company's website(if any)"
                         onChange={onChangeHandler}
                         className="w-full p-2 border border-gray-300 rounded-md"
                     />

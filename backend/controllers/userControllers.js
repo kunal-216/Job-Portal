@@ -123,7 +123,7 @@ const candidateRegister = async (req, res) => {
 };
 
 const recruiterRegister = async (req, res) => {
-    const { gender, location, companyName } = req.body;
+    const { gender, location, companyName, websiteOfCompany, aboutCompany } = req.body;
     try {
         const user = await userModel.findById(req.user.id);
         if (!user) {
@@ -134,7 +134,7 @@ const recruiterRegister = async (req, res) => {
             return res.status(400).json({ message: "Profile is already completed." });
         }
         
-        if (!location || !gender || !companyName) {
+        if (!location || !gender || !companyName || !aboutCompany || !websiteOfCompany) {
             return res.status(400).json({ message: "Please enter all details" });
         }
 
@@ -158,6 +158,8 @@ const recruiterRegister = async (req, res) => {
             location,
             companyLogo: companyLogofileName,
             gender,
+            aboutCompany,
+            websiteOfCompany,
         });
 
         await newRecruiter.save();

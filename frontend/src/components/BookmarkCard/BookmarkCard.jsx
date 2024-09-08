@@ -2,8 +2,9 @@ import { toast } from "react-toastify";
 import { useContextProvider } from "../../context/StoreContext";
 import getTimeDifference from "../../utils/timeDifference";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
-const BookmarkCard = ({ id, companyName, companyLogo, opportunityType, location, title, salary, type, createdAt, onDelete }) => {
+const BookmarkCard = ({ id, companyName, companyLogo, opportunityType, location, title, salary, type, createdAt, onDelete, opportunityId }) => {
 
     const postedTime = getTimeDifference(createdAt);
     const { url } = useContextProvider();
@@ -69,9 +70,9 @@ const BookmarkCard = ({ id, companyName, companyLogo, opportunityType, location,
                 <button onClick={handleDelete} className='bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500'>
                     Delete
                 </button>
-                <button onClick={handleViewDetails} className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'>
+                <Link to={`/jobs/${opportunityId}`} onClick={handleViewDetails} className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'>
                     View Details
-                </button>
+                </Link>
             </div>
         </div>
     );

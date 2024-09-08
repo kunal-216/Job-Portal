@@ -13,3 +13,5 @@ export { default as PostOpportunity } from "../pages/PostOpportunity/PostOpportu
 export { default as Bookmarked } from "../pages/Bookmarked/Bookmarked"
 export { default as RecruiterSignup } from "../pages/RecruiterSignup/RecruiterSignup"
 export { default as CandidateSignup } from "../pages/CandidateSignup/CandidateSignup"
+export { default as JobPage } from "../pages/JobPage/JobPage"
+export { default as InternshipPage } from "../pages/InternshipPage/InternshipPage"

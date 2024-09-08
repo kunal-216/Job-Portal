@@ -17,7 +17,7 @@ const getBookmarks = async (req, res) => {
         }
         res.status(200).json({ message: "Bookmarks fetched successfully", data: bookmarks });
     } catch (error) {
-        console.error("Error fetching bookmarks:", error);
+        console.log(error);
         res.status(500).json({ message: "Internal server error" });
     }
 };

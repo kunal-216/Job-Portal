@@ -1,11 +1,11 @@
- import axios from 'axios';
+import axios from 'axios';
 import { Sidebar } from '../../components';
 import { useContextProvider } from '../../context/StoreContext';
 import { toast } from 'react-toastify';
 
 const OpportunitiesPosted = () => {
 
-  const { url, postedOpportunities } = useContextProvider();
+  const { url, postedOpportunities, setPostedOpportunities } = useContextProvider();
 
   const jobs = postedOpportunities?.jobs?.length ? postedOpportunities.jobs : [];
   const internships = postedOpportunities?.internships?.length ? postedOpportunities.internships : [];
@@ -37,21 +37,34 @@ const OpportunitiesPosted = () => {
     }
   };
 
-  const handleViewDetails = (index) => {
-    console.log('View details button clicked for index:', index);
+  const handleViewDetails = (id) => {
+    console.log('View details button clicked for index:', id);
   };
 
-  const handleDeleteOpportunity = async (index) =>{
-    console.log(index);
+  const handleDeleteOpportunity = async (id, type) => {
     try {
-      const response = await axios.delete(`${url}/api/opportunity/remove-posted-opportunity/${index}`,{
-        headers:{
+      const response = await axios.delete(`${url}/api/opportunity/remove-posted-opportunity/${id}`, {
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       })
 
-      if(response.status === 200){
+      if (response.status === 200) {
+        setPostedOpportunities((prevOpportunities) => {
+          if (type === 'job') {
+            return {
+              ...prevOpportunities,
+              jobs: prevOpportunities.jobs.filter((job) => job._id !== id)
+            };
+          } else if (type === 'internship') {
+            return {
+              ...prevOpportunities,
+              internships: prevOpportunities.internships.filter((internship) => internship._id !== id)
+            };
+          }
+          return prevOpportunities; 
+        });
         toast.success("Opportunity deleted successfully")
       }
     } catch (error) {
@@ -71,8 +84,8 @@ const OpportunitiesPosted = () => {
         </header>
         <div className='w-full max-w-4xl'>
           {opportunities.length !== 0 ? (
-            opportunities.map((opportunity, index) => (
-              <div key={index} className='bg-white rounded-lg shadow-lg border border-gray-200 mb-6 p-6 relative'>
+            opportunities.map((opportunity) => (
+              <div key={opportunity._id} className='bg-white rounded-lg shadow-lg border border-gray-200 mb-6 p-6 relative'>
                 <span className='bg-blue-100 text-blue-600 text-lg font-medium px-4 py-2 rounded-full absolute top-4 right-4'>
                   {opportunity.type || opportunity.type}
                 </span>
@@ -97,10 +110,10 @@ const OpportunitiesPosted = () => {
                     </span>
                   </div>
                   <div className='flex flex-row gap-2'>
-                    <button onClick={() => handleDeleteOpportunity(index)} className='bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500'>
+                    <button onClick={() => handleDeleteOpportunity(opportunity._id, opportunity.type)} className='bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500'>
                       Delete
                     </button>
-                    <button onClick={() => handleViewDetails(index)} className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'>
+                    <button onClick={() => handleViewDetails(opportunity._id)} className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'>
                       View Details
                     </button>
                   </div>

@@ -24,7 +24,7 @@ const Bookmarked = () => {
             <BookmarkCard
               key={opportunity._id} id={opportunity._id} type={opportunity.type} createdAt={opportunity.createdAt}
               companyName={opportunity.companyName} companyLogo={opportunity.companyLogo}
-              opportunityType={opportunity.opportunityType} title={opportunity.title}
+              opportunityType={opportunity.opportunityType} title={opportunity.title} opportunityId={opportunity.opportunityId}
               salary={opportunity.salary} location={opportunity.location} onDelete={handleDeleteBookmark}
             />
           )) :

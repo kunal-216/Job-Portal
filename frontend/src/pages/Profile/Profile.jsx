@@ -15,7 +15,7 @@ const Profile = () => {
           </div>
         </header>
         {profileData ? (
-          <div className='w-full max-w-4xl bg-white shadow-md rounded-lg p-6'>
+          <div className='w-full max-w-4xl bg-white shadow-md rounded-lg p-6 mb-5'>
             {userDesignation === "Candidate" ? (
               <>
                 <div className='flex justify-center mb-6'>
@@ -89,6 +89,8 @@ const Profile = () => {
                     {renderProfileField('Company Name', recruiterProfileData?.companyName, 'w-1/2')}
                     {renderProfileField('Company Location', recruiterProfileData?.location, 'w-1/2')}
                   </div>
+                  {renderProfileField('About the company', recruiterProfileData?.aboutCompany)}
+                  {renderProfileField('Website of the company', recruiterProfileData?.websiteOfCompany)}
                 </div>
               </>
             )}
