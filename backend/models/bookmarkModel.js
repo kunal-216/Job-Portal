@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const bookmarkSchema = mongoose.Schema({
+const bookmarkSchema = new mongoose.Schema({
     candidateId: { type: mongoose.Schema.Types.ObjectId, ref: "candidate", required: true },
     opportunityId: { type: mongoose.Schema.Types.ObjectId, required: true },
     type: { type: String, enum: ["Job", "Internship"], required: true }, 

@@ -8,7 +8,7 @@ const jobSchema = new mongoose.Schema({
     applications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'application' }],
     title: { type: String, required: true },
     description: { type: String, required: true },
-    salary: { type: String, required: true },
+    salary: { type: Number, required: true },
     location: { type: String },
     experience: { type: String, required: true },
     jobCategory: { type: String, required: true },

@@ -81,7 +81,7 @@ const Internship = ({ company, companyLogo, internshipType, description, locatio
       <div className='flex flex-row justify-between'>
         <div className='flex items-center gap-2 mt-2'>
           <span className="px-4 py-2 rounded-full bg-teal-500 text-white text-sm font-medium">{internshipType}</span>
-          <span className="px-4 py-2 rounded-full bg-indigo-500 text-white text-sm font-medium">₹{stipend}</span>
+          <span className="px-4 py-2 rounded-full bg-indigo-500 text-white text-sm font-medium">₹{stipend},000 /month</span>
         </div>
         <div className='flex items-center justify-end mt-6'>
           <Link to={`/internships/${opportunityId}`} className='text-sm text-blue-500 hover:text-blue-700 hover:underline'>Details</Link>

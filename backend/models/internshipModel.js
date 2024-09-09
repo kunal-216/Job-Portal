@@ -8,7 +8,7 @@ const internshipSchema = new mongoose.Schema({
     applications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'application' }],
     title: { type: String, required: true },
     description: { type: String, required: true },
-    stipend: { type: String, required: true },
+    stipend: { type: Number, required: true },
     location: { type: String },
     experience: { type: String, required: true },
     internshipCategory: { type: String, required: true },

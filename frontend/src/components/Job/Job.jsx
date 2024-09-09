@@ -82,7 +82,7 @@ const Job = ({ company, companyLogo, jobType, description, experience, location,
 
             <div className='flex items-center gap-2 mt-4'>
                 <span className="px-4 py-2 rounded-full bg-teal-500 text-white text-sm font-medium">{jobType}</span>
-                <span className="px-4 py-2 rounded-full bg-indigo-500 text-white text-sm font-medium">₹{salary}</span>
+                <span className="px-4 py-2 rounded-full bg-indigo-500 text-white text-sm font-medium">₹{salary} LPA</span>
             </div>
 
             <div className='flex items-center justify-between mt-6'>

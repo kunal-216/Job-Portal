@@ -145,13 +145,13 @@ const PostOpportunity = () => {
                 Salary
               </label>
               <input
-                type='text'
+                type='number'
                 name='salary'
                 id='salary'
                 className='w-full p-2 border border-gray-300 rounded'
                 value={data.salary}
                 onChange={handleChange}
-                placeholder='10,00,000-15,00,000'
+                placeholder='(in Lpa for jobs and k per month for internships)'
                 required
               />
             </div>
