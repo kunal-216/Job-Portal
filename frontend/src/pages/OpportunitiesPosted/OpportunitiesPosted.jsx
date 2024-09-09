@@ -63,7 +63,7 @@ const OpportunitiesPosted = () => {
               internships: prevOpportunities.internships.filter((internship) => internship._id !== id)
             };
           }
-          return prevOpportunities; 
+          return prevOpportunities;
         });
         toast.success("Opportunity deleted successfully")
       }
@@ -95,9 +95,13 @@ const OpportunitiesPosted = () => {
                     <span className='bg-blue-100 text-blue-600 text-lg font-medium px-4 py-2 rounded-full'>
                       {opportunity.internshipType || opportunity.jobType}
                     </span>
-                    <span className='bg-blue-100 text-blue-600 text-lg font-medium px-4 py-2 rounded-full'>
-                      ₹{opportunity.stipend || opportunity.salary}
-                    </span>
+                    {opportunity.type === "Internship" ?
+                        <span className='bg-blue-100 text-blue-600 text-lg font-medium px-4 py-2 rounded-full'>
+                          ₹{opportunity.stipend},000 /month
+                        </span> : <span className='bg-blue-100 text-blue-600 text-lg font-medium px-4 py-2 rounded-full'>
+                          ₹{opportunity.salary} LPA
+                        </span>
+                    }
                   </div>
                   <span className='bg-gray-100 text-gray-600 text-lg font-medium px-4 py-2 rounded-full mt-4'>
                     {getTimeDifference(opportunity.createdAt)}

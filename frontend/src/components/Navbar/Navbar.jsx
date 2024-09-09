@@ -78,10 +78,10 @@ const Navbar = () => {
           </>
           :
           <>
-            <div className='flex items-center'>
+            <Link to="/user" className='flex items-center'>
               <FaUserCircle className='w-9 h-9 rounded-full' />
-            </div>
-            <div className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded'>Sign Up</div>
+            </Link>
+            <Link to="/user" className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded'>Sign Up</Link>
           </>
         }
       </div>

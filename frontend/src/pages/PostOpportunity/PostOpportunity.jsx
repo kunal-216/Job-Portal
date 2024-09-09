@@ -166,7 +166,7 @@ const PostOpportunity = () => {
                 className='w-full p-2 border border-gray-300 rounded'
                 value={data.experience}
                 onChange={handleChange}
-                placeholder='0-2 years'
+                placeholder='2'
                 required
               />
             </div>
@@ -274,7 +274,7 @@ const PostOpportunity = () => {
                 type="text"
                 value={newSkill}
                 onChange={(e) => setNewSkill(e.target.value)}
-                placeholder="Enter your skills"
+                placeholder="Enter skills required"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md"
               />
               <button
