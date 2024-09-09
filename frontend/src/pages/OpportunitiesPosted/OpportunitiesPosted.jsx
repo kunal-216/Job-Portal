@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Sidebar } from '../../components';
 import { useContextProvider } from '../../context/StoreContext';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 const OpportunitiesPosted = () => {
 
@@ -36,11 +37,7 @@ const OpportunitiesPosted = () => {
       return 'Last month';
     }
   };
-
-  const handleViewDetails = (id) => {
-    console.log('View details button clicked for index:', id);
-  };
-
+  
   const handleDeleteOpportunity = async (id, type) => {
     try {
       const response = await axios.delete(`${url}/api/opportunity/remove-posted-opportunity/${id}`, {
@@ -49,7 +46,7 @@ const OpportunitiesPosted = () => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       })
-
+      
       if (response.status === 200) {
         setPostedOpportunities((prevOpportunities) => {
           if (type === 'job') {
@@ -117,9 +114,9 @@ const OpportunitiesPosted = () => {
                     <button onClick={() => handleDeleteOpportunity(opportunity._id, opportunity.type)} className='bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500'>
                       Delete
                     </button>
-                    <button onClick={() => handleViewDetails(opportunity._id)} className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'>
+                    <Link to={`/view-applications/${opportunity._id}?type=${opportunity.type}`}  className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'>
                       View Details
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

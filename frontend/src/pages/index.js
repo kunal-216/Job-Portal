@@ -15,3 +15,4 @@ export { default as RecruiterSignup } from "../pages/RecruiterSignup/RecruiterSi
 export { default as CandidateSignup } from "../pages/CandidateSignup/CandidateSignup"
 export { default as JobPage } from "../pages/JobPage/JobPage"
 export { default as InternshipPage } from "../pages/InternshipPage/InternshipPage"
+export { default as ViewApplications } from "../pages/ViewApplications/ViewApplications"

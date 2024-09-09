@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
-  Home, LoginSignup, Jobs, Contact,
+  Home, LoginSignup, Jobs, Contact, ViewApplications,
   Internships, Dashboard, MyApplications,
   UpdateProfile, Profile, Resume, PostOpportunity,
   OpportunitiesPosted, Bookmarked, CandidateSignup,
@@ -29,6 +29,7 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path='/my-applications' element={<MyApplications />} />
+          <Route path='/view-applications/:id' element={<ViewApplications />} />
           <Route path='/update-profile' element={<UpdateProfile />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/resume' element={<Resume />} />

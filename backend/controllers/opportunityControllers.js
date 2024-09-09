@@ -145,7 +145,6 @@ const deletePostedOpportunities = async (req, res) => {
 
 const getdynamicJobs = async (req, res) => {
     const { id } = req.params;
-    console.log(id)
     try {
         const job = await jobModel.findById(id);
         if(!job){
