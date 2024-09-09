@@ -8,10 +8,35 @@ import axios from "axios";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
 const InternshipPage = () => {
-  const { url } = useContextProvider();
+  const { url, candidateProfileData } = useContextProvider();
   const { id } = useParams();
   const [internship, setInternship] = useState(null);
   const navigate = useNavigate();
+
+  const applyHandler = async(e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${url}/api/application/apply`,{
+        internshipId: id,
+        type:"Internship",
+        candidateId: candidateProfileData._id,
+      },{
+        headers:{
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json',
+        }
+      });
+      
+      if(response.status === 201){
+        navigate("/internships")
+        toast.success('Application submitted successfully');
+      }
+    } catch (error) {
+      console.error(error);
+      const errorMessage = error.response?.data?.message || 'An unexpected error occurred';
+      toast.error(errorMessage);
+    }
+  }
 
   useEffect(() => {
     const fetchInternships = async () => {
@@ -67,7 +92,7 @@ const InternshipPage = () => {
                 {internship.internshipType}
               </span>
               <span className="bg-green-100 text-green-600 text-lg font-medium px-4 py-2 rounded-full">
-                ₹{internship.stipend}
+                ₹{internship.stipend},000 /month
               </span>
               <span className="bg-red-100 text-red-600 text-lg font-medium px-4 py-2 rounded-full">
                 {getTimeDifference(internship.createdAt)}
@@ -110,7 +135,7 @@ const InternshipPage = () => {
           </div>
 
           <div className="flex flex-col gap-4 mb-6">
-            <button className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button onClick={applyHandler} className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
               Apply Now
             </button>
           </div>

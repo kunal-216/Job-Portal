@@ -19,6 +19,7 @@ export const StoreContextProvider = ({ children }) => {
   const [jobData, setJobData] = useState(null);
   const [postedOpportunities, setPostedOpportunities] = useState(null);
   const [bookmarkData, setBookmarkData] = useState(null);
+  const [applications, setApplications] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -192,6 +193,25 @@ export const StoreContextProvider = ({ children }) => {
     }
   };
 
+  const fetchAppliedOpportunities = async () => {
+    const id = candidateProfileData._id;
+    try {
+      const response = await axios.get(`${url}/api/application/get-applications/${id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
+      if (response.status === 200) {
+        setApplications(response.data.data);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(error?.response?.data?.message || "Internal Server Error")
+    }
+  }
+
   useEffect(() => {
     const loadData = () => {
       const storedToken = localStorage.getItem("token");
@@ -227,6 +247,7 @@ export const StoreContextProvider = ({ children }) => {
   useEffect(() => {
     if (candidateProfileData && candidateProfileData._id) {
       getBookMarkedOpportunities();
+      fetchAppliedOpportunities();
     }
   }, [candidateProfileData]);
 
@@ -245,7 +266,8 @@ export const StoreContextProvider = ({ children }) => {
       candidateProfileData, recruiterProfileData,
       internshipData, jobData,
       postedOpportunities, setPostedOpportunities,
-      bookmarkData, setBookmarkData
+      bookmarkData, setBookmarkData,
+      applications, setApplications
     }}>
       {children}
     </StoreContext.Provider>

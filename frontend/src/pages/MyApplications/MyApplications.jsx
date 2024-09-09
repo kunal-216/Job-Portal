@@ -1,73 +1,10 @@
+import { Link } from 'react-router-dom';
 import { Sidebar } from '../../components/index';
+import { useContextProvider } from '../../context/StoreContext';
 
 const MyApplications = () => {
-  const applications = [
-    {
-      companyName: 'Company A',
-      profile: 'Software Engineer',
-      appliedOn: '2024-08-01',
-      numberOfApplicants: 150,
-      applicationStatus: 'Under Review',
-      type: 'Job',
-    },
-    {
-      companyName: 'Company B',
-      profile: 'Product Manager',
-      appliedOn: '2024-08-10',
-      numberOfApplicants: 85,
-      applicationStatus: 'Accepted',
-      type: 'Internship',
-    },
-    {
-      companyName: 'Company B',
-      profile: 'Product Manager',
-      appliedOn: '2024-08-10',
-      numberOfApplicants: 85,
-      applicationStatus: 'Accepted',
-      type: 'Internship',
-    },
-    {
-      companyName: 'Company B',
-      profile: 'Product Manager',
-      appliedOn: '2024-08-10',
-      numberOfApplicants: 85,
-      applicationStatus: 'Accepted',
-      type: 'Internship',
-    },
-    {
-      companyName: 'Company B',
-      profile: 'Product Manager',
-      appliedOn: '2024-08-10',
-      numberOfApplicants: 85,
-      applicationStatus: 'Accepted',
-      type: 'Internship',
-    },
-    {
-      companyName: 'Company B',
-      profile: 'Product Manager',
-      appliedOn: '2024-08-10',
-      numberOfApplicants: 85,
-      applicationStatus: 'Accepted',
-      type: 'Internship',
-    },
-    {
-      companyName: 'Company B',
-      profile: 'Product Manager',
-      appliedOn: '2024-08-10',
-      numberOfApplicants: 85,
-      applicationStatus: 'Accepted',
-      type: 'Internship',
-    },
-    {
-      companyName: 'Company B',
-      profile: 'Product Manager',
-      appliedOn: '2024-08-10',
-      numberOfApplicants: 85,
-      applicationStatus: 'Accepted',
-      type: 'Internship',
-    },
-
-  ];
+  const { applications } = useContextProvider();
+  const myApplications = applications || [];
 
   return (
     <div className='flex'>
@@ -94,23 +31,45 @@ const MyApplications = () => {
               </tr>
             </thead>
             <tbody>
-              {applications.map((app, index) => (
-                <tr key={index} className='bg-white border-b hover:bg-gray-50'>
-                  <td className='py-4 text-center px-6 text-lg text-gray-800'>{app.companyName}</td>
-                  <td className='py-4 text-center px-6 text-lg text-gray-800'>{app.profile}</td>
-                  <td className='py-4 text-center px-6 text-lg text-gray-800'>{app.appliedOn}</td>
-                  <td className='py-4 text-center px-6 text-lg text-gray-800'>{app.numberOfApplicants}</td>
-                  <td className='py-4 text-center px-6 text-lg text-gray-800'>{app.applicationStatus}</td>
-                  <td className='py-4 text-center px-6 text-lg text-gray-800'>{app.type}</td>
-                  <td className='py-4 px-16 text-lg text-gray-800'>
-                    <button className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors'>
-                      View
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {myApplications.map((app, index) => {
+                const job = app.jobId || null;
+                const internship = app.internshipId || null;
+                return (
+                  <tr key={index} className='bg-white border-b hover:bg-gray-50'>
+                    <td className='py-4 text-center px-6 text-lg text-gray-800'>
+                      {job ? job.company : internship ? internship.company : 'N/A'}
+                    </td>
+                    <td className='py-4 text-center px-6 text-lg text-gray-800'>
+                      {job ? job.title : internship ? internship.title : 'N/A'}
+                    </td>
+                    <td className='py-4 text-center px-6 text-lg text-gray-800'>
+                      {new Date(app.createdAt).toLocaleDateString()}
+                    </td>
+                    <td className='py-4 text-center px-6 text-lg text-gray-800'>
+                      {job ? job.applications.length : internship ? internship.applications.length : 0}
+                    </td>
+                    <td className='py-4 text-center px-6 text-lg text-gray-800'>
+                      {app.status}
+                    </td>
+                    <td className='py-4 text-center px-6 text-lg text-gray-800'>
+                      {app.type}
+                    </td>
+                    <td className='py-4 px-16 text-lg text-gray-800'>
+                      {app.type === "Job" && job ?
+                        <Link to={`/jobs/${job._id}`} className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors'>
+                          View
+                        </Link>
+                        : app.type === "Internship" && internship ?
+                          <Link to={`/internships/${internship._id}`} className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors'>
+                            View
+                          </Link>
+                          : 'N/A'
+                      }
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
-
           </table>
         </div>
       </div>
