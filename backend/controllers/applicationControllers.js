@@ -162,4 +162,22 @@ const getAllApplications = async (req, res) => {
     }
 };
 
-export { applyOpportunity, getAppliedOpportunities, getAllApplications };
+const updateApplicationStatus = async(req,res) => {
+    const {id, status} = req.body;
+    try {
+        const application = await applicationModel.findById(id);
+        if(!application){
+            return res.status(404).json({message: "Application not found"});
+        }
+
+        application.status = status
+        await application.save();
+
+        res.status(200).json({ message: "Status updated successfully", application });
+    } catch (error) {
+        console.error(error)
+        res.status(501).json({message: error})
+    }
+}
+
+export { applyOpportunity, getAppliedOpportunities, getAllApplications, updateApplicationStatus };

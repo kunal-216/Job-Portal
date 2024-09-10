@@ -49,7 +49,20 @@ const MyApplications = () => {
                       {job ? job.applications.length : internship ? internship.applications.length : 0}
                     </td>
                     <td className='py-4 text-center px-6 text-lg text-gray-800'>
-                      {app.status}
+                      {app.status === "Accepted" ?
+                        <div className='bg-green-400 p-2 rounded-lg text-white'>
+                          {app.status}
+                        </div>
+                        :
+                        app.status === "Rejected" ?
+                          <div className='bg-red-400 p-2 rounded-lg text-white'>
+                            {app.status}
+                          </div>
+                          :
+                          <div className='bg-blue-400 p-2 rounded-lg text-white'>
+                            {app.status}
+                          </div>
+                      }
                     </td>
                     <td className='py-4 text-center px-6 text-lg text-gray-800'>
                       {app.type}

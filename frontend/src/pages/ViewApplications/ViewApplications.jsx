@@ -1,43 +1,66 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { useContextProvider } from "../../context/StoreContext"
+import { useContextProvider } from "../../context/StoreContext";
 import { toast } from "react-toastify";
-import axios from "axios"
+import axios from "axios";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
 const ViewApplications = () => {
-
     const { url } = useContextProvider();
     const navigate = useNavigate();
     const { id } = useParams();
     const location = useLocation();
-    // this is the way to extract type from the url
     const type = new URLSearchParams(location.search).get("type");
     const [allOpportunityApplications, setAllOpportunityApplications] = useState(null);
 
-    useEffect(() => {
-        const getOpportunityApplications = async () => {
-            try {
-                const response = await axios.get(`${url}/api/application/view-applications/${id}?type=${type}`, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    }
-                });
-
-                if (response.status === 200) {
-                    setAllOpportunityApplications(response.data)
-                } else {
-                    toast.error('Error fetching applications')
+    const getOpportunityApplications = async () => {
+        try {
+            const response = await axios.get(`${url}/api/application/view-applications/${id}?type=${type}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
-            } catch (error) {
-                console.error(error)
-                toast.error(error?.response?.data?.message || "Internal Server Error")
-            }
-        }
+            });
 
-        getOpportunityApplications();
-    }, [id, type, url])
+            if (response.status === 200) {
+                setAllOpportunityApplications(response.data);
+            } else {
+                toast.error('Error fetching applications');
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error(error?.response?.data?.message || "Internal Server Error");
+        }
+    };
+
+    const updateStatusHandler = async (applicationId, status) => {
+        try {
+            const response = await axios.post(`${url}/api/application/status`, {
+                id: applicationId,
+                status,
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+
+            if (response.status === 200) {
+                toast.success("Status Updated");
+                getOpportunityApplications();
+            } else {
+                toast.error("Failed to update status");
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error?.response?.data?.message || "Internal Server Error");
+        }
+    };
+
+    useEffect(() => {
+        getOpportunityApplications(); 
+    }, [id, type, url]);
 
     const applications = allOpportunityApplications || [];
 
@@ -91,13 +114,25 @@ const ViewApplications = () => {
                                         <strong>University: </strong> {item.applicant.university}
                                     </div>
                                     <div className="flex-grow">
-                                        <select
-                                            id="status"
-                                            className="w-[95%] p-2 border rounded-md text-gray-600 text-[17px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                            <option value="">Select Status</option>
-                                            <option value="accepted">Accept</option>
-                                            <option value="rejected">Reject</option>
-                                        </select>
+                                        {item.status === "Accepted" ?
+                                            <div className="bg-green-500 text-white font-semibold px-4 py-2 rounded-lg inline">
+                                                {item.status}
+                                            </div>
+                                            :
+                                            item.status === "Rejected" ?
+                                                <div className="bg-red-500 text-white font-semibold px-4 py-2 rounded-lg inline">
+                                                    {item.status}
+                                                </div>
+                                                :
+                                                <select
+                                                    onChange={(e) => updateStatusHandler(item._id, e.target.value)}
+                                                    id="status"
+                                                    className="w-[95%] p-2 border rounded-md text-gray-600 text-[17px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                    <option value="">Select Status</option>
+                                                    <option value="Accepted">Accept</option>
+                                                    <option value="Rejected">Reject</option>
+                                                </select>
+                                            }
                                     </div>
                                 </div>
                             </div>
@@ -111,4 +146,4 @@ const ViewApplications = () => {
     )
 }
 
-export default ViewApplications
+export default ViewApplications;
