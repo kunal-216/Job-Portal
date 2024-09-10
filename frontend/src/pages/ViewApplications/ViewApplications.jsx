@@ -25,8 +25,6 @@ const ViewApplications = () => {
 
             if (response.status === 200) {
                 setAllOpportunityApplications(response.data);
-            } else {
-                toast.error('Error fetching applications');
             }
         } catch (error) {
             console.error(error);
@@ -49,8 +47,6 @@ const ViewApplications = () => {
             if (response.status === 200) {
                 toast.success("Status Updated");
                 getOpportunityApplications();
-            } else {
-                toast.error("Failed to update status");
             }
         } catch (error) {
             console.log(error);

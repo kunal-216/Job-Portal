@@ -43,8 +43,6 @@ const Internship = ({ company, companyLogo, internshipType, description, locatio
       if (response.status === 201) {
         setBookmark(!bookmark);
         toast.success("Bookmark successfully added")
-      } else {
-        toast.error("Failed to add bookmark")
       }
     } catch (error) {
       console.error('Error adding bookmark:', error);

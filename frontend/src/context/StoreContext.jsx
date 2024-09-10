@@ -35,10 +35,7 @@ export const StoreContextProvider = ({ children }) => {
       } else if (response.data.tokenExpired) {
         logout();
         toast.error('Session expired. Please log in again.');
-      } else {
-        toast.error('Failed to fetch the user data.');
       }
-
     } catch (error) {
       if (error.response && error.response.status === 401) {
         logout();
@@ -60,8 +57,6 @@ export const StoreContextProvider = ({ children }) => {
 
       if (response.data.success) {
         setCandidateProfileData(response.data.data);
-      } else {
-        toast.error(response.data.message || 'Failed to fetch user profile.');
       }
     } catch (error) {
       if (error.response) {
@@ -90,7 +85,6 @@ export const StoreContextProvider = ({ children }) => {
         setRecruiterProfileData(response.data.data);
       } else {
         console.error('Failed to fetch user profile:', response.data);
-        toast.error('Failed to fetch user profile.');
       }
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -109,7 +103,6 @@ export const StoreContextProvider = ({ children }) => {
         setJobData(response.data.data);
       } else {
         console.error('Failed to fetch jobs:', response.data);
-        toast.error('Failed to fetch jobs.');
       }
     } catch (error) {
       toast.error(error)
@@ -129,7 +122,6 @@ export const StoreContextProvider = ({ children }) => {
         setInternshipData(response.data.data)
       } else {
         console.error('Failed to fetch internships:', response.data);
-        toast.error('Failed to fetch internships.');
       }
     } catch (error) {
       toast.error(error)
@@ -161,7 +153,6 @@ export const StoreContextProvider = ({ children }) => {
         }
       } else {
         console.error('Failed to fetch opportunities:', response.data);
-        toast.error('Failed to fetch opportunities.');
       }
     } catch (error) {
       toast.error("Error fetching posted opportunities");
@@ -186,7 +177,6 @@ export const StoreContextProvider = ({ children }) => {
         setBookmarkData(response.data.data);
       } else {
         console.error('Failed to fetch bookmarks:', response.data);
-        toast.error('Failed to fetch bookmarks.');
       }
     } catch (error) {
       console.error("Error fetching bookmarks:", error);

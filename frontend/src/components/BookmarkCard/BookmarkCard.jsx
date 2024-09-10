@@ -21,8 +21,6 @@ const BookmarkCard = ({ id, companyName, companyLogo, opportunityType, location,
             if (response.status === 201) {
                 toast.success('Bookmark deleted successfully');
                 onDelete(id);
-            } else {
-                toast.error("Failed to delete bookmark");
             }
         } catch (error) {
             console.log(error)

@@ -132,9 +132,6 @@ const getAllApplications = async (req, res) => {
                         select: "name email"
                     }
                 })
-            if (jobApplications.length === 0) {
-                return res.status(404).json({ message: "No applications found for this Job" });
-            }
             return res.status(200).json(jobApplications);
         }
         else if (type === "Internship") {
@@ -149,9 +146,6 @@ const getAllApplications = async (req, res) => {
                         select: "name email"
                     }
                 })
-            if (internshipApplications.length === 0) {
-                return res.status(404).json({ message: "No applications found for this Internship" });
-            }
             return res.status(200).json(internshipApplications);
         }
 
