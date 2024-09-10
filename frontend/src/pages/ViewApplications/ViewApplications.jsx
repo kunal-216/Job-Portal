@@ -40,7 +40,6 @@ const ViewApplications = () => {
     }, [id, type, url])
 
     const applications = allOpportunityApplications || [];
-    console.log(applications)
 
     return (
         <div className="bg-gray-100 min-h-screen p-6">
@@ -57,50 +56,55 @@ const ViewApplications = () => {
                     </div>
                 </header>
                 <div className="flex flex-wrap gap-6 justify-center">
-                    {applications.map((item) => (
-                        <div
-                        key={item._id}
-                        className="bg-white shadow-lg rounded-lg w-full max-w-3xl p-6 hover:shadow-xl transition-shadow duration-300 min-h-[160px] flex flex-row space-x-6">
-                        <div className="flex flex-col items-center w-[25%]">
-                            <div className="w-[180px] h-[180px] bg-gray-200 rounded-md overflow-hidden shadow-md mb-4">
-                                <img
-                                    src={item.imageURL || 'https://via.placeholder.com/180'}
-                                    alt={`${item.name}'s profile`}
-                                    className="w-full h-full object-cover"/>
+                    {applications.length > 0 ? (
+                        applications.map((item) => (
+                            <div
+                                key={item._id}
+                                className="bg-white shadow-lg rounded-lg w-full max-w-3xl p-6 hover:shadow-xl transition-shadow duration-300 min-h-[160px] flex flex-row space-x-6">
+                                <div className="flex flex-col items-center w-[25%]">
+                                    <div className="w-[180px] h-[180px] bg-gray-200 rounded-md overflow-hidden shadow-md mb-4">
+                                        <img
+                                            src={`${url}/images/${item.applicant.image}`}
+                                            alt={`${item.applicant.userId.name}'s profile`}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                    <a
+                                        href={`${url}/resume/${item.applicant.resume}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-500 hover:text-blue-600 font-semibold transition-colors duration-200 text-[18px]">
+                                        View Resume
+                                    </a>
+                                </div>
+                                <div className="flex flex-col w-[75%]">
+                                    <div className="text-2xl font-bold text-gray-800 mb-3">
+                                        {item.applicant.userId.name}
+                                    </div>
+                                    <div className="text-gray-600 text-lg mb-3">
+                                        <strong>Gender: </strong> {item.applicant.gender}
+                                    </div>
+                                    <div className="text-gray-600 text-lg mb-3">
+                                        <strong>Email: </strong> {item.applicant.userId.email}
+                                    </div>
+                                    <div className="text-gray-600 text-lg mb-6">
+                                        <strong>University: </strong> {item.applicant.university}
+                                    </div>
+                                    <div className="flex-grow">
+                                        <select
+                                            id="status"
+                                            className="w-[95%] p-2 border rounded-md text-gray-600 text-[17px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                            <option value="">Select Status</option>
+                                            <option value="accepted">Accept</option>
+                                            <option value="rejected">Reject</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <a
-                                href={item.resumeURL}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-500 hover:text-blue-600 font-semibold transition-colors duration-200 text-[18px]">
-                                View Resume
-                            </a>
-                        </div>
-                        <div className="flex flex-col w-[75%]">
-                            <div className="text-2xl font-bold text-gray-800 mb-3">
-                                Kunal Talreja
-                            </div>
-                            <div className="text-gray-600 text-lg mb-3">
-                                <strong>Gender: </strong> Male
-                            </div>
-                            <div className="text-gray-600 text-lg mb-3">
-                                <strong>Email: </strong> kunaltalreja18@gmail.com
-                            </div>
-                            <div className="text-gray-600 text-lg mb-6">
-                                <strong>University: </strong> Maharaja Surajmal Institute of Technology
-                            </div>
-                            <div className="flex-grow">
-                                <select
-                                    id="status"
-                                    className="w-[95%] p-2 border rounded-md text-gray-600 text-[17px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    <option value="">Select Status</option>
-                                    <option value="accepted">Accept</option>
-                                    <option value="rejected">Reject</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>                    
-                    ))}
+                        ))
+                    ) : (
+                        <p>No applications found.</p>
+                    )}
                 </div>
             </div>
         </div>

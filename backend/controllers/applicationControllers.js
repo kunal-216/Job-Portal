@@ -2,6 +2,8 @@ import applicationModel from '../models/applicationModel.js';
 import jobModel from '../models/jobModel.js';
 import internshipModel from '../models/internshipModel.js';
 import mongoose from 'mongoose';
+import candidateModel from '../models/candidateModel.js';
+import userModel from '../models/userModels.js';
 
 const getAppliedOpportunities = async (req, res) => {
     const { id } = req.params;
@@ -112,21 +114,41 @@ const applyOpportunity = async (req, res) => {
 
 const getAllApplications = async (req, res) => {
     const { id } = req.params;
-    const { type } = req.query;  
+    const { type } = req.query;
     try {
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({ message: "Invalid opportunity ID" });
         }
 
         if (type === "Job") {
-            const jobApplications = await applicationModel.find({ jobId: id });
+            const jobApplications = await applicationModel.find({ jobId: id })
+                .populate({
+                    path: 'applicant',
+                    model: candidateModel,
+                    select: 'gender university resume image',
+                    populate: {
+                        path: 'userId',
+                        model: userModel,
+                        select: "name email"
+                    }
+                })
             if (jobApplications.length === 0) {
                 return res.status(404).json({ message: "No applications found for this Job" });
             }
             return res.status(200).json(jobApplications);
-        } 
+        }
         else if (type === "Internship") {
-            const internshipApplications = await applicationModel.find({ internshipId: id });
+            const internshipApplications = await applicationModel.find({ internshipId: id })
+                .populate({
+                    path: 'applicant',
+                    model: candidateModel,
+                    select: 'gender university resume image',
+                    populate: {
+                        path: 'userId',
+                        model: userModel,
+                        select: "name email"
+                    }
+                })
             if (internshipApplications.length === 0) {
                 return res.status(404).json({ message: "No applications found for this Internship" });
             }
@@ -139,6 +161,5 @@ const getAllApplications = async (req, res) => {
         return res.status(500).json({ message: "Error getting applications for the opportunity" });
     }
 };
-
 
 export { applyOpportunity, getAppliedOpportunities, getAllApplications };

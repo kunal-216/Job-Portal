@@ -47,9 +47,13 @@ const BookmarkCard = ({ id, companyName, companyLogo, opportunityType, location,
                     <span className='bg-blue-100 text-blue-600 text-lg font-medium px-4 py-2 rounded-full'>
                         {opportunityType}
                     </span>
-                    <span className='bg-blue-100 text-blue-600 text-lg font-medium px-4 py-2 rounded-full'>
-                        ₹{salary}
-                    </span>
+                    {type === "Job" ?
+                        <span className='bg-blue-100 text-blue-600 text-lg font-medium px-4 py-2 rounded-full'>
+                            ₹{salary} LPA
+                        </span> :
+                        <span className='bg-blue-100 text-blue-600 text-lg font-medium px-4 py-2 rounded-full'>
+                            ₹{salary},000 /month
+                        </span>}
                     {location ?
                         <>
                             <span className='bg-blue-100 text-blue-600 text-lg font-medium px-4 py-2 rounded-full'>
