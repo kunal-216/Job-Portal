@@ -56,7 +56,7 @@ const LatestJobs = () => {
   return (
     <div className='max-w-7xl mx-auto my-20'>
       <h1 className='text-4xl font-bold text-center my-8'><span className='text-[#3B82F6]'>Latest & Top</span> Job Openings</h1>
-      <div className='grid grid-cols-5 gap-3'>
+      <div className='grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-3 mx-10 xl:mx-4 2xl:mx-0'>
         {
           jobs.slice(0, 5).map((item, index) => (
             <Cards key={index} companyName={item.companyName} location={item.location} jobTitle={item.jobTitle} salary={item.salary} icon={item.icon} jobTimings={item.jobTimings} />
