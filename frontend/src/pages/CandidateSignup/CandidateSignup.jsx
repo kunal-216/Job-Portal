@@ -67,7 +67,6 @@ const CandidateSignup = () => {
             const token = localStorage.getItem("token");
             const response = await axios.post(`${url}/api/user/candidate-register`, formData, {
                 headers: {
-                    "Content-Type": "multipart/form-data",
                     "Authorization": `Bearer ${token}`,
                 },
             });

@@ -43,7 +43,6 @@ const UpdateProfile = () => {
     try {
       const response = await axios.put(`${url}/api/profile/user`, payload, {
         headers: {
-          'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
       });
