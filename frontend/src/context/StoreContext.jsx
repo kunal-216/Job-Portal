@@ -94,11 +94,7 @@ export const StoreContextProvider = ({ children }) => {
 
   const fetchJobs = async () => {
     try {
-      const response = await axios.get(`${url}/api/opportunity/get-jobs`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      })
+      const response = await axios.get(`${url}/api/opportunity/get-jobs`)
       if (response.status === 201) {
         setJobData(response.data.data);
       } else {
@@ -112,11 +108,7 @@ export const StoreContextProvider = ({ children }) => {
 
   const fetchInternships = async () => {
     try {
-      const response = await axios.get(`${url}/api/opportunity/get-internships`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      })
+      const response = await axios.get(`${url}/api/opportunity/get-internships`)
 
       if (response.status === 201) {
         setInternshipData(response.data.data)

@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const authMiddleware = async (req, res, next) => {
+const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ success: false, message: 'Not Authorized, Login Again' });
@@ -18,6 +18,8 @@ const authMiddleware = async (req, res, next) => {
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
       return res.status(401).json({ success: false, message: 'Token expired, please login again', tokenExpired: true });
+    } else if (error.name === 'JsonWebTokenError') {
+      return res.status(401).json({ success: false, message: 'Malformed token, please login again' });
     } else {
       console.log(error);
       return res.status(403).json({ success: false, message: 'Token verification failed' });

@@ -24,16 +24,16 @@ const upload = multer({ storage: storage });
 
 const handleFileUpload = upload.fields({ name: 'logo', maxCount: 1 });
 
-opportunityRouter.get("/get-jobs", authMiddleware, getJobs);
+opportunityRouter.get("/get-jobs", getJobs);
 opportunityRouter.post("/post-job", authMiddleware, handleFileUpload, postJob);
 
-opportunityRouter.get("/get-internships", authMiddleware, getInternships);
+opportunityRouter.get("/get-internships", getInternships);
 opportunityRouter.post("/post-internship", authMiddleware, handleFileUpload, postInternship);
 
 opportunityRouter.get("/get-posted-opportunities/:id", authMiddleware, getPostedOpportunities);
 opportunityRouter.delete("/remove-posted-opportunity/:id", authMiddleware, deletePostedOpportunities);
 
-opportunityRouter.get("/jobs/:id", authMiddleware, getdynamicJobs)
-opportunityRouter.get("/internships/:id", authMiddleware, getdynamicInternships)
+opportunityRouter.get("/jobs/:id", getdynamicJobs)
+opportunityRouter.get("/internships/:id", getdynamicInternships)
 
 export default opportunityRouter;

@@ -203,7 +203,6 @@ const UpdateProfile = () => {
                     )}
                   </div>
                 </div>
-                {/* Conditionally render additional fields based on userDesignation */}
                 {userDesignation === "Candidate" && (
                   <>
                     <div className="info">
@@ -319,6 +318,5 @@ const UpdateProfile = () => {
     </div>
   );
 };
-
 
 export default UpdateProfile;

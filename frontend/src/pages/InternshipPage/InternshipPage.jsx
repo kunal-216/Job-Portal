@@ -44,7 +44,6 @@ const InternshipPage = () => {
         const response = await axios.get(`${url}/api/opportunity/internships/${id}`, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
 

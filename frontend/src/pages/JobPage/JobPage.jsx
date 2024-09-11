@@ -44,7 +44,6 @@ const JobPage = () => {
         const response = await axios.get(`${url}/api/opportunity/jobs/${id}`, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
 
