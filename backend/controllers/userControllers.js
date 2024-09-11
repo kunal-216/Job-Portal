@@ -85,8 +85,12 @@ const candidateRegister = async (req, res) => {
             return res.status(400).json({ message: "Profile is already completed." });
         }
 
-        if (!bio || !gender || !skills || !age || !university) {
+        if (!bio || !gender || !age || !university) {
             return res.status(400).json({ message: "Please enter all details" });
+        }
+
+        if(!skills){
+            return res.status(400).json({ message: "Please enter skills" });
         }
 
         if (!req.files || !req.files.image || req.files.image.length === 0) {

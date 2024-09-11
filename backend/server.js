@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 3000;
 
 // middleware
 const corsOptions = {
-    origin: process.env.FRONTEND_URI,
+    origin: 'https://opportunet.onrender.com/',
     credentials: true
 }
 app.use(cors(corsOptions));
