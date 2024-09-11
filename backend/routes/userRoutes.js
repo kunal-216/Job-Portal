@@ -2,7 +2,6 @@ import express from "express"
 import multer from "multer";
 import { loginUser, registerUser, candidateRegister, recruiterRegister } from "../controllers/userControllers.js";
 import authMiddleware from "../middleware/auth.js";
-import { checkContentType } from "../middleware/contentType.js";
 
 const userRouter = express.Router();
 
@@ -37,7 +36,7 @@ const handleRecruiterUpload = upload.fields([
 
 userRouter.post("/login", loginUser);
 userRouter.post("/register", registerUser);
-userRouter.post("/candidate-register", authMiddleware, checkContentType("multipart/form-data"), handleCandidateUpload, candidateRegister);
-userRouter.post("/recruiter-register", authMiddleware, checkContentType("multipart/form-data"), handleRecruiterUpload, recruiterRegister);
+userRouter.post("/candidate-register", authMiddleware, handleCandidateUpload, candidateRegister);
+userRouter.post("/recruiter-register", authMiddleware, handleRecruiterUpload, recruiterRegister);
 
 export default userRouter;

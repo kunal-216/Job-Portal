@@ -35,7 +35,7 @@ const Header = () => {
           <img
             src={heroImg}
             alt="Hero"
-            className="w-full h-[360px] max-w-lg lg:max-w-xl" //
+            className="w-full lg:h-[360px] h-56 max-w-lg lg:max-w-xl" //
           />
         </div>
 
@@ -44,7 +44,7 @@ const Header = () => {
             No.1 Website for Jobs and Internships
           </span>
 
-          <h1 className="text-3xl lg:text-6xl font-bold text-center lg:text-left mt-5 leading-9">
+          <h1 className="text-3xl lg:text-4xl 2xl:text-5xl font-bold text-center lg:text-left mt-5 leading-9">
             Search, Apply, and Get Your <br />
             <span className="text-[#3B82F6]">Dream Job or Internship</span>
           </h1>
