@@ -7,15 +7,16 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const LoginSignup = () => {
-  const { url, setToken } = useContextProvider();
+  const { url, setToken } = useContextProvider();  
   const [currState, setCurrState] = useState("Sign up");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); 
   const [data, setData] = useState({
     name: "",
     email: "",
     password: "",
     designation: "",
   });
+
   const navigate = useNavigate();
 
   const onChangeHandler = (e) => {
@@ -35,6 +36,7 @@ const LoginSignup = () => {
 
     try {
       let response;
+
       if (currState === "Login") {
         response = await axios.post(newUrl, {
           email: data.email,
@@ -59,11 +61,11 @@ const LoginSignup = () => {
       }
 
       if (response.status === 200) {
-        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('token', response.data.token);  
         setToken(response.data.token);
         toast.success(currState === 'Login' ? 'Successfully logged in!' : 'Successfully signed up!');
         if (currState === 'Sign up') {
-          navigate(data.designation === 'Recruiter' ? '/recruiter' : '/candidate');
+          navigate(data.designation === 'Recruiter' ? '/recruiter' : '/candidate');  
         } else {
           navigate('/');
         }
@@ -81,8 +83,8 @@ const LoginSignup = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <form onSubmit={submitHandler} className="relative bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <div className="flex justify-center items-center min-h-screen">
+      <form onSubmit={submitHandler} className="relative bg-white p-8 rounded-lg sm:shadow-lg w-full max-w-md">
         <div className="mb-4">
           <h1 className="text-3xl text-center font-bold text-blue-500 mb-2">{currState}</h1>
         </div>
@@ -175,4 +177,3 @@ const LoginSignup = () => {
 };
 
 export default LoginSignup;
-

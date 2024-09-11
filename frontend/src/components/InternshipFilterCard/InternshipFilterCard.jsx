@@ -15,6 +15,10 @@ const InternshipFilterCard = () => {
       filterType: "Salary",
       array: ["0-2,000 /month", "2,000-5,000 /month", "5,000-10,000 /month", "10,000-20,000 /month", "20,000-40,000 /month", "40,000 /month+"]
     },
+    {
+      filterType: "Date Posted",
+      array: ["Past 24 hours", "Past week", "Past month", "Anytime"]
+    },
   ];
 
   return (

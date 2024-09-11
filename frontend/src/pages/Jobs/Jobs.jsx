@@ -6,8 +6,8 @@ const Jobs = () => {
   const jobs = jobData || [];
 
   return (
-    <div className='max-w-[100rem] mx-20 my-20'>
-      <h1 className='inline-block my-4 text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-blue-500'>Browse Jobs</h1>
+    <div className='max-w-[100rem] mx-20 my-10'>
+      <h1 className='inline-block my-4 text-[2.6rem] font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-blue-500'>Browse Jobs</h1>
       <div className='flex gap-5'>
         <div className='w-[18%]'>
           <JobFilterCard />

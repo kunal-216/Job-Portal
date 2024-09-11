@@ -4,7 +4,7 @@ import { useContextProvider } from '../../context/StoreContext';
 
 const Footer = () => {
 
-  const {token} = useContextProvider();
+  const {token, candidateProfileData, recruiterProfileData} = useContextProvider();
 
   return (
     <footer className="bg-[#1F2937] text-white py-8 sticky">
@@ -22,9 +22,9 @@ const Footer = () => {
           <div className="w-full md:w-1/4 mb-2 md:mb-0">
             <h3 className="text-xl font-bold mb-4">Candidate Services</h3>
             <ul className="text-gray-400">
-              <li className="mb-2"><Link to="/resume" className="hover:underline">Resume Writing</Link></li>
+              <li className="mb-2"><Link to="/resume" className="hover:underline">See Resume</Link></li>
               <li className="mb-2"><Link to="/" className="hover:underline">Career Coaching</Link></li>
-              <li className="mb-2"><Link to="/" className="hover:underline">Job Alerts</Link></li>
+              <li className="mb-2">{candidateProfileData ? <><Link to="/profile" className="hover:underline">See Profile</Link></> : !token ? <Link to="/user" className="hover:underline">Sign Up</Link> : <Link to="/candidate" className="hover:underline">Candidate Login</Link>}</li>
             </ul>
           </div>
 
@@ -32,8 +32,8 @@ const Footer = () => {
             <h3 className="text-xl font-bold mb-4">Recruiter Services</h3>
             <ul className="text-gray-400">
               <li className="mb-2"><Link to="/post-opportunity" className="hover:underline">Post a Job</Link></li>
-              <li className="mb-2"><Link to="/" className="hover:underline">Search Resumes</Link></li>
-              <li className="mb-2">{token ? <><Link to="/profile" className="hover:underline">See Profile</Link></>: <Link to="/user" className="hover:underline">Recruiter Login</Link>}</li>
+              <li className="mb-2"><Link to="/" className="hover:underline">Search Candidates</Link></li>
+              <li className="mb-2">{recruiterProfileData ? <><Link to="/profile" className="hover:underline">See Profile</Link></> : !token ? <Link to="/user" className="hover:underline">Sign Up</Link> : <Link to="/recruiter" className="hover:underline">Recruiter Login</Link>}</li>
             </ul>
           </div>
         </div>
