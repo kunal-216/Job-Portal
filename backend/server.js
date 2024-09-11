@@ -17,13 +17,13 @@ const PORT = process.env.PORT || 3000;
 
 // middleware
 const corsOptions = {
-    origin: [process.env.FRONTEND_URI],
+    origin: process.env.FRONTEND_URI,
     credentials: true
 }
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser())
+app.use(cookieParser());
 
 // routes
 app.use("/api/user", userRouter);
@@ -40,8 +40,19 @@ app.use("/logo", express.static('logo_uploads'))
 
 app.use("/", (req, res) => {
     res.send("Hello from Server");
-})
+});
+
+// Handle undefined routes
+app.use((req, res, next) => {
+    res.status(404).send("Sorry, can't find that!");
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
-})
+});
