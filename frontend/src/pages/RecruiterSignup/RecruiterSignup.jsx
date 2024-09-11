@@ -68,14 +68,14 @@ const RecruiterSignup = () => {
     
 
     return (
-        <div className="p-4 max-w-lg mx-auto bg-white shadow-md rounded-lg my-16">
+        <div className="p-4 max-w-lg mx-auto bg-white sm:shadow-md rounded-lg my-16">
             <form onSubmit={onSubmitHandler} className="space-y-4">
                 <div className="text-center">
-                    <h1 className="text-3xl text-center text-blue-500 font-bold">Recruiter Profile Completion</h1>
+                    <h1 className="text-2xl md:text-3xl text-blue-500 font-bold">Recruiter Profile Completion</h1>
                 </div>
                 <div className="flex gap-4 mb-4">
                     <div className="flex-1 flex flex-col items-center">
-                        <p className="mb-2 text-lg font-medium">Upload User Image</p>
+                        <p className="mb-2 text-sm md:text-lg font-medium">User Image</p>
                         <label htmlFor="userImage" className="cursor-pointer">
                             <img
                                 src={userImage ? URL.createObjectURL(userImage) : assets.upload_area}
@@ -92,7 +92,7 @@ const RecruiterSignup = () => {
                         />
                     </div>
                     <div className="flex-1 flex flex-col items-center">
-                        <p className="mb-2 text-lg font-medium">Upload Company Logo</p>
+                        <p className="mb-2 text-sm md:text-lg font-medium">Company Logo</p>
                         <label htmlFor="companyLogo" className="cursor-pointer">
                             <img
                                 src={companyLogo ? URL.createObjectURL(companyLogo) : assets.upload_area}
@@ -112,7 +112,7 @@ const RecruiterSignup = () => {
                 <div>
                     <select
                         name="gender"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
                         onChange={onChangeHandler}
                         value={data.gender}
                         required
@@ -130,7 +130,7 @@ const RecruiterSignup = () => {
                         value={data.companyName}
                         placeholder="Enter your company name"
                         onChange={onChangeHandler}
-                        className="w-full p-2 border border-gray-300 rounded-md"
+                        className="w-full p-2 border border-gray-300 rounded-md text-sm md:text-base"
                     />
                 </div>
                 <div>
@@ -140,7 +140,7 @@ const RecruiterSignup = () => {
                         value={data.location}
                         placeholder="Enter your location"
                         onChange={onChangeHandler}
-                        className="w-full p-2 border border-gray-300 rounded-md"
+                        className="w-full p-2 border border-gray-300 rounded-md text-sm md:text-base"
                     />
                 </div>
                 <div>
@@ -150,7 +150,7 @@ const RecruiterSignup = () => {
                         value={data.aboutCompany}
                         placeholder="Enter description about the company"
                         onChange={onChangeHandler}
-                        className="w-full p-2 border border-gray-300 rounded-md"
+                        className="w-full p-2 border border-gray-300 rounded-md text-sm md:text-base"
                     />
                 </div>
                 <div>
@@ -158,15 +158,15 @@ const RecruiterSignup = () => {
                         type="text"
                         name="websiteOfCompany"
                         value={data.websiteOfCompany}
-                        placeholder="Enter the company's website(if any)"
+                        placeholder="Enter the company's website (if any)"
                         onChange={onChangeHandler}
-                        className="w-full p-2 border border-gray-300 rounded-md"
+                        className="w-full p-2 border border-gray-300 rounded-md text-sm md:text-base"
                     />
                 </div>
                 <div className="text-center">
                     <button
                         type="submit"
-                        className="px-4 py-2 my-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600"
+                        className="px-4 py-2 my-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 text-sm md:text-base"
                     >
                         Submit Details
                     </button>

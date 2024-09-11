@@ -78,6 +78,7 @@ const CandidateSignup = () => {
                     gender: "",
                     university: "",
                     age: "",
+                    skills: [],
                 });
                 setNewSkill("");
                 toast.success("Candidate Registered Successfully");
@@ -93,19 +94,19 @@ const CandidateSignup = () => {
     };
 
     return (
-        <div className="p-4 max-w-lg mx-auto bg-white shadow-md rounded-lg my-16">
+        <div className="p-4 max-w-md mx-auto bg-white sm:shadow-md rounded-lg my-16 sm:p-6 md:max-w-lg lg:max-w-xl">
             <form onSubmit={onSubmitHandler} className="space-y-4">
                 <div className="text-center">
-                    <h1 className="text-3xl text-center text-blue-500 font-bold">Candidate Profile Completion</h1>
+                    <h1 className="text-lg md:text-2xl lg:text-3xl text-blue-500 font-bold">Candidate Profile Completion</h1>
                 </div>
-                <div className="flex gap-4 mb-4">
+                <div className="flex flex-col items-center gap-4 mb-4">
                     <div className="flex-1 flex flex-col items-center">
-                        <p className="mb-2 text-lg font-medium">Upload User Image</p>
+                        <p className="mb-2 text-sm md:text-lg font-medium">Upload User Image</p>
                         <label htmlFor="userImage" className="cursor-pointer">
                             <img
                                 src={img ? URL.createObjectURL(img) : assets.upload_area}
                                 alt="Upload"
-                                className="w-36 h-24 object-cover border border-gray-300 rounded-md"
+                                className="w-32 h-20 sm:w-36 sm:h-24 object-cover border border-gray-300 rounded-md"
                             />
                         </label>
                         <input
@@ -116,29 +117,11 @@ const CandidateSignup = () => {
                             required
                         />
                     </div>
-                    <div className="flex-1 flex flex-col items-center">
-                        <p className="mb-2 text-lg font-medium">Upload Resume</p>
-                        <label htmlFor="resume" className="cursor-pointer">
-                            <img
-                                src={resume ? URL.createObjectURL(resume) : assets.upload_area}
-                                alt="Upload"
-                                className="w-36 h-24 object-cover border border-gray-300 rounded-md"
-                            />
-                        </label>
-                        <input
-                            onChange={changeFileHandler}
-                            type="file"
-                            id="resume"
-                            name="resume"
-                            hidden
-                            required
-                        />
-                    </div>
                 </div>
                 <div>
                     <select
                         name="gender"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
                         onChange={onChangeHandler}
                         value={data.gender}
                         required
@@ -156,7 +139,7 @@ const CandidateSignup = () => {
                         value={data.age}
                         placeholder="Enter your age"
                         onChange={onChangeHandler}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm md:text-base"
                         required
                     />
                 </div>
@@ -167,14 +150,14 @@ const CandidateSignup = () => {
                         value={data.university}
                         placeholder="Enter the name of your university"
                         onChange={onChangeHandler}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm md:text-base"
                         required
                     />
                 </div>
                 <div>
                     <textarea
-                        className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 mt-2"
-                        rows="6"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mt-1 text-sm md:text-base"
+                        rows="3"
                         name="bio"
                         placeholder="Enter your Bio"
                         onChange={onChangeHandler}
@@ -183,42 +166,55 @@ const CandidateSignup = () => {
                     ></textarea>
                 </div>
                 <div className="mb-4">
-                    <p className="text-gray-600 ml-1">Skills</p>
-                    <div className="flex gap-2 mb-2">
-                        <input
-                            type="text"
-                            value={newSkill}
-                            onChange={(e) => setNewSkill(e.target.value)}
-                            placeholder="Enter your skills"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                        />
-                        <button
-                            type="button"
-                            onClick={addSkill}
-                            className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600"
-                        >
-                            Add
-                        </button>
+                    <p className="text-gray-600 mb-2 text-sm md:text-base">Upload Resume</p>
+                    <input
+                        type="file"
+                        id="resume"
+                        name="resume"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
+                        onChange={changeFileHandler}
+                        required
+                    />
+                </div>
+                <div>
+                    <p className="text-gray-600 mb-2 text-sm md:text-base">Skills</p>
+                    <div className="flex flex-col gap-2 mb-2">
+                        <div className="flex gap-2">
+                            <input
+                                type="text"
+                                value={newSkill}
+                                onChange={(e) => setNewSkill(e.target.value)}
+                                placeholder="Enter your skills"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm md:text-base"
+                            />
+                            <button
+                                type="button"
+                                onClick={addSkill}
+                                className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 text-sm md:text-base"
+                            >
+                                Add
+                            </button>
+                        </div>
+                        <ul className="list-disc pl-5">
+                            {data.skills.map((skill, index) => (
+                                <li key={index} className="flex justify-between items-center mb-1 text-sm md:text-base">
+                                    {skill}
+                                    <button
+                                        type="button"
+                                        onClick={() => removeSkill(index)}
+                                        className="text-red-500 hover:underline"
+                                    >
+                                        Remove
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
-                    <ul className="list-disc pl-5">
-                        {data.skills.map((skill, index) => (
-                            <li key={index} className="flex justify-between items-center mb-1">
-                                {skill}
-                                <button
-                                    type="button"
-                                    onClick={() => removeSkill(index)}
-                                    className="text-red-500 hover:underline"
-                                >
-                                    Remove
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
                 </div>
                 <div className="text-center">
                     <button
                         type="submit"
-                        className="px-4 py-2 my-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600"
+                        className="px-4 py-2 my-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 text-sm md:text-base"
                     >
                         Submit Details
                     </button>
