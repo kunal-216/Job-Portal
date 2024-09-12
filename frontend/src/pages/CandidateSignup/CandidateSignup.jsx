@@ -53,7 +53,7 @@ const CandidateSignup = () => {
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
-
+      
         const formData = new FormData();
         formData.append("bio", data.bio);
         formData.append("gender", data.gender);
@@ -62,14 +62,14 @@ const CandidateSignup = () => {
         formData.append("skills", JSON.stringify(data.skills));
         formData.append("image", img);
         formData.append("resume", resume);
-
+      
         try {
-            const token = localStorage.getItem("token");
-            const response = await axios.post(`${url}/api/user/candidate-register`, formData, {
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                },
-            });
+          const token = localStorage.getItem("token");
+          const response = await axios.post(`${url}/api/user/candidate-register`, formData, {
+            headers: {
+              "Authorization": `Bearer ${token}`,
+            },
+          });
 
             if (response.status === 201) {
                 setData({
