@@ -8,7 +8,7 @@ const Profile = () => {
   return (
     <div className='flex'>
       <Sidebar />
-      <div className='flex-1 flex flex-col items-center bg-gray-100 p-6'>
+      <div className='flex-1 flex flex-col items-center p-6'>
         <header className='bg-blue-600 text-white py-4 px-6 rounded-lg shadow-lg mb-6 w-full max-w-4xl'>
           <div className='container mx-auto text-center'>
             <h1 className='text-3xl md:text-4xl font-extrabold'>Profile</h1>

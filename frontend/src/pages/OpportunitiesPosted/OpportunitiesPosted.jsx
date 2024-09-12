@@ -122,7 +122,7 @@ const OpportunitiesPosted = () => {
               </div>
             ))
           ) : (
-            <p className='text-gray-600 text-lg text-center'>No opportunities available.</p>
+            <p className='text-gray-600 text-lg text-center'>No opportunities posted yet!</p>
           )}
         </div>
       </div>

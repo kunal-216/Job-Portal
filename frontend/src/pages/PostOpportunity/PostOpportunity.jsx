@@ -90,7 +90,7 @@ const PostOpportunity = () => {
   return (
     <div className='flex'>
       <Sidebar />
-      <div className='flex-1 flex items-center justify-center min-h-screen bg-gray-100 mt-4 mb-6'>
+      <div className='flex-1 flex items-center justify-center min-h-screen mt-4 mb-6'>
         <form onSubmit={handleSubmit} className='w-full max-w-4xl bg-white p-8 rounded-lg shadow-lg my-6 mx-auto'>
           <header className='bg-blue-600 text-white py-4 rounded-lg shadow-lg mb-6 text-center'>
             <h1 className='text-4xl font-extrabold'>Post Opportunity</h1>

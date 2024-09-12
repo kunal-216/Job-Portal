@@ -14,7 +14,7 @@ const Resume = () => {
   return (
     <div className='flex'>
       <Sidebar />
-      <div className='flex-1 flex flex-col items-center justify-center min-h-screen bg-gray-100'>
+      <div className='flex-1 flex flex-col items-center justify-center min-h-screen'>
         <header className='block bg-blue-600 text-white py-4 rounded-lg shadow-lg mb-6 mt-6 px-[376px]'>
           <div className='container mx-auto text-center'>
             <h1 className='text-4xl font-extrabold'>Resume</h1>

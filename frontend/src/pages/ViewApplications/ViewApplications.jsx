@@ -61,7 +61,7 @@ const ViewApplications = () => {
     const applications = allOpportunityApplications || [];
 
     return (
-        <div className="bg-gray-100 min-h-screen p-6">
+        <div className="min-h-screen p-6">
             <button
                 onClick={() => navigate(-1)}
                 className="absolute top-[100px] left-6 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
