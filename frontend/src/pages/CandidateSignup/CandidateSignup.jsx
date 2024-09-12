@@ -27,12 +27,16 @@ const CandidateSignup = () => {
 
     const changeFileHandler = (e) => {
         const { name, files } = e.target;
-        if (name === "file") {
-            setImg(files[0]);
-        } else if (name === "resume") {
-            setResume(files[0]);
+        const selectedFile = files[0];
+        if (name === "file" && selectedFile.size <= 1 * 1024 * 1024) {  // max -> 1mb
+            setImg(selectedFile);
+        } else if (name === "resume" && selectedFile.size <= 10 * 1024 * 1024) {  // max -> 10mb
+            setResume(selectedFile);
+        } else {
+            toast.error("File size exceeds the allowed limit");
         }
     };
+    
 
     const addSkill = () => {
         if (newSkill) {
@@ -53,23 +57,22 @@ const CandidateSignup = () => {
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
-      
         const formData = new FormData();
         formData.append("bio", data.bio);
         formData.append("gender", data.gender);
         formData.append("university", data.university);
         formData.append("age", data.age);
         formData.append("skills", JSON.stringify(data.skills));
-        formData.append("image", img);
-        formData.append("resume", resume);
-      
+        formData.append("image", img);  
+        formData.append("resume", resume); 
         try {
-          const token = localStorage.getItem("token");
-          const response = await axios.post(`${url}/api/user/candidate-register`, formData, {
-            headers: {
-              "Authorization": `Bearer ${token}`,
-            },
-          });
+            const token = localStorage.getItem("token");
+            const response = await axios.post(`${url}/api/user/candidate-register`, formData, {
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data" 
+                },
+            });
 
             if (response.status === 201) {
                 setData({
