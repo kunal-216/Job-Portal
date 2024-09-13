@@ -27,13 +27,10 @@ const CandidateSignup = () => {
 
     const changeFileHandler = (e) => {
         const { name, files } = e.target;
-        const selectedFile = files[0];
-        if (name === "file" && selectedFile.size <= 1 * 1024 * 1024) {  // max -> 1mb
-            setImg(selectedFile);
-        } else if (name === "resume" && selectedFile.size <= 10 * 1024 * 1024) {  // max -> 10mb
-            setResume(selectedFile);
-        } else {
-            toast.error("File size exceeds the allowed limit");
+        if (name === "file") {
+            setImg(files[0]);
+        } else if (name === "resume") {
+            setResume(files[0]);
         }
     };
     

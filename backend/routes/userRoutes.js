@@ -35,26 +35,20 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-const multi_upload = multer({
-    storage,
-    limits: { fileSize: 1 * 1024 * 1024 }, // 1MB limit
-    fileFilter
-}).array('uploadedImages', 2);
+// const multi_upload = multer({
+//     storage,
+//     limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+//     fileFilter
+// }).array('uploadedImages', 2);
 
-const handleCandidateUpload = multer({
-    storage: storage,
-    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB per file
-    fileFilter
-}).fields([
+const upload = multer({storage: storage})
+
+const handleCandidateUpload = upload.fields([
     { name: 'image', maxCount: 1 },
-    { name: 'resume', maxCount: 1 }
+    { name: 'resume', maxCount: 1 },
 ]);
 
-const handleRecruiterUpload = multer({
-    storage: storage,
-    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB per file
-    fileFilter
-}).fields([
+const handleRecruiterUpload = upload.fields([
     { name: 'image', maxCount: 1 },
     { name: 'companyLogo', maxCount: 1 }
 ]);
