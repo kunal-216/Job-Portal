@@ -1,6 +1,5 @@
 import express from "express";
 import multer from "multer";
-import path from "path";
 import fs from "fs";
 import { loginUser, registerUser, candidateRegister, recruiterRegister } from "../controllers/userControllers.js";
 import authMiddleware from "../middleware/auth.js";

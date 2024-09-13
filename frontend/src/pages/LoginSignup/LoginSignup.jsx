@@ -69,8 +69,6 @@ const LoginSignup = () => {
         } else {
           navigate('/');
         }
-      } else {
-        toast.error(response.data.message || 'Something went wrong.');
       }
     } catch (error) {
       console.error('Error response:', error.response);

@@ -167,8 +167,6 @@ export const StoreContextProvider = ({ children }) => {
       });
       if (response.status === 200) {
         setBookmarkData(response.data.data);
-      } else {
-        console.error('Failed to fetch bookmarks:', response.data);
       }
     } catch (error) {
       console.error("Error fetching bookmarks:", error);
@@ -214,9 +212,9 @@ export const StoreContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (profileData) {
-      if (profileData.designation === "Candidate") {
+      if (profileData.designation === "Candidate" && profileData.profileCompleted === true) {
         fetchCandidateData();
-      } else if (profileData.designation === "Recruiter") {
+      } else if (profileData.designation === "Recruiter" && profileData.profileCompleted === true) {
         fetchRecruiterData().then(() => {
           if (recruiterProfileData && recruiterProfileData._id) {
             fetchPostedOpportunities();
