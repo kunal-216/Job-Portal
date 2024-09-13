@@ -82,6 +82,9 @@ const candidateRegister = async (req, res) => {
     const { bio, gender, skills, age, university } = req.body;
     try {
         const user = await userModel.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
         if (user.profileCompleted) {
             return res.status(400).json({ message: "Profile is already completed." });
         }
@@ -94,11 +97,11 @@ const candidateRegister = async (req, res) => {
             return res.status(400).json({ message: "Please enter skills" });
         }
 
-        if (!req.files?.image || req.files.image.length === 0) {
+        if (!req.files || !req.files.image || req.files.image.length === 0) {
             return res.status(400).json({ message: "Image file is required" });
         }
 
-        if (!req.files?.resume || req.files.resume.length === 0) {
+        if (!req.files.resume || req.files.resume.length === 0) {
             return res.status(400).json({ message: "Resume file is required" });
         }
 
@@ -123,7 +126,7 @@ const candidateRegister = async (req, res) => {
         res.status(201).json({ message: "Candidate registered successfully" });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Server error" });
+        res.status(500).json({ message: "Server error", error: error.message });
     }
 };
 

@@ -61,7 +61,7 @@ const CandidateSignup = () => {
         formData.append("age", data.age);
         formData.append("skills", JSON.stringify(data.skills));
         formData.append("image", img);  
-        formData.append("resume", resume); 
+        formData.append("resume", resume);
         try {
             const token = localStorage.getItem("token");
             const response = await axios.post(`${url}/api/user/candidate-register`, formData, {
