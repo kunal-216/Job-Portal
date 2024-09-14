@@ -26,13 +26,10 @@ const handleFileUpload = upload.fields({ name: 'logo', maxCount: 1 });
 
 opportunityRouter.get("/get-jobs", getJobs);
 opportunityRouter.post("/post-job", authMiddleware, handleFileUpload, postJob);
-
 opportunityRouter.get("/get-internships", getInternships);
 opportunityRouter.post("/post-internship", authMiddleware, handleFileUpload, postInternship);
-
 opportunityRouter.get("/get-posted-opportunities/:id", authMiddleware, getPostedOpportunities);
 opportunityRouter.delete("/remove-posted-opportunity/:id", authMiddleware, deletePostedOpportunities);
-
 opportunityRouter.get("/jobs/:id", getdynamicJobs)
 opportunityRouter.get("/internships/:id", getdynamicInternships)
 

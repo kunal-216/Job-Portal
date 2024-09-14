@@ -20,12 +20,10 @@ const postJob = async (req, res) => {
         if (!title || !description || !salary || !category || !experience || !workMode || !type || !skills || !applyBy || !numberOfOpenings) {
             return res.status(400).json({ message: "Please fill in all fields" })
         }
-
         const recruiter = await recruiterModel.findById(recruiterId)
         if (!recruiter) {
             return res.status(404).json({ message: "Recruiter not found" })
         }
-
         const newJob = new jobModel({
             type,
             companyLogo: recruiter.companyLogo,
@@ -44,7 +42,6 @@ const postJob = async (req, res) => {
             numberOfOpenings,
             applyBy
         });
-
         const job = await newJob.save();
         res.status(201).json({ message: "Job posted successfully", job });
     } catch (error) {

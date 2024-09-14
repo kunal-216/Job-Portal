@@ -33,7 +33,7 @@ app.use("/api/bookmark", bookmarkRouter);
 app.use("/api/application", applicationRouter);
 
 // access all the images of the uploads folder using the URL or basically from the databases' .png file 
-// URL can be: http://localhost:3000/images/profileData.image or the deployed: https://blahblah.com/images/profileData.image
+// URL can be: http://opportunet.onrender.com/images/profileData.image 
 app.use("/images", express.static('image_uploads'))
 app.use("/resume", express.static('resume_uploads'))
 app.use("/logo", express.static('logo_uploads'))
