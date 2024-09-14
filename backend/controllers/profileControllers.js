@@ -1,13 +1,7 @@
 import userModel from "../models/userModels.js";
 import candidateModel from "../models/candidateModel.js";
 import recruiterModel from "../models/recruiterModel.js";
-import fs from 'fs';
-import { fileURLToPath } from 'url';
-import path, { dirname } from 'path';
 import validator from "validator";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const getProfileDetails = async (req, res) => {
     try {
@@ -17,31 +11,6 @@ const getProfileDetails = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Error fetching user details" });
-    }
-}
-
-const updateProfile = async (req, res) => {
-    const { name, email } = req.body;
-    try {
-        if (!name || !email) {
-            return res.status(400).json({ success: false, message: "All fields are required" });
-        }
-
-        if (!validator.isEmail(email)) {
-            return res.status(400).json({ success: false, message: "Email is entered incorrectly" });
-        }
-
-        let updateData = { name, email };
-        const user = await userModel.findByIdAndUpdate(req.user.id, updateData, { new: true });
-
-        if (!user) {
-            return res.status(404).json({ success: false, message: "User not found" })
-        }
-
-        res.json({ success: true, data: user });
-    } catch (error) {
-        console.error(error)
-        res.status(500).json({ success: false, message: "Error updating user details" });
     }
 }
 
@@ -71,97 +40,74 @@ const getRecruiterProfile = async (req, res) => {
     }
 };
 
-
-const updateCandidateProfile = async (req, res) => {
-    const { gender, age, bio, university } = req.body;
+const updateProfile = async (req, res) => {
     try {
-        // Check if candidate is authenticated
-        if (!req.candidate || !req.candidate.id) {
-            console.error("User not authenticated. req.candidate:", req.candidate);
-            return res.status(401).json({ success: false, message: "Candidate not authenticated" });
+        const userId = req.user.id;
+        const { name, email, designation, ...profileData } = req.body;
+        if (!name || !email || !designation) {
+            return res.status(400).json({ success: false, message: "Name, email, and designation are required" });
+        }
+        if (!validator.isEmail(email)) {
+            return res.status(400).json({ success: false, message: "Email is entered incorrectly" });
+        }
+        const updatedUser = await userModel.findByIdAndUpdate(
+            userId,
+            { name, email, designation },
+            { new: true }
+        );
+        if (!updatedUser) {
+            return res.status(404).json({ success: false, message: "User not found" });
         }
 
-        if (!gender || !age || !bio || !university) {
-            return res.status(400).json({ success: false, message: "Please fill all fields" })
-        }
-        
-        let updateData = { gender, age, bio, university };
-
-        // Handle image file upload
-        if (req.file) {
-            updateData.image = req.file.filename;
-
-            // Delete old image if a new image is uploaded
-            const candidate = await candidateModel.findById(req.candidate.id);
-            if (candidate && candidate.image) {
-                const oldImagePath = path.join(__dirname, '..', 'image_uploads', candidate.image);
-                fs.unlinkSync(oldImagePath);
+        let updatedProfileData;
+        if (designation === "Candidate") {
+            const { age, gender, bio, university, skills } = profileData;
+            if (!age || !gender || !bio || !university) {
+                return res.status(400).json({ success: false, message: "All candidate fields are required" });
             }
-        }
-
-        if (req.file && req.file.resume) {
-            updateData.resume = req.file.resume[0].filename;
-
-            // Delete old resume if a new resume is uploaded
-            const candidate = await candidateModel.findById(req.candidate.id);
-            if (candidate && candidate.resume) {
-                const oldResumePath = path.join(__dirname, '..', 'resume_uploads', candidate.resume);
-                fs.unlinkSync(oldResumePath);
+            let updateData = { age, gender, bio, university, skills: JSON.parse(skills) };
+            if (req.files && req.files.image) {
+                updateData.image = req.files.image[0].filename;
             }
+            if (req.files && req.files.resume) {
+                updateData.resume = req.files.resume[0].filename;
+            }
+            updatedProfileData = await candidateModel.findOneAndUpdate(
+                { userId },
+                updateData,
+                { new: true, upsert: true }
+            );
+        } else if (designation === "Recruiter") {
+            const { companyName, location, websiteOfCompany, aboutCompany } = profileData;
+            if (!companyName || !location) {
+                return res.status(400).json({ success: false, message: "Company name and location are required" });
+            }
+            let updateData = { companyName, location, websiteOfCompany, aboutCompany };
+
+            if (req.files && req.files.image) {
+                updateData.image = req.files.image[0].filename;
+            }
+            if (req.files && req.files.companyLogo) {
+                updateData.companyLogo = req.files.companyLogo[0].filename;
+            }
+            updatedProfileData = await recruiterModel.findOneAndUpdate(
+                { userId },
+                updateData,
+                { new: true, upsert: true }
+            );
+        } else {
+            return res.status(400).json({ success: false, message: "Invalid designation" });
         }
-
-        const candidate = await candidateModel.findByIdAndUpdate(req.candidate.id, updateData, { new: true });
-
-        if (!candidate) {
-            return res.status(404).json({ success: false, message: "Candidate not found" })
-        }
-
-        res.json({ success: true, data: candidate });
-
+        res.status(201).json({
+            success: true,
+            message: "Profile updated successfully",
+            userData: updatedUser,
+            [designation.toLowerCase() + 'Data']: updatedProfileData
+        });
     } catch (error) {
-        console.log(error);
-        res.status(501).json({ message: error });
+        console.error('Error updating profile:', error);
+        res.status(500).json({ success: false, message: "Error updating profile" });
     }
-}
+};
 
-const updateRecruiterProfile = async (req, res) => {
-    const { gender, companyName, location } = req.body;
-    try {
-
-        // Check if recruiter is authenticated
-        if (!req.recruiter || !req.recruiter.id) {
-            console.error("User not authenticated. req.recruiter:", req.recruiter);
-            return res.status(401).json({ success: false, message: "Recruiter not authenticated" });
-        }
-
-        if (!gender || !companyName || !location) {
-            return res.status(400).json({ success: false, message: "Please enter all fields" });
-        }
-
-        let updateData = { gender, companyName, location };
-        if (req.file) {
-            updateData.image = req.file.filename;
-            
-            // Delete old image if a new image is uploaded
-            const recruiter = await recruiterModel.findById(req.recruiter.id);
-            if (recruiter && recruiter.image) {
-                const oldImagePath = path.join(__dirname, '..', 'image_uploads', recruiter.image);
-                fs.unlinkSync(oldImagePath);
-            }
-        }
-        
-        const recruiter = await recruiterModel.findByIdAndUpdate(req.recruiter.id, updateData, { new: true });
-
-        if (!recruiter) {
-            return res.status(404).json({ success: false, message: "Recruiter not found" })
-        }
-
-        res.json({ success: true, data: recruiter });
-
-    } catch (error) {
-        console.log(error);
-        res.status(501).json({ message: error });
-    }
-}
-
-export { getCandidateProfile, getRecruiterProfile, updateCandidateProfile, updateRecruiterProfile, getProfileDetails, updateProfile }
+export {updateProfile, getCandidateProfile, getRecruiterProfile, getProfileDetails}

@@ -31,7 +31,7 @@ const Footer = () => {
           <div className="w-full md:w-1/4 mb-2 md:mb-0">
             <h3 className="text-xl font-bold mb-4">Recruiter Services</h3>
             <ul className="text-gray-400">
-              <li className="mb-2"><Link to="/post-opportunity" className="hover:underline">Post a Job</Link></li>
+              <li className="mb-2">{recruiterProfileData ? <><Link to="/post-opportunity" className="hover:underline">Post an Opportunity</Link></> : !token ? <Link to="/user" className="hover:underline">Post a Job</Link> : <Link to="/recruiter" className="hover:underline">Post a Job</Link>}</li>
               <li className="mb-2"><Link to="/" className="hover:underline">Search Candidates</Link></li>
               <li className="mb-2">{recruiterProfileData ? <><Link to="/profile" className="hover:underline">See Profile</Link></> : !token ? <Link to="/user" className="hover:underline">Sign Up</Link> : <Link to="/recruiter" className="hover:underline">Recruiter Login</Link>}</li>
             </ul>

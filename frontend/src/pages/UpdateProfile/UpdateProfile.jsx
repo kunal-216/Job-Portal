@@ -1,332 +1,453 @@
-// import { useState } from 'react';
-// import { Sidebar } from '../../components/index';
-// import { useContextProvider } from '../../context/StoreContext';
-// import { FaUserEdit } from "react-icons/fa";
-// import { toast } from 'react-toastify';
-// import axios from 'axios';
-
-// const UpdateProfile = () => {
-//   const {
-//     url, profileData, setProfileData, userDesignation,
-//     candidateProfileData, recruiterProfileData,
-//     setCandidateProfileData, setRecruiterProfileData,
-//     debouncedHandleInputChange
-//   } = useContextProvider();
-
-//   const [image, setImage] = useState(null);
-//   const [resume, setResume] = useState(null);
-//   const [companyLogo, setCompanyLogo] = useState(null);
-//   const [editState, setEditState] = useState(null);
-
-//   const saveData = async (e) => {
-//     e.preventDefault();
-//     const payload = new FormData();
-//     payload.append('name', profileData.name);
-//     payload.append('email', profileData.email);
-//     payload.append('designation', profileData.designation);
-
-//     if (userDesignation === "Candidate") {
-//       payload.append('age', candidateProfileData.age);
-//       payload.append('gender', candidateProfileData.gender);
-//       payload.append('bio', candidateProfileData.bio);
-//       payload.append('university', candidateProfileData.university);
-//       payload.append('skills', candidateProfileData.skills);
-//       if (resume) payload.append('resume', resume);
-//     } else if (userDesignation === "Recruiter") {
-//       payload.append('companyName', recruiterProfileData.companyName);
-//       payload.append('location', recruiterProfileData.location);
-//       if (companyLogo) payload.append('companyLogo', companyLogo);
-//     }
-
-//     if (image) payload.append('image', image);
-
-//     try {
-//       const response = await axios.put(`${url}/api/profile/user`, payload, {
-//         headers: {
-//           'Content-Type': 'multipart/form-data',
-//           'Authorization': `Bearer ${localStorage.getItem('token')}`
-//         },
-//       });
-
-//       if (response.data.success) {
-//         toast.success("Profile Updated Successfully");
-//         setEditState(null);
-//         setProfileData(response.data.data);
-
-//         if (userDesignation === "Candidate") {
-//           setCandidateProfileData(response.data.data);
-//         } else if (userDesignation === "Recruiter") {
-//           setRecruiterProfileData(response.data.data);
-//         }
-
-//         setImage(null);
-//         setResume(null);
-//         setCompanyLogo(null);
-//       } else {
-//         toast.error("Failed to Update Profile");
-//         setEditState(null);
-//       }
-//     } catch (error) {
-//       toast.error("An error occurred while saving the profile data.");
-//       console.error("Error updating profile:", error);
-//       setEditState(null);
-//     }
-//   };
-
-//   const handleImageChange = (e) => {
-//     const file = e.target.files[0];
-//     setImage(file || null);
-//   };
-
-//   const handleResumeChange = (e) => {
-//     const file = e.target.files[0];
-//     setResume(file || null);
-//   };
-
-//   const handleCompanyLogoChange = (e) => {
-//     const file = e.target.files[0];
-//     setCompanyLogo(file || null);
-//   };
-
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     debouncedHandleInputChange(name, value);
-//     if (userDesignation === "Candidate") {
-//       setCandidateProfileData(prevState => ({ ...prevState, [name]: value }));
-//     } else if (userDesignation === "Recruiter") {
-//       setRecruiterProfileData(prevState => ({ ...prevState, [name]: value }));
-//     }
-//     setProfileData(prevState => ({ ...prevState, [name]: value }));
-//   };
-
-//   const handleImageClick = () => {
-//     document.getElementById('imageInput').click();
-//   };
-
-//   const handleCompanyLogoClick = () => {
-//     document.getElementById('companyLogoInput').click();
-//   };
-
-//   return (
-//     <div className="flex min-h-screen bg-gray-100">
-//       <Sidebar />
-//       <div className="flex-1 flex flex-col p-6 bg-gray-100">
-//         <div className="w-full max-w-2xl mx-auto">
-//           <header className='bg-blue-600 text-white py-4 rounded-lg shadow-lg mb-8'>
-//             <div className='container mx-auto text-center'>
-//               <h1 className='text-4xl font-extrabold'>Update Profile</h1>
-//             </div>
-//           </header>
-//           <div className="flex justify-center mb-8">
-//             {editState !== "Edit" && (
-//               <FaUserEdit
-//                 size={24}
-//                 onClick={() => setEditState("Edit")}
-//                 className="cursor-pointer text-blue-500 hover:text-blue-600"
-//               />
-//             )}
-//           </div>
-
-//           {profileData ? (
-//             <div className="w-full">
-//               <div className='flex flex-row justify-center items-center gap-10'>
-//                 <div
-//                   className={`relative cursor-pointer mb-6 flex justify-center ${editState === "Edit" ? 'opacity-75' : ''}`}
-//                   onClick={editState === "Edit" ? handleImageClick : null}>
-//                   <img
-//                     src={`${url}/images/${userDesignation === "Candidate" ? candidateProfileData.image : recruiterProfileData.image}`}
-//                     alt={profileData.name}
-//                     className="w-32 h-32 rounded-full object-cover border-2 border-gray-300"
-//                   />
-//                   <input
-//                     id="imageInput"
-//                     type="file"
-//                     accept="image/*"
-//                     style={{ display: "none" }}
-//                     onChange={handleImageChange}
-//                   />
-//                 </div>
-//                 {userDesignation === "Recruiter" && (
-//                   <div
-//                     className={`relative cursor-pointer mb-6 flex justify-center ${editState === "Edit" ? 'opacity-75' : ''}`}
-//                     onClick={editState === "Edit" ? handleCompanyLogoClick : null}
-//                   >
-//                     <img
-//                       src={`${url}/logo/${recruiterProfileData.companyLogo}`}
-//                       alt={recruiterProfileData.companyName}
-//                       className="w-32 h-32 rounded-full object-cover border-2 border-gray-300"
-//                     />
-//                     <input
-//                       id="companyLogoInput"
-//                       type="file"
-//                       accept="image/*"
-//                       style={{ display: "none" }}
-//                       onChange={handleCompanyLogoChange}
-//                     />
-//                   </div>
-//                 )}
-//               </div>
-//               <div className="space-y-6">
-//                 <div className="space-y-4">
-//                   <div className="info">
-//                     <h3 className="text-lg font-medium">Full Name</h3>
-//                     <input
-//                       type="text"
-//                       value={profileData.name}
-//                       readOnly={editState !== "Edit"}
-//                       onChange={handleInputChange}
-//                       name="name"
-//                       className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
-//                     />
-//                   </div>
-//                   <div className="info">
-//                     <h3 className="text-lg font-medium">Gender</h3>
-//                     {editState !== "Edit" ? (
-//                       <input
-//                         type="text"
-//                         value={userDesignation === "Candidate" ? candidateProfileData.gender : recruiterProfileData.gender}
-//                         readOnly
-//                         name="gender"
-//                         className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm bg-white"
-//                       />
-//                     ) : (
-//                       <select
-//                         name="gender"
-//                         value={userDesignation === "Candidate" ? candidateProfileData.gender : recruiterProfileData.gender}
-//                         onChange={handleInputChange}
-//                         className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
-//                       >
-//                         <option value="Male">Male</option>
-//                         <option value="Female">Female</option>
-//                         <option value="Other">Other</option>
-//                       </select>
-//                     )}
-//                   </div>
-//                 </div>
-//                 {userDesignation === "Candidate" && (
-//                   <>
-//                     <div className="info">
-//                       <h3 className="text-lg font-medium">Age</h3>
-//                       <input
-//                         type="text"
-//                         value={candidateProfileData.age}
-//                         readOnly={editState !== "Edit"}
-//                         onChange={handleInputChange}
-//                         name="age"
-//                         className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
-//                       />
-//                     </div>
-//                     <div className="info">
-//                       <h3 className="text-lg font-medium">Bio</h3>
-//                       <textarea
-//                         value={candidateProfileData.bio}
-//                         readOnly={editState !== "Edit"}
-//                         onChange={handleInputChange}
-//                         name="bio"
-//                         className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
-//                       />
-//                     </div>
-//                     <div className="info">
-//                       <h3 className="text-lg font-medium">University</h3>
-//                       <input
-//                         type="text"
-//                         value={candidateProfileData.university}
-//                         readOnly={editState !== "Edit"}
-//                         onChange={handleInputChange}
-//                         name="university"
-//                         className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
-//                       />
-//                     </div>
-//                     <div className="info">
-//                       <h3 className="text-lg font-medium">Skills</h3>
-//                       <input
-//                         type="text"
-//                         value={candidateProfileData.skills}
-//                         readOnly={editState !== "Edit"}
-//                         onChange={handleInputChange}
-//                         name="skills"
-//                         className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
-//                       />
-//                     </div>
-//                     <div className="info">
-//                       <h3 className="text-lg font-medium">Resume</h3>
-//                       {editState === "Edit" ? (
-//                         <>
-//                           <input
-//                             type="file"
-//                             accept=".pdf"
-//                             onChange={handleResumeChange}
-//                             className="mt-1 block w-full"
-//                           />
-//                         </>
-//                       ) : (
-//                         <a
-//                           href={`${url}/files/${candidateProfileData.resume}`}
-//                           target="_blank"
-//                           rel="noopener noreferrer"
-//                           className="text-blue-600"
-//                         >
-//                           View Resume
-//                         </a>
-//                       )}
-//                     </div>
-//                   </>
-//                 )}
-
-//                 {userDesignation === "Recruiter" && (
-//                   <>
-//                     <div className="info">
-//                       <h3 className="text-lg font-medium">Company Name</h3>
-//                       <input
-//                         type="text"
-//                         value={recruiterProfileData.companyName}
-//                         readOnly={editState !== "Edit"}
-//                         onChange={handleInputChange}
-//                         name="companyName"
-//                         className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
-//                       />
-//                     </div>
-//                     <div className="info">
-//                       <h3 className="text-lg font-medium">Location</h3>
-//                       <input
-//                         type="text"
-//                         value={recruiterProfileData.location}
-//                         readOnly={editState !== "Edit"}
-//                         onChange={handleInputChange}
-//                         name="location"
-//                         className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50 ${editState === "Edit" ? 'bg-gray-200' : 'bg-white'}`}
-//                       />
-//                     </div>
-//                   </>
-//                 )}
-
-//                 {editState === "Edit" && (
-//                   <button
-//                     onClick={saveData}
-//                     className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-//                   >
-//                     Save
-//                   </button>
-//                 )}
-//               </div>
-//             </div>
-//           ) : (
-//             <p>Loading...</p>
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default UpdateProfile;
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { FaUserEdit } from "react-icons/fa";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { Sidebar } from "../../components/index";
+import { useContextProvider } from "../../context/StoreContext";
 
 const UpdateProfile = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  const { 
+    url, 
+    profileData, 
+    setProfileData, 
+    candidateProfileData, 
+    setCandidateProfileData, 
+    recruiterProfileData, 
+    setRecruiterProfileData 
+  } = useContextProvider();
 
-export default UpdateProfile
+  const navigate = useNavigate();
+  const [editState, setEditState] = useState("View");
+  const [image, setImage] = useState(null);
+  const [companyLogo, setCompanyLogo] = useState(null);
+  const [resume, setResume] = useState(null);
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    designation: "",
+    age: "",
+    gender: "",
+    bio: "",
+    university: "",
+    skills: [],
+    companyName: "",
+    location: "",
+    websiteOfCompany: "",
+    aboutCompany: "",
+  });
+
+  useEffect(() => {
+    if (profileData.designation === "Candidate") {
+      setData({
+        name: profileData.name,
+        email: profileData.email,
+        designation: profileData.designation,
+        age: candidateProfileData?.age || "",
+        gender: candidateProfileData?.gender || "",
+        bio: candidateProfileData?.bio || "",
+        university: candidateProfileData?.university || "",
+        skills: candidateProfileData?.skills || [],
+      });
+    } else if (profileData.designation === "Recruiter") {
+      setData({
+        name: profileData.name,
+        email: profileData.email,
+        designation: profileData.designation,
+        companyName: recruiterProfileData?.companyName || "",
+        location: recruiterProfileData?.location || "",
+        websiteOfCompany: recruiterProfileData?.websiteOfCompany || "",
+        aboutCompany: recruiterProfileData?.aboutCompany || "",
+      });
+    }
+  }, [profileData, candidateProfileData, recruiterProfileData]);
+
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const onChangeRecruiterValues = (e) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({ ...prevData, [name]: value }));
+  }
+
+  const handleImageClick = () => {
+    document.getElementById("imageInput").click();
+  };
+
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
+
+  const handleResume = () => {
+    document.getElementById("resumeInput").click();
+  };
+
+  const handleResumeChange = (e) => {
+    if (e.target.files[0]) {
+      setResume(e.target.files[0]);
+    }
+  };
+
+  const handleCompanyLogoClick = () => {
+    document.getElementById("companyLogoInput").click();
+  };
+
+  const handleCompanyLogoChange = (e) => {
+    if (e.target.files[0]) {
+      setCompanyLogo(e.target.files[0]);
+    }
+  };
+
+  const handleSkillChange = (e) => {
+    const skills = e.target.value.split(',').map(skill => skill.trim());
+    setData(prevData => ({ ...prevData, skills }));
+  };
+
+  const updateProfile = async (e) => {
+    e.preventDefault();
+
+    const formdata = new FormData();
+    formdata.append("name", data.name);
+    formdata.append("email", data.email);
+    formdata.append("designation", data.designation);
+
+    if (data.designation === "Candidate") {
+      formdata.append("age", data.age);
+      formdata.append("gender", data.gender);
+      formdata.append("bio", data.bio);
+      formdata.append("university", data.university);
+      formdata.append("skills", JSON.stringify(data.skills));
+      if (image) formdata.append("image", image);
+      if (resume) formdata.append("resume", resume);
+    } else if (data.designation === "Recruiter") {
+      formdata.append("companyName", data.companyName);
+      formdata.append("location", data.location);
+      formdata.append("websiteOfCompany", data.websiteOfCompany);
+      formdata.append("aboutCompany", data.aboutCompany);
+      if (companyLogo) formdata.append("companyLogo", companyLogo);
+      if (image) formdata.append("image", image);
+    }
+
+    try {
+      const response = await axios.put(`${url}/api/profile/user`, formdata, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        }
+      });
+
+      if (response.status === 201) {
+        const { userData, candidateData, recruiterData } = response.data;
+        setProfileData(userData);
+        if (candidateData && typeof setCandidateProfileData === 'function') {
+          setCandidateProfileData(candidateData);
+        }
+        if (recruiterData && typeof setRecruiterProfileData === 'function') {
+          setRecruiterProfileData(recruiterData);
+        }
+
+        toast.success("Profile Updated Successfully");
+        setEditState("View");
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || "Internal Server Error");
+    }
+  };
+
+  return (
+    <div className="flex">
+      <Sidebar />
+      <div className="flex-1 flex flex-col items-center p-6">
+        <header className='bg-blue-600 text-white py-4 px-6 rounded-lg shadow-lg mb-6 w-full max-w-4xl'>
+          <div className='container mx-auto text-center'>
+            <h1 className='text-3xl md:text-4xl font-extrabold'>Update Profile</h1>
+          </div>
+        </header>
+        <div className="flex justify-center mb-8">
+          <FaUserEdit
+            size={24}
+            onClick={() => setEditState(editState === "View" ? "Edit" : "View")}
+            className="cursor-pointer text-blue-500 hover:text-blue-600"
+          />
+        </div>
+        {profileData ? (
+          <div className='w-full max-w-4xl bg-white shadow-md rounded-lg p-6 mb-5'>
+            {data.designation === "Candidate" ? (
+              <>
+                <div className='flex justify-center mb-6'>
+                  <img
+                    src={image ? URL.createObjectURL(image) : `${url}/images/${candidateProfileData?.image}`}
+                    className='rounded-full w-32 h-32 object-cover cursor-pointer border border-neutral-700'
+                    alt="Profile Image"
+                    onClick={handleImageClick}
+                  />
+                  <input
+                    id="imageInput"
+                    type="file"
+                    accept="image/*"
+                    style={{ display: "none" }}
+                    onChange={handleImageChange}
+                    disabled={editState === "View"}
+                  />
+                </div>
+                <div className='space-y-6'>
+                  <div className='flex flex-col'>
+                    <label className='block text-sm font-medium text-gray-700'>Name</label>
+                    <input
+                      type='text'
+                      name="name"
+                      value={data.name}
+                      onChange={onChangeHandler}
+                      className={`mt-1 p-2 block w-full border border-gray-300 rounded-md ${editState === "View" ? 'bg-gray-200' : ''}`}
+                      disabled={editState === "View"}
+                    />
+                  </div>
+                  <div className='flex gap-6'>
+                    <div className='flex flex-col w-1/2'>
+                      <label className='block text-sm font-medium text-gray-700'>Gender</label>
+                      <input
+                        type='text'
+                        name="gender"
+                        value={data.gender}
+                        onChange={onChangeHandler}
+                        className={`mt-1 p-2 block w-full border border-gray-300 rounded-md ${editState === "View" ? 'bg-gray-200' : ''}`}
+                        disabled={editState === "View"}
+                      />
+                    </div>
+                    <div className='flex flex-col w-1/2'>
+                      <label className='block text-sm font-medium text-gray-700'>Age</label>
+                      <input
+                        type='text'
+                        name="age"
+                        value={data.age}
+                        onChange={onChangeHandler}
+                        className={`mt-1 p-2 block w-full border border-gray-300 rounded-md ${editState === "View" ? 'bg-gray-200' : ''}`}
+                        disabled={editState === "View"}
+                      />
+                    </div>
+                  </div>
+                  <div className='flex gap-6'>
+                    <div className='flex flex-col w-1/2'>
+                      <label className='block text-sm font-medium text-gray-700'>Email</label>
+                      <input
+                        type='text'
+                        name="email"
+                        value={data.email}
+                        onChange={onChangeHandler}
+                        className={`mt-1 p-2 block w-full border border-gray-300 rounded-md ${editState === "View" ? 'bg-gray-200' : ''}`}
+                        disabled={editState === "View"}
+                      />
+                    </div>
+                    <div className='flex flex-col w-1/2'>
+                      <label className='block text-sm font-medium text-gray-700'>Designation</label>
+                      <input
+                        type='text'
+                        value={profileData.designation}
+                        className='mt-1 p-2 block w-full border border-gray-300 rounded-md bg-gray-200'
+                        disabled
+                      />
+                    </div>
+                  </div>
+                  <div className='flex flex-col'>
+                    <label className='block text-sm font-medium text-gray-700'>Bio</label>
+                    <textarea
+                      name="bio"
+                      value={data.bio}
+                      onChange={onChangeHandler}
+                      className={`mt-1 p-2 block w-full border border-gray-300 rounded-md ${editState === "View" ? 'bg-gray-200' : ''}`}
+                      disabled={editState === "View"}
+                    />
+                  </div>
+                  <div className='flex flex-col'>
+                    <label className='block text-sm font-medium text-gray-700'>Skills (comma-separated)</label>
+                    <input
+                      type='text'
+                      name="skills"
+                      value={data.skills.join(', ')}
+                      onChange={handleSkillChange}
+                      className={`mt-1 p-2 block w-full border border-gray-300 rounded-md ${editState === "View" ? 'bg-gray-200' : ''}`}
+                      disabled={editState === "View"}
+                    />
+                  </div>
+                  <div className='flex flex-col'>
+                    <label className='block text-sm font-medium text-gray-700'>University</label>
+                    <input
+                      type='text'
+                      name="university"
+                      value={data.university}
+                      onChange={onChangeHandler}
+                      className={`mt-1 p-2 block w-full border border-gray-300 rounded-md ${editState === "View" ? 'bg-gray-200' : ''}`}
+                      disabled={editState === "View"}
+                    />
+                  </div>
+                  <div className='flex flex-col'>
+                    <label className='block text-sm font-medium text-gray-700'>Resume</label>
+                    <div className='flex items-center'>
+                      <button
+                        onClick={handleResume}
+                        className={`px-4 py-2 bg-blue-500 text-white rounded-md ${editState === "View" ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        disabled={editState === "View"}
+                      >
+                        {resume ? 'Change Resume' : 'Upload Resume'}
+                      </button>
+                      {resume && <span className='ml-2'>{resume.name}</span>}
+                    </div>
+                    <input
+                      id="resumeInput"
+                      type="file"
+                      accept=".pdf,.doc,.docx"
+                      style={{ display: "none" }}
+                      onChange={handleResumeChange}
+                      disabled={editState === "View"}
+                    />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className='flex flex-row justify-center items-center gap-20'>
+                  <div className='flex flex-col items-center mb-6'>
+                    <img
+                      src={image ? URL.createObjectURL(image) : `${url}/images/${recruiterProfileData?.image}`}
+                      className='rounded-full w-32 h-32 object-cover cursor-pointer'
+                      alt="Profile"
+                      onClick={handleImageClick}
+                    />
+                    <input
+                      id="imageInput"
+                      type="file"
+                      accept="image/*"
+                      style={{ display: "none" }}
+                      onChange={handleImageChange}
+                      disabled={editState === "View"}
+                    />
+                  </div>
+                  <div className='flex flex-col items-center mb-6'>
+                    <img
+                      src={companyLogo ? URL.createObjectURL(companyLogo) : `${url}/logo/${recruiterProfileData?.companyLogo}`}
+                      className='rounded-full w-32 h-32 object-cover cursor-pointer'
+                      alt="Company Logo"
+                      onClick={handleCompanyLogoClick}
+                    />
+                    <input
+                      id="companyLogoInput"
+                      type="file"
+                      accept="image/*"
+                      style={{ display: "none" }}
+                      onChange={handleCompanyLogoChange}
+                      disabled={editState === "View"}
+                    />
+                  </div>
+                </div>
+                <div className='space-y-6'>
+                <div className='flex flex-col'>
+                    <label className='block text-sm font-medium text-gray-700'>Name</label>
+                    <input
+                      type='text'
+                      name="name"
+                      value={data.name}
+                      onChange={onChangeRecruiterValues}
+                      className={`mt-1 p-2 block w-full border border-gray-300 rounded-md ${editState === "View" ? 'bg-gray-200' : ''}`}
+                      disabled={editState === "View"}
+                    />
+                  </div>
+                  <div className='flex gap-6'>
+                    <div className='flex flex-col w-1/2'>
+                      <label className='block text-sm font-medium text-gray-700'>Email</label>
+                      <input
+                        type='text'
+                        name="email"
+                        value={data.email}
+                        onChange={onChangeHandler}
+                        className={`mt-1 p-2 block w-full border border-gray-300 rounded-md ${editState === "View" ? 'bg-gray-200' : ''}`}
+                        disabled={editState === "View"}
+                      />
+                    </div>
+                    <div className='flex flex-col w-1/2'>
+                      <label className='block text-sm font-medium text-gray-700'>Designation</label>
+                      <input
+                        type='text'
+                        value={profileData.designation}
+                        className='mt-1 p-2 block w-full border border-gray-300 rounded-md bg-gray-200'
+                        disabled
+                      />
+                    </div>
+                  </div>
+                  <div className='flex gap-6'>
+                    <div className='flex flex-col w-1/2'>
+                      <label className='block text-sm font-medium text-gray-700'>Company Name</label>
+                      <input
+                        type='text'
+                        name="companyName"
+                        value={data.companyName}
+                        onChange={onChangeHandler}
+                        className={`mt-1 p-2 block w-full border border-gray-300 rounded-md ${editState === "View" ? 'bg-gray-200' : ''}`}
+                        disabled={editState === "View"}
+                      />
+                    </div>
+                    <div className='flex flex-col w-1/2'>
+                      <label className='block text-sm font-medium text-gray-700'>Company Location</label>
+                      <input
+                        type='text'
+                        name="location"
+                        value={data.location}
+                        onChange={onChangeHandler}
+                        className={`mt-1 p-2 block w-full border border-gray-300 rounded-md ${editState === "View" ? 'bg-gray-200' : ''}`}
+                        disabled={editState === "View"}
+                      />
+                    </div>
+                  </div>
+                  <div className='flex flex-col'>
+                    <label className='block text-sm font-medium text-gray-700'>About the company</label>
+                    <textarea
+                      name="aboutCompany"
+                      value={data.aboutCompany}
+                      onChange={onChangeHandler}
+                      className={`mt-1 p-2 block w-full border border-gray-300 rounded-md ${editState === "View" ? 'bg-gray-200' : ''}`}
+                      disabled={editState === "View"}
+                    />
+                  </div>
+                  <div className='flex flex-col'>
+                    <label className='block text-sm font-medium text-gray-700'>Website of the company</label>
+                    <input
+                      type='text'
+                      name="websiteOfCompany"
+                      value={data.websiteOfCompany}
+                      onChange={onChangeHandler}
+                      className={`mt-1 p-2 block w-full border border-gray-300 rounded-md ${editState === "View" ? 'bg-gray-200' : ''}`}
+                      disabled={editState === "View"}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+            {editState === "Edit" && (
+              <div className="mt-6">
+                <button
+                  onClick={updateProfile}
+                  className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors">
+                  Update Profile
+                </button>
+                <button
+                  onClick={() => setEditState("View")}
+                  className="ml-4 px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition-colors">
+                  Cancel
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <p className='text-gray-600'>Loading profile data...</p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default UpdateProfile;

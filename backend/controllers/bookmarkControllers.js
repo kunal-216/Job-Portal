@@ -12,9 +12,6 @@ const getBookmarks = async (req, res) => {
             return res.status(400).json({ message: "Invalid candidate ID" });
         }
         const bookmarks = await bookmarkModel.find({ candidateId });
-        if (!bookmarks.length) {
-            return res.status(404).json({ message: "No bookmarks found" });
-        }
         res.status(200).json({ message: "Bookmarks fetched successfully", data: bookmarks });
     } catch (error) {
         console.log(error);
