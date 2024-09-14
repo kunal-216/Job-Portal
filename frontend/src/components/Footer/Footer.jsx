@@ -22,7 +22,7 @@ const Footer = () => {
           <div className="w-full md:w-1/4 mb-2 md:mb-0">
             <h3 className="text-xl font-bold mb-4">Candidate Services</h3>
             <ul className="text-gray-400">
-              <li className="mb-2"><Link to="/resume" className="hover:underline">See Resume</Link></li>
+              <li className="mb-2">{candidateProfileData ? <><Link to="/resume" className="hover:underline">See Resume</Link></> : !token ? <Link to="/user" className="hover:underline">Sign Up</Link> : <Link to="/candidate" className="hover:underline">Candidate Login</Link>}</li>
               <li className="mb-2"><Link to="/" className="hover:underline">Career Coaching</Link></li>
               <li className="mb-2">{candidateProfileData ? <><Link to="/profile" className="hover:underline">See Profile</Link></> : !token ? <Link to="/user" className="hover:underline">Sign Up</Link> : <Link to="/candidate" className="hover:underline">Candidate Login</Link>}</li>
             </ul>
