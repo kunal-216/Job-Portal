@@ -9,10 +9,8 @@ const PostOpportunity = () => {
   const { url, recruiterProfileData } = useContextProvider();
   const navigate = useNavigate();
 
-  // type means job or opportunity
-  const [type, setType] = useState('Job'); // Default to 'Job' or 'Internship'
+  const [type, setType] = useState('Job');
   const [newSkill, setNewSkill] = useState("");
-  // opportunityType means part time, full time, WFH
   const [data, setData] = useState({
     title: "",
     description: "",
@@ -88,12 +86,12 @@ const PostOpportunity = () => {
   };
 
   return (
-    <div className='flex'>
+    <div className='flex flex-col md:flex-row'>
       <Sidebar />
-      <div className='flex-1 flex items-center justify-center min-h-screen mt-4 mb-6'>
-        <form onSubmit={handleSubmit} className='w-full max-w-4xl bg-white p-8 rounded-lg shadow-lg my-6 mx-auto'>
-          <header className='bg-blue-600 text-white py-4 rounded-lg shadow-lg mb-6 text-center'>
-            <h1 className='text-4xl font-extrabold'>Post Opportunity</h1>
+      <div className='flex-1 px-4 py-6 md:px-6 lg:px-8'>
+        <form onSubmit={handleSubmit} className='w-full max-w-4xl bg-white p-4 md:p-8 rounded-lg shadow-lg my-6 mx-auto'>
+          <header className='bg-blue-600 text-white py-3 md:py-4 rounded-lg shadow-lg mb-4 md:mb-6 text-center'>
+            <h1 className='text-2xl md:text-4xl font-extrabold'>Post Opportunity</h1>
           </header>
           <div className='mb-4'>
             <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='type'>
@@ -201,7 +199,6 @@ const PostOpportunity = () => {
               <option value="Sales">Sales</option>
               <option value="Software Development">Software Development</option>
               <option value="Web Development">Web Development</option>
-
             </select>
           </div>
           <div className='mb-4'>
@@ -222,7 +219,7 @@ const PostOpportunity = () => {
               <option value='Hybrid'>Hybrid</option>
             </select>
           </div>
-          <div className='mb-2'>
+          <div className='mb-4'>
             <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='description'>
               Job Description
             </label>
@@ -234,9 +231,10 @@ const PostOpportunity = () => {
               onChange={handleChange}
               placeholder='Enter description'
               required
+              rows="4"
             />
           </div>
-          <div className='mb-3'>
+          <div className='mb-4'>
             <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='applyBy'>
               Apply By
             </label>
@@ -250,7 +248,7 @@ const PostOpportunity = () => {
               required
             />
           </div>
-          <div className='mb-3'>
+          <div className='mb-4'>
             <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='numberOfOpenings'>
               Number of Openings
             </label>
@@ -269,7 +267,7 @@ const PostOpportunity = () => {
             <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='skills'>
               Skills Required
             </label>
-            <div className="flex gap-2 mb-2">
+            <div className="flex flex-col sm:flex-row gap-2 mb-2">
               <input
                 type="text"
                 value={newSkill}
@@ -287,7 +285,7 @@ const PostOpportunity = () => {
             <ul className="list-disc pl-5">
               {data.skills.map((skill, index) => (
                 <li key={index} className="flex justify-between items-center mb-1">
-                  {skill}
+                  <span className="mr-2">{skill}</span>
                   <button
                     type="button"
                     onClick={() => removeSkill(index)}
@@ -301,7 +299,7 @@ const PostOpportunity = () => {
           </div>
           <button
             type='submit'
-            className='bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700'
+            className='w-full sm:w-auto bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700'
           >
             Post Opportunity
           </button>
