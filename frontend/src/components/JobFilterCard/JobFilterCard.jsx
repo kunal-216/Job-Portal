@@ -43,11 +43,10 @@ const JobFilterCard = ({ onFilterChange }) => {
 
             <div className='space-y-4'>
                 {filterData.map((filterItem, index) => (
-                    <div key={index}>
+                    <div key={index} className='mb-4'>
                         <Combobox
                             value={selectedFilters[filterItem.filterType] || ""}
-                            onChange={(value) => handleSelect(filterItem.filterType, value)}
-                        >
+                            onChange={(value) => handleSelect(filterItem.filterType, value)}>
                             <Combobox.Label className='text-lg font-medium text-gray-700'>{filterItem.filterType}</Combobox.Label>
                             <div className="relative">
                                 <Combobox.Input
