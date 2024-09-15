@@ -26,7 +26,7 @@ const Internships = () => {
   };
 
   return (
-    <div className='max-w-[100rem] xl:mx-20 px-4 my-10'>
+    <div className='max-w-[100rem] xl:mx-13 md:mx-7 px-4 my-10'>
       <h1 className='inline-block my-4 text-[2.6rem] font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500'>
         Browse Internships
       </h1>

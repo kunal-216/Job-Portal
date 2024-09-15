@@ -41,7 +41,7 @@ const Navbar = () => {
   return (
     <nav className='flex justify-between items-center p-4 bg-gray-800 text-white h-[64px]'>
       <div>
-        <Link to="/"><h1 className='text-[28px] font-bold text-white ml-5 mb-2'>Opportu<span className='text-[#7ca6fb]'>Net</span></h1></Link>
+        <Link to="/"><h1 className='text-[28px] font-bold text-white md:ml-5 md:mb-2 mb-1 ml-3'>Opportu<span className='text-[#7ca6fb]'>Net</span></h1></Link>
       </div>
 
       <div className='hidden md:flex md:space-x-6'>

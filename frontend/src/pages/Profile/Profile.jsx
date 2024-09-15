@@ -1,4 +1,3 @@
-
 import { Sidebar } from '../../components/index';
 import { useContextProvider } from '../../context/StoreContext';
 
@@ -6,12 +5,12 @@ const Profile = () => {
   const { profileData, url, userDesignation, candidateProfileData, recruiterProfileData } = useContextProvider();
 
   return (
-    <div className='flex'>
+    <div className='flex flex-col md:flex-row min-h-screen'>
       <Sidebar />
       <div className='flex-1 flex flex-col items-center p-6'>
         <header className='bg-blue-600 text-white py-4 px-6 rounded-lg shadow-lg mb-6 w-full max-w-4xl'>
-          <div className='container mx-auto text-center'>
-            <h1 className='text-3xl md:text-4xl font-extrabold'>Profile</h1>
+          <div className='text-center'>
+            <h1 className='text-2xl md:text-4xl font-extrabold'>Profile</h1>
           </div>
         </header>
         {profileData ? (
@@ -21,28 +20,25 @@ const Profile = () => {
                 <div className='flex justify-center mb-6'>
                   <img
                     src={`${url}/images/${candidateProfileData?.image}`}
-                    className='rounded-full w-32 h-32 object-cover cursor-pointer border border-neutral-700'
+                    className='rounded-full w-24 h-24 md:w-32 md:h-32 object-cover border border-neutral-700'
                     alt="Profile"
-                  />
-                  <input
-                    id="imageInput"
-                    type="file"
-                    accept="image/*"
-                    style={{ display: "none" }}
-                    disabled
                   />
                 </div>
                 <div className='space-y-6'>
                   {renderProfileField('Name', profileData.name)}
-                  <div className='flex gap-6'>
-                    {renderProfileField('Gender', candidateProfileData?.gender, 'w-1/2')}
-                    {renderProfileField('Age', candidateProfileData?.age, 'w-1/2')}
+                  
+                  <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+                    {renderProfileField('Gender', candidateProfileData?.gender)}
+                    {renderProfileField('Age', candidateProfileData?.age)}
                   </div>
-                  <div className='flex gap-6'>
-                    {renderProfileField('Email', profileData.email, 'w-1/2')}
-                    {renderProfileField('Designation', profileData.designation, 'w-1/2')}
+                  
+                  <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+                    {renderProfileField('Email', profileData.email)}
+                    {renderProfileField('Designation', profileData.designation)}
                   </div>
+
                   {renderProfileField('Bio', candidateProfileData?.bio)}
+                  
                   {candidateProfileData?.skills && (
                     <div className='flex flex-col'>
                       <label htmlFor="skills" className='block text-sm font-medium text-gray-700'>
@@ -57,38 +53,44 @@ const Profile = () => {
                       </div>
                     </div>
                   )}
+
                   {renderProfileField('University', candidateProfileData?.university)}
                 </div>
               </>
             ) : (
               <>
-                <div className='flex flex-row justify-center items-center gap-20'>
-                  <div className='flex flex-col items-center mb-6'>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-10 justify-center mb-6'>
+                  <div className='flex flex-col items-center'>
                     <img
                       src={`${url}/images/${recruiterProfileData?.image}`}
-                      className='rounded-full w-32 h-32 object-cover cursor-pointer'
-                      alt="Company Logo"
+                      className='rounded-full w-24 h-24 md:w-32 md:h-32 object-cover'
+                      alt="Recruiter Image"
                     />
                   </div>
-                  <div className='flex flex-col items-center mb-6'>
+                  <div className='flex flex-col items-center'>
                     <img
                       src={`${url}/logo/${recruiterProfileData?.companyLogo}`}
-                      className='rounded-full w-32 h-32 object-cover cursor-pointer'
+                      className='rounded-full w-24 h-24 md:w-32 md:h-32 object-cover'
                       alt="Company Logo"
                     />
                   </div>
                 </div>
+
                 <div className='space-y-6'>
                   {renderProfileField('Name', profileData.name)}
-                  <div className='flex gap-6'>
-                    {renderProfileField('Gender', recruiterProfileData?.gender, 'w-1/2')}
-                    {renderProfileField('Email', profileData.email, 'w-1/2')}
+                  
+                  <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+                    {renderProfileField('Gender', recruiterProfileData?.gender)}
+                    {renderProfileField('Email', profileData.email)}
                   </div>
+
                   {renderProfileField('Designation', profileData.designation)}
-                  <div className='flex gap-6'>
-                    {renderProfileField('Company Name', recruiterProfileData?.companyName, 'w-1/2')}
-                    {renderProfileField('Company Location', recruiterProfileData?.location, 'w-1/2')}
+                  
+                  <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+                    {renderProfileField('Company Name', recruiterProfileData?.companyName)}
+                    {renderProfileField('Company Location', recruiterProfileData?.location)}
                   </div>
+
                   {renderProfileField('About the company', recruiterProfileData?.aboutCompany)}
                   {renderProfileField('Website of the company', recruiterProfileData?.websiteOfCompany)}
                 </div>
@@ -103,7 +105,6 @@ const Profile = () => {
   );
 };
 
-// Utility function to render profile fields
 const renderProfileField = (label, value, className = '') => (
   <div className={`flex flex-col ${className}`}>
     <label htmlFor={label.toLowerCase()} className='block text-sm font-medium text-gray-700'>

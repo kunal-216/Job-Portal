@@ -7,14 +7,14 @@ import { Sidebar } from "../../components/index";
 import { useContextProvider } from "../../context/StoreContext";
 
 const UpdateProfile = () => {
-  const { 
-    url, 
-    profileData, 
-    setProfileData, 
-    candidateProfileData, 
-    setCandidateProfileData, 
-    recruiterProfileData, 
-    setRecruiterProfileData 
+  const {
+    url,
+    profileData,
+    setProfileData,
+    candidateProfileData,
+    setCandidateProfileData,
+    recruiterProfileData,
+    setRecruiterProfileData
   } = useContextProvider();
 
   const navigate = useNavigate();
@@ -161,15 +161,15 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex flex-col md:flex-row">
       <Sidebar />
-      <div className="flex-1 flex flex-col items-center p-6">
-        <header className='bg-blue-600 text-white py-4 px-6 rounded-lg shadow-lg mb-6 w-full max-w-4xl'>
+      <div className="flex-1 flex flex-col items-center p-4 md:p-6">
+        <header className='bg-blue-600 text-white py-3 md:py-4 px-4 md:px-6 rounded-lg shadow-lg mb-4 md:mb-6 w-full max-w-4xl'>
           <div className='container mx-auto text-center'>
-            <h1 className='text-3xl md:text-4xl font-extrabold'>Update Profile</h1>
+            <h1 className='text-2xl md:text-3xl lg:text-4xl font-extrabold'>Update Profile</h1>
           </div>
         </header>
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-6 md:mb-8">
           <FaUserEdit
             size={24}
             onClick={() => setEditState(editState === "View" ? "Edit" : "View")}
@@ -177,13 +177,13 @@ const UpdateProfile = () => {
           />
         </div>
         {profileData ? (
-          <div className='w-full max-w-4xl bg-white shadow-md rounded-lg p-6 mb-5'>
+          <div className='w-full max-w-4xl bg-white shadow-md rounded-lg p-4 md:p-6 mb-5'>
             {data.designation === "Candidate" ? (
               <>
-                <div className='flex justify-center mb-6'>
+                <div className='flex justify-center mb-4 md:mb-6'>
                   <img
                     src={image ? URL.createObjectURL(image) : `${url}/images/${candidateProfileData?.image}`}
-                    className='rounded-full w-32 h-32 object-cover cursor-pointer border border-neutral-700'
+                    className='rounded-full w-24 h-24 md:w-32 md:h-32 object-cover cursor-pointer border border-neutral-700'
                     alt="Profile Image"
                     onClick={handleImageClick}
                   />
@@ -196,7 +196,7 @@ const UpdateProfile = () => {
                     disabled={editState === "View"}
                   />
                 </div>
-                <div className='space-y-6'>
+                <div className='space-y-4 md:space-y-6'>
                   <div className='flex flex-col'>
                     <label className='block text-sm font-medium text-gray-700'>Name</label>
                     <input
@@ -208,8 +208,8 @@ const UpdateProfile = () => {
                       disabled={editState === "View"}
                     />
                   </div>
-                  <div className='flex gap-6'>
-                    <div className='flex flex-col w-1/2'>
+                  <div className='flex flex-col md:flex-row md:gap-6'>
+                    <div className='flex flex-col w-full md:w-1/2'>
                       <label className='block text-sm font-medium text-gray-700'>Gender</label>
                       <input
                         type='text'
@@ -220,7 +220,7 @@ const UpdateProfile = () => {
                         disabled={editState === "View"}
                       />
                     </div>
-                    <div className='flex flex-col w-1/2'>
+                    <div className='flex flex-col w-full md:w-1/2 mt-4 md:mt-0'>
                       <label className='block text-sm font-medium text-gray-700'>Age</label>
                       <input
                         type='text'
@@ -232,8 +232,8 @@ const UpdateProfile = () => {
                       />
                     </div>
                   </div>
-                  <div className='flex gap-6'>
-                    <div className='flex flex-col w-1/2'>
+                  <div className='flex flex-col md:flex-row md:gap-6'>
+                    <div className='flex flex-col w-full md:w-1/2'>
                       <label className='block text-sm font-medium text-gray-700'>Email</label>
                       <input
                         type='text'
@@ -244,7 +244,7 @@ const UpdateProfile = () => {
                         disabled={editState === "View"}
                       />
                     </div>
-                    <div className='flex flex-col w-1/2'>
+                    <div className='flex flex-col w-full md:w-1/2 mt-4 md:mt-0'>
                       <label className='block text-sm font-medium text-gray-700'>Designation</label>
                       <input
                         type='text'
@@ -288,7 +288,7 @@ const UpdateProfile = () => {
                   </div>
                   <div className='flex flex-col'>
                     <label className='block text-sm font-medium text-gray-700'>Resume</label>
-                    <div className='flex items-center'>
+                    <div className='flex items-center flex-wrap'>
                       <button
                         onClick={handleResume}
                         className={`px-4 py-2 bg-blue-500 text-white rounded-md ${editState === "View" ? 'opacity-50 cursor-not-allowed' : ''}`}
@@ -296,7 +296,7 @@ const UpdateProfile = () => {
                       >
                         {resume ? 'Change Resume' : 'Upload Resume'}
                       </button>
-                      {resume && <span className='ml-2'>{resume.name}</span>}
+                      {resume && <span className='ml-2 mt-2 md:mt-0'>{resume.name}</span>}
                     </div>
                     <input
                       id="resumeInput"
@@ -311,11 +311,11 @@ const UpdateProfile = () => {
               </>
             ) : (
               <>
-                <div className='flex flex-row justify-center items-center gap-20'>
-                  <div className='flex flex-col items-center mb-6'>
+                <div className='flex flex-col md:flex-row justify-center items-center gap-8 md:gap-20'>
+                  <div className='flex flex-col items-center mb-4 md:mb-6'>
                     <img
                       src={image ? URL.createObjectURL(image) : `${url}/images/${recruiterProfileData?.image}`}
-                      className='rounded-full w-32 h-32 object-cover cursor-pointer'
+                      className='rounded-full w-24 h-24 md:w-32 md:h-32 object-cover cursor-pointer'
                       alt="Profile"
                       onClick={handleImageClick}
                     />
@@ -328,10 +328,10 @@ const UpdateProfile = () => {
                       disabled={editState === "View"}
                     />
                   </div>
-                  <div className='flex flex-col items-center mb-6'>
+                  <div className='flex flex-col items-center mb-4 md:mb-6'>
                     <img
                       src={companyLogo ? URL.createObjectURL(companyLogo) : `${url}/logo/${recruiterProfileData?.companyLogo}`}
-                      className='rounded-full w-32 h-32 object-cover cursor-pointer'
+                      className='rounded-full w-24 h-24 md:w-32 md:h-32 object-cover cursor-pointer'
                       alt="Company Logo"
                       onClick={handleCompanyLogoClick}
                     />
@@ -345,8 +345,8 @@ const UpdateProfile = () => {
                     />
                   </div>
                 </div>
-                <div className='space-y-6'>
-                <div className='flex flex-col'>
+                <div className='space-y-4 md:space-y-6'>
+                  <div className='flex flex-col'>
                     <label className='block text-sm font-medium text-gray-700'>Name</label>
                     <input
                       type='text'
@@ -357,8 +357,8 @@ const UpdateProfile = () => {
                       disabled={editState === "View"}
                     />
                   </div>
-                  <div className='flex gap-6'>
-                    <div className='flex flex-col w-1/2'>
+                  <div className='flex flex-col md:flex-row md:gap-6'>
+                    <div className='flex flex-col w-full md:w-1/2'>
                       <label className='block text-sm font-medium text-gray-700'>Email</label>
                       <input
                         type='text'
@@ -369,7 +369,7 @@ const UpdateProfile = () => {
                         disabled={editState === "View"}
                       />
                     </div>
-                    <div className='flex flex-col w-1/2'>
+                    <div className='flex flex-col w-full md:w-1/2 mt-4 md:mt-0'>
                       <label className='block text-sm font-medium text-gray-700'>Designation</label>
                       <input
                         type='text'
@@ -379,8 +379,8 @@ const UpdateProfile = () => {
                       />
                     </div>
                   </div>
-                  <div className='flex gap-6'>
-                    <div className='flex flex-col w-1/2'>
+                  <div className='flex flex-col md:flex-row md:gap-6'>
+                    <div className='flex flex-col w-full md:w-1/2'>
                       <label className='block text-sm font-medium text-gray-700'>Company Name</label>
                       <input
                         type='text'
@@ -391,7 +391,7 @@ const UpdateProfile = () => {
                         disabled={editState === "View"}
                       />
                     </div>
-                    <div className='flex flex-col w-1/2'>
+                    <div className='flex flex-col w-full md:w-1/2 mt-4 md:mt-0'>
                       <label className='block text-sm font-medium text-gray-700'>Company Location</label>
                       <input
                         type='text'
@@ -428,15 +428,15 @@ const UpdateProfile = () => {
               </>
             )}
             {editState === "Edit" && (
-              <div className="mt-6">
+              <div className="mt-6 flex flex-col sm:flex-row gap-4">
                 <button
                   onClick={updateProfile}
-                  className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors">
+                  className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors w-full sm:w-auto">
                   Update Profile
                 </button>
                 <button
                   onClick={() => setEditState("View")}
-                  className="ml-4 px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition-colors">
+                  className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition-colors w-full sm:w-auto">
                   Cancel
                 </button>
               </div>

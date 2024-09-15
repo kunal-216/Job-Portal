@@ -26,7 +26,7 @@ const Jobs = () => {
     };
 
     return (
-        <div className="max-w-[100rem] xl:mx-20 px-4 my-10">
+        <div className="max-w-[100rem] xl:mx-13 md:mx-7 px-4 my-10">
             <h1 className="inline-block my-4 text-[2.6rem] font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-blue-500">
                 Browse Jobs
             </h1>
