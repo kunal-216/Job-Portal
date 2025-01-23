@@ -66,12 +66,10 @@ const postInternship = async (req, res) => {
         if (!title || !description || !category || !salary || !experience || !workMode || !type || !skills || !applyBy || !numberOfOpenings){
             return res.status(400).json({ message: "Please enter all the details" });
         }
-
         const recruiter = await recruiterModel.findById(recruiterId)
         if (!recruiter) {
             return res.status(404).json({ message: "Recruiter not found" })
         }
-
         const newInternship = internshipModel({
             type,
             companyLogo: recruiter.companyLogo,
