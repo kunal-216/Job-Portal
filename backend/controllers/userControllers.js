@@ -137,7 +137,7 @@ const recruiterRegister = async (req, res) => {
         if (!req.files.companyLogo || req.files.companyLogo.length === 0) {
             return res.status(400).json({ message: "Company Logo file is required" });
         }
-
+        // hello there
         const imagePath = req.files.image[0].path;
         const imagefileName = path.basename(imagePath);
         const companyLogoPath = req.files.companyLogo[0].path;
