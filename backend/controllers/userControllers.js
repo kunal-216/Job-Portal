@@ -13,16 +13,13 @@ const loginUser = async (req, res) => {
         if (!user) {
             return res.status(400).json({ message: "Invalid email or password" });
         }
-
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
-
         if (designation !== user.designation) {
             return res.status(400).json({ message: "Designation does not match" });
         }
-
         const token = createToken(user._id);
         res.json({ token });
     } catch (error) {
@@ -41,11 +38,9 @@ const registerUser = async (req, res) => {
         if (!email || !password) {
             return res.status(400).json({ message: "Please enter both email and password" });
         }
-
         if (!name || !designation) {
             return res.status(400).json({ message: "Please enter valid details" });
         }
-
         const exists = await userModel.findOne({ email });
         if (exists) {
             return res.status(400).json({ message: "User already exists" });
@@ -54,11 +49,9 @@ const registerUser = async (req, res) => {
         if (!validator.isEmail(email)) {
             return res.status(400).json({ message: "Invalid email" });
         }
-
         if (password.length < 8) {
             return res.status(400).json({ message: "Please enter a strong password" });
         }
-
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -68,7 +61,6 @@ const registerUser = async (req, res) => {
             email,
             password: hashedPassword,
         });
-
         const user = await newUser.save();
         const token = createToken(user._id);
         res.json({ token });
@@ -88,23 +80,19 @@ const candidateRegister = async (req, res) => {
         if (user.profileCompleted) {
             return res.status(400).json({ message: "Profile is already completed." });
         }
-
         if (!bio || !gender || !age || !university) {
             return res.status(400).json({ message: "Please enter all details" });
         }
-
         if (!skills) {
             return res.status(400).json({ message: "Please enter skills" });
         }
-
         if (!req.files || !req.files.image || req.files.image.length === 0) {
             return res.status(400).json({ message: "Image file is required" });
         }
-
         if (!req.files.resume || req.files.resume.length === 0) {
             return res.status(400).json({ message: "Resume file is required" });
         }
-
+        
         const imagePath = req.files.image[0].path;
         const imagefileName = path.basename(imagePath);
         const resumePath = req.files.resume[0].path;
